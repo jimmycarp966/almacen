@@ -27,11 +27,16 @@ export function ProductCard({ id, nombre, descripcion, precio, imagen_url, categ
         setTimeout(() => setIsAdding(false), 500)
     }
 
+    // Usar imagen por defecto si no hay imagen_url
+    const displayImage = imagen_url && imagen_url.trim() !== '' 
+        ? imagen_url 
+        : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'
+
     return (
         <div className="group cursor-pointer product-card">
             <div className="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
                 <OptimizedImage
-                    src={imagen_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}
+                    src={displayImage}
                     alt={nombre}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
