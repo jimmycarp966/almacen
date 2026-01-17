@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { ClientNotifications } from '@/components/client/ClientNotifications'
 
 interface PageProps {
     params: Promise<{ id: string }>
@@ -40,6 +41,9 @@ export default async function SeguimientoPage({ params }: PageProps) {
     return (
         <div className="min-h-screen bg-background-light">
             <Navbar />
+            
+            {/* Notificaciones en tiempo real */}
+            <ClientNotifications />
 
             <main className="flex-grow py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
                 {/* Page Heading & Status */}

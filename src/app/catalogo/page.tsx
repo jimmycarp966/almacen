@@ -1,21 +1,62 @@
+'use client'
+
+import { Suspense } from 'react'
 import { getCategorias, getProductos } from '@/actions/catalog'
 import { Navbar } from '@/components/layout/Navbar'
 import { ProductCard } from '@/components/client/ProductCard'
 import { CartFAB } from '@/components/client/CartFAB'
+import { SearchBar } from '@/components/catalog/SearchBar'
+import { FilterPanel, FilterState } from '@/components/catalog/FilterPanel'
 import Link from 'next/link'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
-interface PageProps {
-    searchParams: Promise<{ categoria?: string }>
-}
+function CatalogContent() {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const [mounted, setMounted] = useState(false)
+    
+    const [filters, setFilters] = useState<FilterState>({
+        minPrice: 0,
+        maxPrice: 50000,
+        categories: [],
+        inStock: false,
+        sortBy: 'nombre',
+    })
 
-export default async function CatalogPage({ searchParams }: PageProps) {
-    const params = await searchParams
-    const categoriaId = params.categoria || 'todos'
+    const [categorias, setCategorias] = useState<any[]>([])
+    const [productos, setProductos] = useState<any[]>([])
+    const [loading, setLoading] = useState(true)
 
-    const [categorias, productos] = await Promise.all([
-        getCategorias(),
-        getProductos(categoriaId)
-    ])
+    const categoriaId = searchParams.get('categoria') || 'todos'
+    const searchQuery = searchParams.get('q') || ''
+
+    useEffect(() => {
+        setMounted(true)
+        loadProducts()
+    }, [categoriaId, searchQuery, filters])
+
+    const loadProducts = async () => {
+        setLoading(true)
+        try {
+            const [cats, prods] = await Promise.all([
+                getCategorias(),
+                getProductos(categoriaId, searchQuery || undefined, filters)
+            ])
+            setCategorias(cats)
+            setProductos(prods)
+        } catch (error) {
+            console.error('Error cargando productos:', error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleFilterChange = (newFilters: FilterState) => {
+        setFilters(newFilters)
+    }
+
+    if (!mounted) return null
 
     return (
         <div className="min-h-screen bg-background-light">
@@ -54,49 +95,86 @@ export default async function CatalogPage({ searchParams }: PageProps) {
                         <p className="text-text-secondary text-lg">Los mejores productos seleccionados para ti.</p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <button className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm font-bold text-text-main">
-                            <span className="material-symbols-outlined text-[20px]">tune</span>
-                            Filtrar
-                        </button>
-                        <button className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm font-bold text-text-main">
-                            <span className="material-symbols-outlined text-[20px]">sort</span>
-                            Ordenar
-                        </button>
+                        <SearchBar placeholder="Buscar productos..." />
+                        <FilterPanel onFilterChange={handleFilterChange} initialFilters={filters} />
                     </div>
                 </div>
 
-                {/* Product Grid */}
-                {productos.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
-                        {productos.map((prod) => (
-                            <ProductCard
-                                key={prod.id}
-                                id={prod.id}
-                                nombre={prod.nombre}
-                                descripcion={prod.descripcion || ''}
-                                precio={Number(prod.precio)}
-                                imagen_url={prod.imagen_url}
-                                esNuevo={false}
-                            />
-                        ))}
+                {/* Loading State */}
+                {loading ? (
+                    <div className="flex justify-center py-20">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center justify-center py-20 text-center">
-                        <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">inventory_2</span>
-                        <h3 className="text-xl font-bold text-text-main">No hay productos en esta categoría</h3>
-                        <p className="text-text-secondary">Prueba seleccionando otra categoría o vuelve más tarde.</p>
-                    </div>
-                )}
+                    <>
+                        {/* Product Grid */}
+                        {productos.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+                                {productos.map((prod) => (
+                                    <ProductCard
+                                        key={prod.id}
+                                        id={prod.id}
+                                        nombre={prod.nombre}
+                                        descripcion={prod.descripcion}
+                                        precio={prod.precio}
+                                        imagen_url={prod.imagen_url}
+                                        categoria_id={prod.categoria_id}
+                                        esNuevo={prod.esNuevo}
+                                        descuento={prod.descuento}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center py-20 text-center">
+                                <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">inventory_2</span>
+                                <h3 className="text-xl font-bold text-text-main">No hay productos encontrados</h3>
+                                <p className="text-text-secondary">Intenta con otros filtros o vuelve más tarde.</p>
+                                {(searchQuery || filters.categories.length > 0 || filters.minPrice > 0 || filters.maxPrice < 50000 || filters.inStock) && (
+                                    <button
+                                        onClick={() => {
+                                            router.push('/catalogo')
+                                            setFilters({
+                                                minPrice: 0,
+                                                maxPrice: 50000,
+                                                categories: [],
+                                                inStock: false,
+                                                sortBy: 'nombre',
+                                            })
+                                        }}
+                                        className="mt-4 px-6 py-2 bg-primary text-white rounded-lg font-bold hover:bg-red-700 transition-colors"
+                                    >
+                                        Limpiar Filtros
+                                    </button>
+                                )}
+                            </div>
+                        )}
 
-                {/* Meta Text */}
-                <div className="mt-20 flex justify-center pb-32">
-                    <p className="text-text-secondary text-base font-medium">
-                        Mostrando {productos.length} productos exclusivos
-                    </p>
-                </div>
+                        {/* Meta Text */}
+                        <div className="mt-20 flex justify-center pb-32">
+                            <p className="text-text-secondary text-base font-medium">
+                                Mostrando {productos.length} productos exclusivos
+                            </p>
+                        </div>
+                    </>
+                )}
             </main>
 
             <CartFAB />
         </div>
+    )
+}
+
+export default function CatalogPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-background-light">
+                <Navbar />
+                <div className="flex justify-center py-20">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                </div>
+            </div>
+        }>
+            <CatalogContent />
+        </Suspense>
     )
 }

@@ -37,6 +37,7 @@ export const mockProductos = [
         categoria_id: '1',
         activo: true,
         stock: 50,
+        stock_minimo: 10,
     },
     {
         id: '2',
@@ -47,6 +48,7 @@ export const mockProductos = [
         categoria_id: '1',
         activo: true,
         stock: 80,
+        stock_minimo: 15,
     },
     {
         id: '3',
@@ -58,6 +60,7 @@ export const mockProductos = [
         categoria_id: '1',
         activo: true,
         stock: 60,
+        stock_minimo: 20,
         descuento: '-17%',
     },
     {
@@ -69,6 +72,7 @@ export const mockProductos = [
         categoria_id: '2',
         activo: true,
         stock: 100,
+        stock_minimo: 25,
     },
     {
         id: '5',
@@ -79,6 +83,7 @@ export const mockProductos = [
         categoria_id: '3',
         activo: true,
         stock: 30,
+        stock_minimo: 5,
     },
     {
         id: '6',
@@ -89,6 +94,7 @@ export const mockProductos = [
         categoria_id: '4',
         activo: true,
         stock: 90,
+        stock_minimo: 20,
     },
     {
         id: '7',
@@ -99,6 +105,7 @@ export const mockProductos = [
         categoria_id: '5',
         activo: true,
         stock: 40,
+        stock_minimo: 10,
     },
     {
         id: '8',
@@ -109,6 +116,7 @@ export const mockProductos = [
         categoria_id: '1',
         activo: true,
         stock: 70,
+        stock_minimo: 15,
     },
     {
         id: '9',
@@ -119,6 +127,7 @@ export const mockProductos = [
         categoria_id: '1',
         activo: true,
         stock: 85,
+        stock_minimo: 20,
     },
     {
         id: '10',
@@ -129,6 +138,7 @@ export const mockProductos = [
         categoria_id: '6',
         activo: true,
         stock: 55,
+        stock_minimo: 10,
     },
 ]
 

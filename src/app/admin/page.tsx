@@ -1,4 +1,6 @@
 import { getDashboardStats } from '@/actions/admin'
+import { AdminNotifications } from '@/components/admin/AdminNotifications'
+import { StockAlerts } from '@/components/admin/StockAlerts'
 
 export default async function AdminDashboard() {
     const stats = await getDashboardStats()
@@ -12,6 +14,12 @@ export default async function AdminDashboard() {
 
     return (
         <div className="space-y-10">
+            {/* Notificaciones en tiempo real */}
+            <AdminNotifications />
+
+            {/* Alertas de stock bajo */}
+            <StockAlerts />
+
             {/* Welcome Section */}
             <div className="flex flex-col gap-2">
                 <h1 className="text-3xl font-black text-text-main tracking-tight">Bienvenido, Admin</h1>

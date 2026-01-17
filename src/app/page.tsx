@@ -94,12 +94,19 @@ export default function LoginPage() {
                     </form>
 
                     {/* Info */}
-                    <div className="bg-blue-50/20 border border-blue-200 rounded-xl p-4">
+                    <div className="bg-blue-50/20 border border-blue-200 rounded-xl p-4 space-y-4">
                         <div className="flex items-start gap-3">
                             <span className="material-symbols-outlined text-blue-600 text-xl">info</span>
                             <div className="text-sm text-blue-800">
                                 <p className="font-bold mb-1">Para acceder como administrador:</p>
                                 <p className="font-mono">3814011673</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <span className="material-symbols-outlined text-green-600 text-xl">person</span>
+                            <div className="text-sm text-green-800">
+                                <p className="font-bold mb-1">Para acceder como cliente demo:</p>
+                                <p className="font-mono">3863502004</p>
                             </div>
                         </div>
                     </div>

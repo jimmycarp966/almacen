@@ -2,9 +2,18 @@
 
 import { useSessionStore } from '@/store/sessionStore'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export function Navbar() {
     const user = useSessionStore((state) => state.user)
+    const [showUserMenu, setShowUserMenu] = useState(false)
+    const clearSession = useSessionStore((state) => state.clearSession)
+
+    const handleLogout = () => {
+        clearSession()
+        setShowUserMenu(false)
+        window.location.href = '/'
+    }
 
     return (
         <nav className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
@@ -23,6 +32,8 @@ export function Navbar() {
                         <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/">Inicio</Link>
                         {user && <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/historial">Mis Pedidos</Link>}
                         <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/categorias">Categorías</Link>
+                        {user && <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/favoritos">Favoritos</Link>}
+                        {user && <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/listas">Listas</Link>}
                     </div>
 
                     {/* Utilities */}
@@ -30,13 +41,33 @@ export function Navbar() {
                         <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors text-text-main">
                             <span className="material-symbols-outlined">search</span>
                         </button>
-                        <Link
-                            href={user ? "/perfil" : "/login"}
-                            className="p-2.5 rounded-full hover:bg-gray-100 transition-colors text-text-main flex items-center gap-2"
-                        >
-                            <span className="material-symbols-outlined">person</span>
-                            {user && <span className="hidden sm:inline text-sm font-bold">{user.nombre.split(' ')[0]}</span>}
-                        </Link>
+                        <div className="relative">
+                            <button
+                                onClick={() => user && setShowUserMenu(!showUserMenu)}
+                                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors text-text-main flex items-center gap-2"
+                            >
+                                <span className="material-symbols-outlined">person</span>
+                                {user && <span className="hidden sm:inline text-sm font-bold">{user.nombre.split(' ')[0]}</span>}
+                            </button>
+                            {showUserMenu && user && (
+                                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-soft border border-gray-100 overflow-hidden z-50">
+                                    <div className="px-4 py-3 border-b border-gray-100">
+                                        <p className="text-xs font-bold text-text-secondary uppercase tracking-wider">
+                                            {user.rol === 'admin' ? 'Administrador' : 'Cliente'}
+                                        </p>
+                                        <p className="text-sm text-text-main font-medium">{user.nombre}</p>
+                                        <p className="text-xs text-text-secondary">{user.telefono}</p>
+                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left px-4 py-3 flex items-center gap-3 text-text-main hover:bg-red-50 hover:text-red-700 transition-colors"
+                                    >
+                                        <span className="material-symbols-outlined">logout</span>
+                                        <span className="text-sm font-bold">Cerrar Sesión</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

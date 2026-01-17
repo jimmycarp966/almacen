@@ -2,6 +2,8 @@
 
 import { useCartStore } from '@/store/cartStore'
 import { useState } from 'react'
+import { OptimizedImage } from './OptimizedImage'
+import { FavoriteButton } from './FavoriteButton'
 
 interface ProductCardProps {
     id: string
@@ -9,11 +11,12 @@ interface ProductCardProps {
     descripcion: string
     precio: number
     imagen_url: string | null
+    categoria_id: string
     esNuevo?: boolean
     descuento?: number
 }
 
-export function ProductCard({ id, nombre, descripcion, precio, imagen_url, esNuevo, descuento }: ProductCardProps) {
+export function ProductCard({ id, nombre, descripcion, precio, imagen_url, categoria_id, esNuevo, descuento }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem)
     const [isAdding, setIsAdding] = useState(false)
 
@@ -27,10 +30,23 @@ export function ProductCard({ id, nombre, descripcion, precio, imagen_url, esNue
     return (
         <div className="group cursor-pointer product-card">
             <div className="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
-                <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-                    style={{ backgroundImage: `url('${imagen_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}')` }}
-                ></div>
+                <OptimizedImage
+                    src={imagen_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}
+                    alt={nombre}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+
+                {/* Favorite Button */}
+                <FavoriteButton
+                    productId={id}
+                    nombre={nombre}
+                    descripcion={descripcion}
+                    precio={precio}
+                    imagen_url={imagen_url}
+                    categoria_id={categoria_id}
+                />
 
                 {/* Add Button */}
                 <button
