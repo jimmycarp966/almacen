@@ -5,7 +5,7 @@ Proveer un sistema de supermercado online premium con 100% de fidelidad a los di
 
 ## 🏗 Stack Tecnológico
 - **Frontend:** Next.js 15 (App Router), React 19, Tailwind CSS.
-- **Backend:** Supabase (Auth, DB, Storage) + Mock Data (Desarrollo).
+- **Backend:** Supabase (Auth, DB, Storage) + Mock Data (Fallback).
 - **Estado:** Zustand.
 - **Validación:** Zod.
 - **Testing:** Playwright (E2E).
@@ -32,21 +32,11 @@ Proveer un sistema de supermercado online premium con 100% de fidelidad a los di
 - **Estética:** Uso de bordes troquelados para recibos, micro-animaciones y paleta de colores corporativa.
 - **Modo:** Exclusivamente modo claro (sin dark mode).
 
-## 🛒 Datos Mock (Supermercado Argentino)
-### Categorías (6)
-- Alimentos, Lácteos, Carnes, Bebidas, Panadería, Limpieza
-
-### Productos (10 productos)
-- Arroz Gallo Oro 1kg - $1.500
-- Fideos Matarazzo 500g - $1.200
-- Yerba Mate Playadito 500g - $3.500 (con descuento)
-- Leche La Serenísima 1L - $1.000
-- Carne Vacuna 1kg - $12.000
-- Coca-Cola 2.25L - $2.000
-- Pan Casero 1kg - $1.500
-- Aceite Natura 1L - $2.500
-- Azúcar Ledesma 1kg - $1.800
-- Detergente Magistral 1L - $2.200
+## 🛒 Catálogo de Productos
+- **Datos:** Conexión a Supabase con fallback automático a datos mock.
+- **Imágenes:** Soporte para imágenes de Supabase Storage + fallback a Unsplash.
+- **Categorías:** 6 categorías (Alimentos, Lácteos, Carnes, Bebidas, Panadería, Limpieza).
+- **Visualización:** CSS backgroundImage para mejor compatibilidad.
 
 ## 🧪 Usuarios de Prueba
 - **Admin:** Teléfono `3814011673` → Redirige a `/admin`
@@ -62,12 +52,22 @@ Proveer un sistema de supermercado online premium con 100% de fidelidad a los di
 - ✅ Dashboard admin con pedidos recientes, productos más vendidos y gráfico de ventas
 - ✅ Recibo digital con diseño premium
 - ✅ Sistema de autenticación por teléfono
-- ✅ Mock data de supermercado argentino
+- ✅ Logout funcional en admin y cliente
+- ✅ Imágenes con fallback automático
 
 ## 🚀 Estado Actual
 - **Compilación:** Exitosa sin errores
+- **Build:** Next.js 15.1.4 - 36 páginas estáticas
 - **Tests E2E:** Plan completado y ejecutado con Playwright
 - **Deploy:** Repositorio en GitHub (https://github.com/jimmycarp966/almacen.git)
-- **Datos:** Mock data actualizado para supermercado argentino
+- **Datos:** Supabase con fallback a mock data argentino
 - **UI:** Modo claro exclusivo, sin dark mode
+- **Estado:** En producción
+
+## 🔧 Cambios Recientes (Ene 2026)
+- Corregido botón de logout en panel admin
+- Corregido botón de logout en navbar cliente
+- Catálogo conectado a Supabase con fallback a mock
+- Imágenes usando CSS backgroundImage para mejor compatibilidad
+- Configuración de dominios permitidos en Next.js para Supabase
 
