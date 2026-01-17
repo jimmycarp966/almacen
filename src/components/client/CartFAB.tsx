@@ -4,7 +4,11 @@ import { useCartStore } from '@/store/cartStore'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-export function CartFAB() {
+interface CartFABProps {
+    className?: string
+}
+
+export function CartFAB({ className = '' }: CartFABProps) {
     const { items, getTotal } = useCartStore()
     const [mounted, setMounted] = useState(false)
 
@@ -18,7 +22,7 @@ export function CartFAB() {
     const totalItems = items.reduce((acc, item) => acc + item.cantidad, 0)
 
     return (
-        <div className="fixed bottom-10 right-10 z-50 group">
+        <div className={`fixed bottom-10 right-10 z-50 group ${className}`}>
             <Link href="/carrito" className="relative w-[72px] h-[72px] bg-primary text-white rounded-full shadow-[0_8px_30px_rgb(230,0,0,0.3)] flex items-center justify-center hover:scale-110 hover:shadow-[0_8px_35px_rgb(230,0,0,0.4)] transition-all duration-300 cursor-pointer outline-none ring-0">
                 <span className="material-symbols-outlined text-[32px]">shopping_cart</span>
                 <span className="absolute top-0 right-0 -mt-1 -mr-1 h-7 w-7 bg-white text-primary text-sm font-extrabold flex items-center justify-center rounded-full border-2 border-primary shadow-sm">

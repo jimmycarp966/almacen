@@ -31,7 +31,7 @@ export function Navbar() {
                     <div className="hidden md:flex items-center space-x-10">
                         <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/">Inicio</Link>
                         {user && <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/historial">Mis Pedidos</Link>}
-                        <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/categorias">Categorías</Link>
+                        <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/catalogo">Catálogo</Link>
                         {user && <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/favoritos">Favoritos</Link>}
                         {user && <Link className="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="/listas">Listas</Link>}
                     </div>

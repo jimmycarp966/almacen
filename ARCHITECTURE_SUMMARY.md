@@ -54,11 +54,12 @@ Proveer un sistema de supermercado online premium con 100% de fidelidad a los di
 
 ## 📊 Módulos Implementados
 - ✅ Catálogo de productos con filtros por categoría
-- ✅ Carrito de compras con cálculo de totales
+- ✅ Carrito lateral siempre visible (desktop) + FAB (móvil)
 - ✅ Checkout con dirección de entrega y método de pago
 - ✅ Seguimiento de pedidos con timeline
 - ✅ Historial de pedidos del cliente
-- ✅ Panel admin completo (Dashboard, Pedidos, Productos, Caja, Reportes, Configuración)
+- ✅ Panel admin completo (Dashboard con datos mock, Pedidos, Productos, Caja, Reportes, Configuración)
+- ✅ Dashboard admin con pedidos recientes, productos más vendidos y gráfico de ventas
 - ✅ Recibo digital con diseño premium
 - ✅ Sistema de autenticación por teléfono
 - ✅ Mock data de supermercado argentino
