@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import { NotificationSetup } from "@/components/layout/NotificationSetup";
-import { Footer } from "@/components/layout/Footer";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -31,11 +30,10 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body
-        className={`${manrope.variable} font-sans antialiased bg-background-light text-text-main flex flex-col min-h-screen`}
+        className={`${manrope.variable} font-sans antialiased bg-background-light text-text-main`}
       >
         <NotificationSetup />
         {children}
-        <Footer />
       </body>
     </html>
   );
