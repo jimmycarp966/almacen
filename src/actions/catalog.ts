@@ -1,11 +1,24 @@
 'use server'
 
+import { supabase } from '@/lib/supabase'
 import { mockCategorias, mockProductos } from '@/lib/mockData'
 import { revalidatePath } from 'next/cache'
 
 export async function getCategorias() {
-    // Usar datos mock en lugar de Supabase
-    return mockCategorias
+    try {
+        const { data, error } = await supabase
+            .from('categorias')
+            .select('*')
+            .eq('activo', true)
+            .order('nombre')
+
+        if (error || !data || data.length === 0) {
+            return mockCategorias
+        }
+        return data
+    } catch {
+        return mockCategorias
+    }
 }
 
 export async function getProductos(categoriaId?: string, searchQuery?: string, filters?: {
@@ -14,54 +27,63 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
     inStock?: boolean
     sortBy?: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
 }) {
-    let productos = mockProductos
+    try {
+        let query = supabase
+            .from('productos')
+            .select('*')
+            .eq('activo', true)
 
-    // Filtrar por categoría
-    if (categoriaId && categoriaId !== 'todos') {
-        productos = productos.filter(p => p.categoria_id === categoriaId)
-    }
+        // Filtrar por categoría
+        if (categoriaId && categoriaId !== 'todos') {
+            query = query.eq('categoria_id', categoriaId)
+        }
 
-    // Filtrar por búsqueda
-    if (searchQuery && searchQuery.trim()) {
-        const query = searchQuery.toLowerCase().trim()
-        productos = productos.filter(p => 
-            p.nombre.toLowerCase().includes(query) ||
-            p.descripcion?.toLowerCase().includes(query)
-        )
-    }
+        // Filtrar por búsqueda
+        if (searchQuery && searchQuery.trim()) {
+            const queryLower = searchQuery.toLowerCase().trim()
+            query = query.or(`nombre.ilike.%${queryLower}%,descripcion.ilike.%${queryLower}%`)
+        }
 
-    // Filtrar por precio
-    if (filters?.minPrice !== undefined && filters.minPrice !== null) {
-        productos = productos.filter(p => Number(p.precio) >= filters.minPrice!)
-    }
-    if (filters?.maxPrice !== undefined && filters.maxPrice !== null) {
-        productos = productos.filter(p => Number(p.precio) <= filters.maxPrice!)
-    }
+        // Filtrar por precio
+        if (filters?.minPrice !== undefined && filters.minPrice !== null) {
+            query = query.gte('precio', filters.minPrice)
+        }
+        if (filters?.maxPrice !== undefined && filters.maxPrice !== null) {
+            query = query.lte('precio', filters.maxPrice)
+        }
 
-    // Filtrar por disponibilidad
-    if (filters?.inStock) {
-        productos = productos.filter(p => p.stock > 0)
-    }
+        // Filtrar por disponibilidad
+        if (filters?.inStock) {
+            query = query.gt('stock', 0)
+        }
 
-    // Ordenar productos
-    if (filters?.sortBy) {
-        productos = [...productos].sort((a, b) => {
-            switch (filters.sortBy) {
-                case 'nombre':
-                    return a.nombre.localeCompare(b.nombre)
-                case 'precio_asc':
-                    return Number(a.precio) - Number(b.precio)
-                case 'precio_desc':
-                    return Number(b.precio) - Number(a.precio)
-                case 'popularidad':
-                    return (b.stock || 0) - (a.stock || 0)
-                default:
-                    return 0
-            }
-        })
-    }
+        // Ordenar productos
+        switch (filters?.sortBy) {
+            case 'nombre':
+                query = query.order('nombre', { ascending: true })
+                break
+            case 'precio_asc':
+                query = query.order('precio', { ascending: true })
+                break
+            case 'precio_desc':
+                query = query.order('precio', { ascending: false })
+                break
+            case 'popularidad':
+                query = query.order('stock', { ascending: false })
+                break
+            default:
+                query = query.order('nombre', { ascending: true })
+        }
 
-    return productos
+        const { data, error } = await query
+
+        if (error || !data || data.length === 0) {
+            return mockProductos
+        }
+        return data
+    } catch {
+        return mockProductos
+    }
 }
 
 /**

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useSessionStore } from '@/store/sessionStore'
 import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -18,11 +18,18 @@ const MENU_ITEMS = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
     const user = useSessionStore((state) => state.user)
+    const clearSession = useSessionStore((state) => state.clearSession)
     const [mounted, setMounted] = useState(false)
+    const router = useRouter()
 
     useEffect(() => {
         setMounted(true)
     }, [])
+
+    const handleLogout = () => {
+        clearSession()
+        router.push('/')
+    }
 
     if (!mounted) return null
 
@@ -74,7 +81,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <p className="text-sm font-bold text-text-main truncate">{user.nombre}</p>
                             <p className="text-xs text-text-secondary truncate capitalize">{user.rol}</p>
                         </div>
-                        <button className="text-gray-400 hover:text-primary transition-colors">
+                        <button onClick={handleLogout} className="text-gray-400 hover:text-primary transition-colors">
                             <span className="material-symbols-outlined text-lg">logout</span>
                         </button>
                     </div>

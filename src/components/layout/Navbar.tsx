@@ -2,17 +2,19 @@
 
 import { useSessionStore } from '@/store/sessionStore'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export function Navbar() {
     const user = useSessionStore((state) => state.user)
     const [showUserMenu, setShowUserMenu] = useState(false)
     const clearSession = useSessionStore((state) => state.clearSession)
+    const router = useRouter()
 
     const handleLogout = () => {
         clearSession()
         setShowUserMenu(false)
-        window.location.href = '/'
+        router.push('/')
     }
 
     return (
