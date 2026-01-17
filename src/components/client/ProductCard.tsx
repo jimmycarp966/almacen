@@ -34,15 +34,10 @@ export function ProductCard({ id, nombre, descripcion, precio, imagen_url, categ
 
     return (
         <div className="group cursor-pointer product-card">
-            <div className="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
-                <OptimizedImage
-                    src={displayImage}
-                    alt={nombre}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-
+            <div 
+                className="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
+                style={{ backgroundImage: `url('${displayImage}')` }}
+            >
                 {/* Favorite Button */}
                 <FavoriteButton
                     productId={id}
