@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useSessionStore } from '@/store/sessionStore'
 import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Footer } from '@/components/layout/Footer'
 
 const MENU_ITEMS = [
     { label: 'Dashboard', icon: 'dashboard', href: '/admin' },
@@ -108,6 +109,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     {children}
                 </div>
             </main>
+            <Footer />
         </div>
     )
 }
