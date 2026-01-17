@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Historial de Pedidos - Catálogo</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e60000",
+                        "background-light": "#ffffff",
+                        "background-dark": "#1c1e22",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for cleaner look if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#181010] min-h-screen flex flex-col overflow-x-hidden antialiased selection:bg-primary/20 selection:text-primary">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-[#f5f0f0]">
+<div class="px-4 lg:px-40 flex justify-center w-full">
+<div class="flex max-w-[1200px] flex-1 flex-col">
+<div class="flex h-16 items-center justify-between gap-8">
+<!-- Logo Section -->
+<div class="flex items-center gap-4">
+<div class="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">storefront</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-[#181010]">CatálogoPlus</h2>
+</div>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-500 hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-sm font-medium text-gray-500 hover:text-primary transition-colors" href="#">Catálogo</a>
+<a class="text-sm font-bold text-primary" href="#">Mi Cuenta</a>
+</nav>
+<!-- Actions -->
+<div class="flex flex-1 justify-end gap-6 items-center">
+<!-- Search Bar -->
+<div class="hidden lg:flex w-full max-w-xs items-center rounded-full bg-[#f5f0f0] px-4 py-2 transition-all focus-within:ring-2 focus-within:ring-primary/20">
+<span class="material-symbols-outlined text-gray-400">search</span>
+<input class="w-full bg-transparent px-2 text-sm text-[#181010] placeholder-gray-400 focus:outline-none" placeholder="Buscar productos..."/>
+</div>
+<!-- Icons -->
+<div class="flex items-center gap-3">
+<button class="flex size-10 items-center justify-center rounded-full bg-white hover:bg-[#f5f0f0] text-[#181010] transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary ring-2 ring-white"></span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-full bg-white hover:bg-[#f5f0f0] text-[#181010] transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-full bg-[#f5f0f0] text-primary font-bold">
+                                JD
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center py-8 px-4 lg:px-40">
+<div class="w-full max-w-[960px] flex flex-col gap-8">
+<!-- Page Heading -->
+<div class="flex flex-col gap-6">
+<!-- Breadcrumb / Back Link -->
+<div>
+<a class="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+                        Volver al Catálogo
+                    </a>
+</div>
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<h1 class="text-4xl font-black tracking-tight text-[#181010] mb-2">Historial de Pedidos</h1>
+<p class="text-gray-500">Consulta el estado y detalle de tus compras recientes.</p>
+</div>
+<!-- Primary Action (Optional, usually for support or new order) -->
+<!-- <button class="hidden sm:flex h-10 items-center gap-2 rounded-lg bg-[#f5f0f0] px-4 text-sm font-bold text-[#181010] hover:bg-gray-200 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">help</span>
+                        Ayuda
+                    </button> -->
+</div>
+</div>
+<!-- Filters / Chips -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-gray-100 pb-4">
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full bg-black text-white text-sm font-bold shadow-md transition-transform hover:scale-105">
+                        Todos
+                    </button>
+<button class="px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                        En camino
+                    </button>
+<button class="px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                        Entregados
+                    </button>
+<button class="px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                        Cancelados
+                    </button>
+</div>
+<!-- Time Filter Dropdown Mock -->
+<div class="relative flex items-center">
+<button class="flex items-center gap-2 text-sm font-bold text-[#181010] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                        Últimos 30 días
+                        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Orders List (Card Layout) -->
+<div class="flex flex-col gap-5">
+<!-- Order Card 1: Delivered -->
+<div class="group relative flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:border-gray-200">
+<!-- Header Row -->
+<div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-50 pb-4">
+<div class="flex items-center gap-3">
+<div class="flex size-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">package_2</span>
+</div>
+<div>
+<p class="text-sm font-bold text-[#181010]">Pedido #ORD-7829-X</p>
+<p class="text-xs text-gray-400">Enviado a Oficina Central</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+<span class="material-symbols-outlined text-[18px]">event</span>
+                            12 Oct, 2023
+                        </div>
+</div>
+<!-- Content Row -->
+<div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Pagado</span>
+<span class="text-2xl font-extrabold text-[#181010]">$1,250.00 MXN</span>
+<span class="text-sm text-gray-500">3 artículos • Visa **** 4242</span>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<!-- Status Badge: Entregado (Green) -->
+<div class="flex items-center gap-1.5 rounded-full bg-[#3D8249]/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#3D8249]">
+<span class="material-symbols-outlined text-[16px] filled">check_circle</span>
+                                Entregado
+                            </div>
+<!-- Action Button -->
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-red-200 transition-all hover:bg-red-700 hover:shadow-lg active:scale-95">
+                                Ver Detalle
+                            </button>
+</div>
+</div>
+</div>
+<!-- Order Card 2: In Transit -->
+<div class="group relative flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:border-gray-200">
+<div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-50 pb-4">
+<div class="flex items-center gap-3">
+<div class="flex size-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div>
+<p class="text-sm font-bold text-[#181010]">Pedido #ORD-7901-Y</p>
+<p class="text-xs text-gray-400">Enviado a Casa</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+<span class="material-symbols-outlined text-[18px]">event</span>
+                            02 Nov, 2023
+                        </div>
+</div>
+<div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Pagado</span>
+<span class="text-2xl font-extrabold text-[#181010]">$450.00 MXN</span>
+<span class="text-sm text-gray-500">1 artículo • PayPal</span>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<!-- Status Badge: En Camino (Blue/Neutral) -->
+<div class="flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-blue-700">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                En Camino
+                            </div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-red-200 transition-all hover:bg-red-700 hover:shadow-lg active:scale-95">
+                                Ver Detalle
+                            </button>
+</div>
+</div>
+</div>
+<!-- Order Card 3: Cancelled -->
+<div class="group relative flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:border-gray-200 opacity-80 hover:opacity-100">
+<div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-50 pb-4">
+<div class="flex items-center gap-3">
+<div class="flex size-10 items-center justify-center rounded-full bg-red-50 text-red-300">
+<span class="material-symbols-outlined">block</span>
+</div>
+<div>
+<p class="text-sm font-bold text-[#181010]">Pedido #ORD-7650-Z</p>
+<p class="text-xs text-gray-400">Cancelado por usuario</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+<span class="material-symbols-outlined text-[18px]">event</span>
+                            15 Jul, 2023
+                        </div>
+</div>
+<div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Reembolsado</span>
+<span class="text-2xl font-extrabold text-gray-400 line-through decoration-red-400 decoration-2">$890.00 MXN</span>
+<span class="text-sm text-gray-400">2 artículos</span>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<!-- Status Badge: Cancelado (Red) -->
+<div class="flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-primary">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+                                Cancelado
+                            </div>
+<!-- Action Button (Ghost for cancelled) -->
+<button class="flex items-center justify-center gap-2 rounded-lg bg-[#f5f0f0] px-6 py-2.5 text-sm font-bold text-[#181010] transition-all hover:bg-gray-200 active:scale-95">
+                                Ver Detalle
+                            </button>
+</div>
+</div>
+</div>
+<!-- Order Card 4: Delivered -->
+<div class="group relative flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:border-gray-200">
+<div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-50 pb-4">
+<div class="flex items-center gap-3">
+<div class="flex size-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">package_2</span>
+</div>
+<div>
+<p class="text-sm font-bold text-[#181010]">Pedido #ORD-7649-Z</p>
+<p class="text-xs text-gray-400">Enviado a Oficina Central</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-gray-500">
+<span class="material-symbols-outlined text-[18px]">event</span>
+                            10 Jul, 2023
+                        </div>
+</div>
+<div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-bold uppercase tracking-wider text-gray-400">Total Pagado</span>
+<span class="text-2xl font-extrabold text-[#181010]">$120.00 MXN</span>
+<span class="text-sm text-gray-500">1 artículo • Visa **** 4242</span>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<!-- Status Badge: Entregado (Green) -->
+<div class="flex items-center gap-1.5 rounded-full bg-[#3D8249]/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-[#3D8249]">
+<span class="material-symbols-outlined text-[16px] filled">check_circle</span>
+                                Entregado
+                            </div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-red-200 transition-all hover:bg-red-700 hover:shadow-lg active:scale-95">
+                                Ver Detalle
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-center pt-8 pb-12">
+<div class="flex items-center gap-1">
+<a class="flex size-10 items-center justify-center rounded-full text-[#181010] hover:bg-[#f5f0f0] transition-colors disabled:opacity-50" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</a>
+<a class="flex size-10 items-center justify-center rounded-full bg-black text-sm font-bold text-white shadow-lg" href="#">1</a>
+<a class="flex size-10 items-center justify-center rounded-full text-sm font-medium text-[#181010] hover:bg-[#f5f0f0] transition-colors" href="#">2</a>
+<a class="flex size-10 items-center justify-center rounded-full text-sm font-medium text-[#181010] hover:bg-[#f5f0f0] transition-colors" href="#">3</a>
+<span class="flex size-10 items-center justify-center text-gray-400">...</span>
+<a class="flex size-10 items-center justify-center rounded-full text-sm font-medium text-[#181010] hover:bg-[#f5f0f0] transition-colors" href="#">12</a>
+<a class="flex size-10 items-center justify-center rounded-full text-[#181010] hover:bg-[#f5f0f0] transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Simple -->
+<footer class="border-t border-[#f5f0f0] bg-white py-8">
+<div class="px-4 lg:px-40 flex justify-center">
+<div class="flex w-full max-w-[960px] flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+<p>© 2024 CatálogoPlus. Todos los derechos reservados.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="hover:text-primary transition-colors" href="#">Términos</a>
+<a class="hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

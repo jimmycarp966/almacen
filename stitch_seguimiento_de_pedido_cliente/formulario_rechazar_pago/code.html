@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rechazar Pago Modal</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c33737",
+                        "primary-dark": "#a12b2b",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#21242c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2b2f38",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'glow': '0 0 15px rgba(195, 55, 55, 0.15)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #e5e7eb; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db; 
+        }
+        .dark textarea::-webkit-scrollbar-thumb {
+            background: #4b5563; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased overflow-hidden h-screen w-full flex text-slate-800 dark:text-slate-100">
+<!-- Background Simulation (App Context) -->
+<!-- This section simulates the app behind the modal to give context -->
+<div aria-hidden="true" class="flex-1 flex flex-col h-full opacity-30 pointer-events-none select-none blur-[2px] transition-all duration-500">
+<!-- Mock Header -->
+<header class="h-16 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark flex items-center px-8 justify-between">
+<div class="font-bold text-xl tracking-tight">Catalogo<span class="text-primary">Admin</span></div>
+<div class="flex gap-4 items-center">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600"></div>
+</div>
+</header>
+<!-- Mock Content -->
+<div class="flex-1 p-8 grid grid-cols-12 gap-6 overflow-hidden">
+<div class="col-span-3 bg-white dark:bg-surface-dark rounded-xl h-full border border-gray-200 dark:border-gray-700"></div>
+<div class="col-span-9 flex flex-col gap-6">
+<div class="h-32 bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 w-full"></div>
+<div class="flex-1 bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 w-full p-6">
+<!-- Mock Table Rows -->
+<div class="space-y-4">
+<div class="h-12 w-full bg-gray-100 dark:bg-gray-700/50 rounded-lg"></div>
+<div class="h-12 w-full bg-gray-100 dark:bg-gray-700/50 rounded-lg"></div>
+<div class="h-12 w-full bg-gray-100 dark:bg-gray-700/50 rounded-lg"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"></div>
+<!-- Modal Card -->
+<div class="relative w-full max-w-[560px] transform overflow-hidden rounded-2xl bg-white dark:bg-surface-dark shadow-2xl transition-all border-t-8 border-primary dark:border-primary flex flex-col">
+<!-- Close Button (Top Right) -->
+<button class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary/20">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<!-- Modal Content Wrapper -->
+<div class="px-8 pt-10 pb-8 flex flex-col gap-6">
+<!-- Header Section -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/20 text-primary">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Rechazar Pago</h3>
+</div>
+<!-- Context Pill -->
+<div class="flex items-center gap-2 mt-1 ml-1">
+<span class="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-700 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 ring-1 ring-inset ring-slate-500/10">
+                            Pedido #48291
+                        </span>
+<span class="text-xs text-slate-400 dark:text-slate-500">•</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Maria Fernanda Lopez</span>
+</div>
+</div>
+<!-- Body Text -->
+<div class="bg-red-50 dark:bg-red-900/10 border-l-4 border-red-200 dark:border-red-900 p-4 rounded-r-md">
+<p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+                        Por favor, indica el motivo del rechazo. Este mensaje será <span class="font-semibold text-slate-900 dark:text-white">enviado automáticamente</span> al cliente vía email y notificación push.
+                    </p>
+</div>
+<!-- Form Section -->
+<div class="flex flex-col gap-2">
+<label class="flex justify-between items-end" for="reason">
+<span class="text-slate-900 dark:text-white text-sm font-semibold">Motivo del Rechazo</span>
+<span class="text-slate-400 text-xs font-medium">Requerido</span>
+</label>
+<div class="relative group">
+<textarea class="block w-full rounded-xl border-0 py-4 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary dark:bg-background-dark dark:text-white dark:ring-slate-700 dark:focus:ring-primary sm:text-base sm:leading-relaxed resize-none transition-all ease-in-out duration-200" id="reason" name="reason" placeholder="Ej: El comprobante adjunto es ilegible o no corresponde al monto total del pedido. Por favor, sube nuevamente el comprobante correcto..." rows="5"></textarea>
+<!-- Focus decoration -->
+<div class="absolute inset-0 rounded-xl pointer-events-none ring-0 group-focus-within:ring-2 ring-primary/10"></div>
+</div>
+<!-- Helper Suggestions -->
+<div class="flex gap-2 mt-1 flex-wrap">
+<button class="text-xs bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 px-3 py-1.5 rounded-full border border-gray-200 dark:border-slate-700 transition-colors">
+                            Comprobante Ilegible
+                        </button>
+<button class="text-xs bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 px-3 py-1.5 rounded-full border border-gray-200 dark:border-slate-700 transition-colors">
+                            Monto Incorrecto
+                        </button>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-4 pt-6 border-t border-slate-100 dark:border-slate-700/50">
+<button class="group flex items-center justify-center rounded-lg px-6 py-3.5 text-sm font-bold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-200">
+<span class="mr-2 hidden group-hover:inline-block transition-all transform scale-0 group-hover:scale-100 duration-200">
+<span class="material-symbols-outlined text-[18px] align-middle">arrow_back</span>
+</span>
+                        Volver
+                    </button>
+<button class="relative overflow-hidden flex flex-1 sm:flex-none sm:min-w-[240px] items-center justify-center rounded-lg bg-primary px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-red-900/20 hover:bg-primary-dark hover:shadow-red-900/30 active:scale-[0.98] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-surface-dark">
+<span class="material-symbols-outlined text-[20px] mr-2">send</span>
+<span>Confirmar Rechazo y Notificar</span>
+</button>
+</div>
+</div>
+<!-- Bottom decorative line -->
+<div class="h-1 w-full bg-gradient-to-r from-transparent via-red-100 dark:via-red-900/30 to-transparent opacity-50"></div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Inventario Admin</title>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c33737",
+                        "background-light": "#ffffff",
+                        "background-dark": "#181b20",
+                        "surface-light": "#f8f9fa",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#171212] font-display antialiased overflow-x-hidden">
+<div class="min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full bg-white/90 dark:bg-[#181b20]/90 backdrop-blur-md border-b border-[#f4f1f1] dark:border-gray-800">
+<div class="flex items-center justify-between px-6 py-4 max-w-[1440px] mx-auto w-full">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">inventory_2</span>
+</div>
+<h2 class="text-[#171212] dark:text-white text-xl font-bold leading-tight tracking-tight">Gestión de Inventario</h2>
+</div>
+<div class="flex items-center gap-6">
+<!-- Notifications -->
+<button class="relative text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-primary rounded-full border-2 border-white"></span>
+</button>
+<!-- Profile -->
+<div class="flex items-center gap-3 pl-6 border-l border-gray-100">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-[#171212] dark:text-white">Admin Principal</p>
+<p class="text-xs text-gray-500">admin@empresa.com</p>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-gray-100" data-alt="User profile avatar showing a professional person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOSDeTjOgaYe03xlXKs5afCIDmjgy99r912pHIGCzPF5fEVw7vOhVPXbkR6pTuKUKGYt13HQGBeqG9Aqs1TB_W8P53pxOdf66GX299LlAgHs7Vjk_iuYor_OKbegqzsouEL8PeXCw1RnXxVIks8kB7-birEpxrLNeUcHCCHxBF0s4pLzr7RM7oNkZ6SuOCnr4bMrnP9ahXRbO8Tub1F0X-uAFJXLDH64tIFBDRbQiznhQRUspsKhfKITJWWTEo59CSWo6lE_8XO4I");'>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-6 py-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+<div>
+<h1 class="text-3xl font-bold text-[#171212] dark:text-white tracking-tight">Productos</h1>
+<p class="text-gray-500 mt-1">Gestiona tu catálogo, stock y precios desde aquí.</p>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-red-700 text-white font-bold h-12 px-6 rounded-lg transition-colors shadow-lg shadow-red-900/10">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Agregar Nuevo Producto</span>
+</button>
+</div>
+<!-- Toolbar / Filters -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
+<!-- Search -->
+<div class="md:col-span-5 lg:col-span-4 relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="w-full h-12 pl-12 pr-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-gray-400" placeholder="Buscar por nombre, SKU o etiqueta..." type="text"/>
+</div>
+<!-- Category Filter -->
+<div class="md:col-span-3 lg:col-span-3 relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+<span class="material-symbols-outlined">filter_list</span>
+</span>
+<select class="w-full h-12 pl-12 pr-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary appearance-none cursor-pointer text-gray-600 dark:text-gray-300">
+<option value="">Todas las Categorías</option>
+<option value="ropa">Ropa</option>
+<option value="calzado">Calzado</option>
+<option value="electronica">Electrónica</option>
+<option value="accesorios">Accesorios</option>
+</select>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</span>
+</div>
+<!-- Spacer -->
+<div class="hidden md:block md:col-span-1 lg:col-span-2"></div>
+<!-- Export/More Actions -->
+<div class="md:col-span-3 lg:col-span-3 flex justify-end gap-2">
+<button class="h-12 px-4 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium text-sm flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Exportar CSV
+                    </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50/50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700">
+<th class="p-4 pl-6 text-xs font-bold text-gray-500 uppercase tracking-wider w-20">Imagen</th>
+<th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Nombre del Producto</th>
+<th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Categoría</th>
+<th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Stock Actual</th>
+<th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Precio Unitario</th>
+<th class="p-4 pr-6 text-xs font-bold text-gray-500 uppercase tracking-wider text-right w-32">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+<!-- Row 1 -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="p-4 pl-6">
+<div class="size-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-200 dark:border-gray-600">
+<img class="w-full h-full object-cover" data-alt="Black t-shirt folded neatly on a surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMlgh-D4q1p57oM3_D6EQdVElHoJ2eyuFeyIFL8MDfHsZ7DaRkwgqzJgIgig5oPMi2WsmoOmWIYrGIEUKB26WFdWagsKE1OM4ntzBfrSFkjk4Z5l18fy7lgo03IAuAy9oUlbTfXqMng6M87UXlzRg65FcK5OPb2xAXY14mha3mRH904solO2uc0K6WuQfRRgeLSyF2KkgenbfFWHkK5GtnnkAPBYo1oehfFvwD5zdiqMMZ2IYcb8NnVcaVGAD9LFKVnkrkVMJf_lI"/>
+</div>
+</td>
+<td class="p-4">
+<div class="font-bold text-[#171212] dark:text-white">Camiseta Básica Negra</div>
+<div class="text-xs text-gray-400 mt-0.5">SKU: #CM-001-BLK</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                                        Ropa
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2 text-green-700 dark:text-green-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                        120 unidades
+                                    </div>
+</td>
+<td class="p-4 text-right">
+<span class="font-medium text-[#171212] dark:text-white">$25.00</span>
+</td>
+<td class="p-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Eliminar">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Low Stock Warning -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors bg-red-50/30 dark:bg-red-900/10">
+<td class="p-4 pl-6">
+<div class="size-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-200 dark:border-gray-600">
+<img class="w-full h-full object-cover" data-alt="Red athletic sneaker shoe side view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH3TdsLfvq3AvOqpMhZbFGsH8Pj3AkUk8DinQq1U8s1_RNAFy2CbSiW_fwS15pHfugq6bg-TRkrojF7GSlEZYmX3mxeZw6-3OC0gCCMc5S3f8OnPE0kSCTdgB5RPKVeIHhaO_f0UvTsyqlRQnYXPZQse6khVd79S_tkmZylGzab6Tqc7HKd6xlS55vD2f4exRMT1tmCluYnHY1jWHHm1tLX1lXTnc88iDB3Hl22MP-Qf_bZ1B_6U65L_UkLDnCKmKymF02GgFEcUQ"/>
+</div>
+</td>
+<td class="p-4">
+<div class="font-bold text-[#171212] dark:text-white">Zapatillas Deportivas</div>
+<div class="text-xs text-gray-400 mt-0.5">SKU: #SH-230-RED</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                                        Calzado
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2 text-primary font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                                        5 unidades (Bajo)
+                                    </div>
+</td>
+<td class="p-4 text-right">
+<span class="font-medium text-[#171212] dark:text-white">$89.99</span>
+</td>
+<td class="p-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Eliminar">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="p-4 pl-6">
+<div class="size-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-200 dark:border-gray-600">
+<img class="w-full h-full object-cover" data-alt="Folded blue denim jeans texture detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1a7Dp-ygZR9SDlPajFWTElaV36PftC3YXUDUlRMdFDBMSU7bWLF1u7_fjBpzth-RGed1qTxTcjAk3wvSE5y8xfDpA-Pui9nvBoJDUT5N8iKssjosQxdsqx9a6CEhREJhSeDhNr6DDqBMJRBzBs3dWL6dW6dJPhZV4DsxtGPx8JenDZyxqpGfJ7GHwyzysJwycnCi_S9XMxRyb_0-0sKHoU3IeRDxd-WaPqOaUoGKUhn1t6uDNgo--ErQZHFRtxz3UIcUsAkj6ZUg"/>
+</div>
+</td>
+<td class="p-4">
+<div class="font-bold text-[#171212] dark:text-white">Pantalón Jeans Slim</div>
+<div class="text-xs text-gray-400 mt-0.5">SKU: #JN-555-BLU</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                                        Ropa
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-gray-300">circle</span>
+                                        45 unidades
+                                    </div>
+</td>
+<td class="p-4 text-right">
+<span class="font-medium text-[#171212] dark:text-white">$45.50</span>
+</td>
+<td class="p-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Eliminar">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Low Stock Warning -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors bg-red-50/30 dark:bg-red-900/10">
+<td class="p-4 pl-6">
+<div class="size-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-200 dark:border-gray-600">
+<img class="w-full h-full object-cover" data-alt="Wireless over-ear headphones product shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFrj2zpCaI6nES87v1l0s0ItOMDFX3iB0zUu3WqjwepRNPduoPYPD0QD-IAMYWP-gOc6ytUxRCV-GDENR3dZ2XwTx2B9ZRSJAzt5i12_3v6Ad_N68p_ccDBNSGR3xeDG_soOnH3ikKzALZKKWfjUsxrFhxFXWljWbOMeF2XggG-Mo3dca73UXR9oDL4mnweB1PNmy-mSJed8d1rPRcHgDG6AQUAMB0kMHnoS2YrJcAaYSt1bBH_PbYvJfEr-hqXcdJ3jzKJIzCXj0"/>
+</div>
+</td>
+<td class="p-4">
+<div class="font-bold text-[#171212] dark:text-white">Auriculares Bluetooth</div>
+<div class="text-xs text-gray-400 mt-0.5">SKU: #AU-900-WHT</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                                        Electrónica
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2 text-primary font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                                        2 unidades (Crítico)
+                                    </div>
+</td>
+<td class="p-4 text-right">
+<span class="font-medium text-[#171212] dark:text-white">$120.00</span>
+</td>
+<td class="p-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Eliminar">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="p-4 pl-6">
+<div class="size-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-200 dark:border-gray-600">
+<img class="w-full h-full object-cover" data-alt="Smartwatch product on white wrist strap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqRlmsYlrkfCgzhunwRPjY9B_uh9FlzrSqASSDCL09Lg019WGkcaZdeIzCM30_M-nbouyAreiRycGpwQPF42cHj6t_037wzGcBzx7V8YKRq1JBnmXHMVohRdmYlI8k_U91Jh0rMxNsLMNZf7adKT66fyZjShm9nACRqKt6_mnEzcgOk7-x89vYKf1dfSdDNIxVAqWn6t2LiQEUuIcHaPgKIXixEn4yvHeoYDXkUn-VygQS9sVmCcS8rWJ2gZeCd8gDAJp6Kv51EyU"/>
+</div>
+</td>
+<td class="p-4">
+<div class="font-bold text-[#171212] dark:text-white">Reloj Inteligente V2</div>
+<div class="text-xs text-gray-400 mt-0.5">SKU: #SW-202-BLK</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                                        Electrónica
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-gray-300">circle</span>
+                                        30 unidades
+                                    </div>
+</td>
+<td class="p-4 text-right">
+<span class="font-medium text-[#171212] dark:text-white">$150.00</span>
+</td>
+<td class="p-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/10 transition-all" title="Eliminar">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer / Pagination -->
+<div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50/30 dark:bg-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-sm text-gray-500">Mostrando <span class="font-bold text-[#171212] dark:text-white">1-5</span> de <span class="font-bold text-[#171212] dark:text-white">58</span> resultados</p>
+<div class="flex items-center gap-2">
+<button class="px-3 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium">
+                            Anterior
+                        </button>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-lg bg-primary text-white text-sm font-bold">1</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-600 text-sm font-medium transition-colors">2</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-600 text-sm font-medium transition-colors">3</button>
+<span class="text-gray-400 px-1">...</span>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-600 text-sm font-medium transition-colors">12</button>
+</div>
+<button class="px-3 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-gray-600 transition-colors text-sm font-medium flex items-center gap-1">
+                            Siguiente
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Quick Actions Floating Button (Mobile Only visible logic usually, but kept for desktop aesthetic surprise) -->
+<!-- Not strictly needed for desktop admin panel, but nice detail -->
+</body></html>

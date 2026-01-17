@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Caja Diaria - Gestión Financiera</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c33737",
+                        "primary-dark": "#a02a2a",
+                        "background-light": "#ffffff",
+                        "background-dark": "#1f1313",
+                        "surface": "#f8f8f8",
+                        "text-main": "#171212",
+                        "text-muted": "#826868",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table container if needed */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-main font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full bg-white">
+<!-- Side Navigation -->
+<aside class="hidden lg:flex w-72 flex-col border-r border-gray-100 bg-white h-full">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="User profile picture showing a professional man in a suit" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFvvx1Fc7n6sev_IBA99tx64pYv9o5r4UO7so1b8g8PGbg83GR7U7ePUMqjrv_c0LhRdCRJwnx9_YTbg0F6KP_6vpu9-TNWecqOHShgIOdP9XKk7oFbpKSSAuJnNxzrFhCiH0cx4kq-v-vr-OS_hd1WivsUeaRtRaxBeTXsxBKV-EjmdCGWy6S9iqs0-r8s4cH55j-qvstatmISF2i0f8oYXgFkNOERSNwlX96I54u7FO9-ZuyFSlv7fjtAsyAw5cy4GJ-fHFvNlQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-base font-bold leading-tight">Roberto M.</h1>
+<p class="text-text-muted text-xs font-medium">Dueño / Admin</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-4 py-6 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:bg-surface hover:text-text-main transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface text-text-main" href="#">
+<span class="material-symbols-outlined text-2xl text-primary font-fill">point_of_sale</span>
+<span class="text-sm font-bold">Caja Diaria</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:bg-surface hover:text-text-main transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">receipt_long</span>
+<span class="text-sm font-semibold">Movimientos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:bg-surface hover:text-text-main transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">bar_chart</span>
+<span class="text-sm font-semibold">Reportes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:bg-surface hover:text-text-main transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-semibold">Configuración</span>
+</a>
+</nav>
+<div class="p-4 border-t border-gray-100">
+<button class="flex w-full items-center gap-3 px-4 py-3 rounded-lg text-text-muted hover:bg-red-50 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">logout</span>
+<span class="text-sm font-semibold">Cerrar Sesión</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full relative overflow-hidden">
+<!-- Top Header -->
+<header class="h-16 flex items-center justify-between px-6 lg:px-10 border-b border-gray-100 bg-white shrink-0">
+<div class="flex items-center gap-4">
+<button class="lg:hidden p-2 text-text-main">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-text-main text-lg font-bold tracking-tight">Módulo Financiero</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-text-muted hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white"></span>
+</button>
+<div class="hidden sm:flex text-right flex-col">
+<span class="text-xs font-medium text-text-muted">Estado de Caja</span>
+<span class="text-xs font-bold text-green-600 flex items-center justify-end gap-1">
+<span class="size-1.5 rounded-full bg-green-600"></span> Abierta
+                        </span>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto bg-white p-6 lg:p-10 custom-scrollbar">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Page Heading & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-primary font-bold text-sm tracking-wider uppercase">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                                24 Octubre 2023
+                            </div>
+<h1 class="text-4xl lg:text-5xl font-black text-text-main tracking-tight">Caja Diaria</h1>
+<p class="text-text-muted text-lg max-w-xl">Gestión de flujo de efectivo y control de operaciones del día.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary font-bold hover:bg-red-50 transition-colors">
+<span class="material-symbols-outlined text-xl">remove_circle</span>
+                                Registrar Egreso
+                            </button>
+<button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-bold shadow-lg shadow-red-200 hover:bg-primary-dark transition-colors">
+<span class="material-symbols-outlined text-xl">lock</span>
+                                Cerrar Caja
+                            </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Ingresos -->
+<div class="p-6 rounded-2xl border border-gray-100 bg-white shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group hover:border-gray-200 transition-all">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-black">trending_up</span>
+</div>
+<p class="text-text-muted font-medium text-sm">Total Ingresos</p>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black text-text-main tracking-tight">$ 15,450.00</span>
+</div>
+</div>
+<!-- Egresos -->
+<div class="p-6 rounded-2xl border border-red-100 bg-red-50/30 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group hover:border-red-200 transition-all">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">trending_down</span>
+</div>
+<p class="text-primary font-medium text-sm">Total Egresos</p>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black text-primary tracking-tight">$ 3,200.00</span>
+</div>
+</div>
+<!-- Saldo Neto -->
+<div class="p-6 rounded-2xl bg-text-main text-white shadow-lg flex flex-col justify-between h-32 relative overflow-hidden">
+<div class="absolute right-0 top-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-8xl text-white">account_balance_wallet</span>
+</div>
+<p class="text-gray-400 font-medium text-sm">Saldo Neto Actual</p>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black text-white tracking-tight">$ 12,250.00</span>
+<span class="mb-1 text-sm font-bold text-green-400 bg-green-900/30 px-2 py-0.5 rounded">+8.5%</span>
+</div>
+</div>
+</div>
+<!-- Content Split: Table & Chart -->
+<div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+<!-- Left: Transactions Table (3 cols wide) -->
+<div class="xl:col-span-3 flex flex-col gap-6">
+<!-- Filter Bar -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface/50 p-2 rounded-xl">
+<div class="relative w-full sm:w-80">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-400">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-2.5 border-none bg-white rounded-lg text-sm text-text-main placeholder-text-muted focus:ring-2 focus:ring-primary shadow-sm" placeholder="Buscar transacción..." type="text"/>
+</div>
+<div class="flex gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+<button class="px-4 py-2 bg-white rounded-lg text-sm font-semibold text-text-main shadow-sm border border-gray-100 hover:bg-gray-50 whitespace-nowrap">Todos</button>
+<button class="px-4 py-2 bg-transparent rounded-lg text-sm font-medium text-text-muted hover:bg-white hover:shadow-sm hover:text-text-main whitespace-nowrap transition-all">Ingresos</button>
+<button class="px-4 py-2 bg-transparent rounded-lg text-sm font-medium text-text-muted hover:bg-white hover:shadow-sm hover:text-text-main whitespace-nowrap transition-all">Egresos</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-gray-100 text-xs uppercase tracking-wider text-text-muted bg-surface/30">
+<th class="px-6 py-4 font-bold">Hora</th>
+<th class="px-6 py-4 font-bold">Descripción</th>
+<th class="px-6 py-4 font-bold">Modalidad</th>
+<th class="px-6 py-4 font-bold text-right">Monto</th>
+<th class="px-6 py-4 font-bold text-center">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-50">
+<!-- Row 1: Income -->
+<tr class="group hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-text-muted whitespace-nowrap">15:42</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main">Venta #1024</span>
+<span class="text-xs text-text-muted">Cliente General</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-gray-100 text-gray-700">
+<span class="material-symbols-outlined text-[16px]">credit_card</span>
+                                                        Tarjeta
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-text-main font-mono">+ $ 45.00</span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Expense -->
+<tr class="group hover:bg-red-50/20 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-text-muted whitespace-nowrap">14:15</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main">Pago Proveedor Bebidas</span>
+<span class="text-xs text-primary font-medium">Egreso Manual</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-red-50 text-primary border border-red-100">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                                                        Efectivo
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-primary font-mono">- $ 150.00</span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Income -->
+<tr class="group hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-text-muted whitespace-nowrap">13:30</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main">Venta #1025</span>
+<span class="text-xs text-text-muted">Mesa 4</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-gray-900 text-white">
+<span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+                                                        QR
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-text-main font-mono">+ $ 20.00</span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Income -->
+<tr class="group hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-text-muted whitespace-nowrap">12:10</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main">Venta #1023</span>
+<span class="text-xs text-text-muted">Mesa 2</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-gray-100 text-gray-700">
+<span class="material-symbols-outlined text-[16px]">credit_card</span>
+                                                        Tarjeta
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-text-main font-mono">+ $ 85.50</span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Expense -->
+<tr class="group hover:bg-red-50/20 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-text-muted whitespace-nowrap">11:05</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main">Limpieza Local</span>
+<span class="text-xs text-primary font-medium">Servicios</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-red-50 text-primary border border-red-100">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                                                        Efectivo
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-primary font-mono">- $ 40.00</span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+<span class="text-xs text-text-muted font-medium">Mostrando 5 de 24 transacciones</span>
+<div class="flex gap-1">
+<button class="size-8 flex items-center justify-center rounded bg-white border border-gray-200 text-gray-400 hover:text-primary hover:border-primary disabled:opacity-50">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded bg-white border border-gray-200 text-gray-400 hover:text-primary hover:border-primary">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Chart & Distribution (1 col wide) -->
+<div class="xl:col-span-1 flex flex-col gap-6">
+<div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+<h3 class="text-lg font-bold text-text-main mb-6">Distribución Ingresos</h3>
+<div class="flex flex-col items-center justify-center mb-8">
+<!-- CSS Conic Gradient Chart -->
+<div class="relative size-48 rounded-full" data-alt="Donut chart showing income distribution: 50% Card, 30% Cash, 20% QR" style="background: conic-gradient(#171212 0% 50%, #c33737 50% 80%, #9ca3af 80% 100%);">
+<div class="absolute inset-4 bg-white rounded-full flex flex-col items-center justify-center">
+<span class="text-xs text-text-muted font-medium">Total</span>
+<span class="text-xl font-black text-text-main">100%</span>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-[#171212]"></div>
+<span class="text-sm font-medium text-text-main">Tarjeta</span>
+</div>
+<span class="text-sm font-bold text-text-main">50%</span>
+</div>
+<div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#171212] h-full rounded-full" style="width: 50%"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-primary"></div>
+<span class="text-sm font-medium text-text-main">Efectivo</span>
+</div>
+<span class="text-sm font-bold text-text-main">30%</span>
+</div>
+<div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 30%"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-[#9ca3af]"></div>
+<span class="text-sm font-medium text-text-main">QR / Transfer</span>
+</div>
+<span class="text-sm font-bold text-text-main">20%</span>
+</div>
+<div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#9ca3af] h-full rounded-full" style="width: 20%"></div>
+</div>
+</div>
+</div>
+<!-- Quick Tip or Status -->
+<div class="bg-surface rounded-2xl p-5 border border-dashed border-gray-300">
+<div class="flex gap-3">
+<div class="bg-blue-100 text-blue-700 p-2 rounded-lg h-fit">
+<span class="material-symbols-outlined">info</span>
+</div>
+<div class="text-sm">
+<p class="font-bold text-text-main mb-1">Cierre Automático</p>
+<p class="text-text-muted leading-relaxed">Recuerde cerrar la caja antes de las 23:00 para generar el reporte Z diario correctamente.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

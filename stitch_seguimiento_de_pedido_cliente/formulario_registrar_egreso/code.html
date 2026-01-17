@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registrar Egreso</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#c33737",
+              "background-light": "#ffffff",
+              "background-dark": "#242628",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            boxShadow: {
+                'glow': '0 0 20px -5px rgba(195, 55, 55, 0.3)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Hide number input spinners */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-zinc-900 font-display min-h-screen flex items-center justify-center p-4">
+<!-- Modal Backdrop -->
+<!-- Simulates the overlay behind the modal -->
+<div aria-hidden="true" class="fixed inset-0 bg-[#242628]/70 backdrop-blur-[2px] z-40 transition-opacity"></div>
+<!-- Modal Container -->
+<div class="relative z-50 w-full max-w-[580px] flex flex-col bg-background-light dark:bg-background-dark rounded-xl shadow-2xl overflow-hidden ring-1 ring-white/10">
+<!-- Header Section -->
+<div class="px-8 pt-8 pb-4 flex justify-between items-start">
+<div>
+<h2 class="text-[#171212] dark:text-white text-[28px] font-extrabold leading-tight tracking-tight">
+                    Registrar Egreso
+                </h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium mt-1">
+                    Detalla la salida de dinero de la caja
+                </p>
+</div>
+<!-- Decorative Icon -->
+<div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary rotate-12">
+<span class="material-symbols-outlined text-[28px]">receipt_long</span>
+</div>
+</div>
+<!-- Form Body -->
+<div class="px-8 py-4 flex flex-col gap-6">
+<!-- Field: Concepto / Descripción -->
+<div class="flex flex-col gap-2">
+<label class="text-[#171212] dark:text-gray-200 text-sm font-bold uppercase tracking-wider" for="concepto">
+                    Concepto / Descripción
+                </label>
+<div class="relative">
+<input class="w-full h-14 bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg px-4 text-base text-[#171212] dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all" id="concepto" placeholder="Ej. Pago a proveedores" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</div>
+</div>
+</div>
+<!-- Field: Monto (Highlighted with Red) -->
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between text-[#171212] dark:text-gray-200 text-sm font-bold uppercase tracking-wider" for="monto">
+<span>Monto del Retiro</span>
+<span class="text-primary text-[10px] bg-primary/10 px-2 py-0.5 rounded-full font-bold">REQUERIDO</span>
+</label>
+<div class="relative group">
+<div class="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center pointer-events-none">
+<span class="text-primary font-bold text-xl">$</span>
+</div>
+<!-- The red border requirement is applied here with border-primary and border-2 -->
+<input class="w-full h-16 pl-12 pr-4 bg-white dark:bg-zinc-800 border-2 border-primary rounded-lg text-2xl font-bold text-[#171212] dark:text-white placeholder:text-gray-300 focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all shadow-glow" id="monto" placeholder="0.00" type="number"/>
+</div>
+</div>
+<!-- Row: Two Columns for Selects -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<!-- Field: Categoría -->
+<div class="flex flex-col gap-2">
+<label class="text-[#171212] dark:text-gray-200 text-sm font-bold uppercase tracking-wider" for="categoria">
+                        Categoría
+                    </label>
+<div class="relative">
+<select class="w-full h-14 appearance-none bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg pl-4 pr-10 text-base text-[#171212] dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all cursor-pointer" id="categoria">
+<option disabled="" selected="" value="">Seleccionar...</option>
+<option value="servicios">Servicios</option>
+<option value="proveedores">Proveedores</option>
+<option value="nomina">Nómina</option>
+<option value="varios">Varios</option>
+</select>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none flex items-center">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Field: Método de Pago -->
+<div class="flex flex-col gap-2">
+<label class="text-[#171212] dark:text-gray-200 text-sm font-bold uppercase tracking-wider" for="metodo">
+                        Método de Pago
+                    </label>
+<div class="relative">
+<select class="w-full h-14 appearance-none bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg pl-4 pr-10 text-base text-[#171212] dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all cursor-pointer" id="metodo">
+<option selected="" value="efectivo">Efectivo</option>
+<option value="tarjeta">Tarjeta</option>
+<option value="transferencia">Transferencia</option>
+<option value="cheque">Cheque</option>
+</select>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none flex items-center">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-8 pt-4 mt-2 flex flex-col-reverse sm:flex-row gap-4 sm:items-center sm:justify-end">
+<!-- Secondary Button: Cancelar (Red Border, Black Text) -->
+<button class="flex-1 sm:flex-none h-14 px-8 rounded-lg border-2 border-primary bg-transparent text-[#171212] dark:text-white font-bold text-base hover:bg-red-50 dark:hover:bg-red-900/20 active:scale-95 transition-transform duration-150 flex items-center justify-center">
+                Cancelar
+            </button>
+<!-- Primary Button: Registrar (Solid Red) -->
+<button class="flex-1 sm:flex-none h-14 px-10 rounded-lg bg-primary text-white font-bold text-base shadow-lg shadow-primary/30 hover:bg-red-700 active:scale-95 transition-all duration-150 flex items-center justify-center gap-2">
+<span>Registrar Gasto</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+<!-- Decorative subtle footer bar -->
+<div class="h-1.5 w-full bg-gradient-to-r from-primary via-red-500 to-black"></div>
+</div>
+</body></html>

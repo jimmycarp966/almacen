@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Identificación por Celular</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c33737",
+                        "background-light": "#ffffff",
+                        "background-dark": "#17191c",
+                        "text-dark": "#171212",
+                        "text-light": "#826868",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-dark antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- Header -->
+<header class="flex w-full items-center justify-between border-b border-[#f4f1f1] px-10 py-5 bg-white/80 backdrop-blur-sm fixed top-0 z-50">
+<div class="flex items-center gap-4 cursor-pointer">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">local_mall</span>
+</div>
+<h2 class="text-[#171212] text-xl font-bold leading-tight tracking-tight">Catálogo Shop</h2>
+</div>
+<div class="hidden md:flex gap-6 text-sm font-medium text-[#171212]/70">
+<a class="hover:text-primary transition-colors" href="#">Ayuda</a>
+<a class="hover:text-primary transition-colors" href="#">Privacidad</a>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center relative p-6 mt-20">
+<!-- Abstract background element -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px]"></div>
+<div class="absolute top-[40%] -left-[10%] w-[400px] h-[400px] bg-primary/3 rounded-full blur-[80px]"></div>
+</div>
+<!-- Login Card -->
+<div class="relative z-10 w-full max-w-[480px] bg-white rounded-2xl shadow-soft border border-slate-100 p-8 md:p-12 animate-fade-in-up">
+<div class="flex flex-col gap-8">
+<!-- Headline Section -->
+<div class="text-center space-y-2">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<h1 class="text-[#171212] text-3xl font-bold tracking-tight">Bienvenido de nuevo</h1>
+<p class="text-[#826868] text-base font-normal">Ingresa tu número para acceder a tu cuenta</p>
+</div>
+<!-- Input Section -->
+<form class="flex flex-col gap-6" onsubmit="event.preventDefault();">
+<div class="space-y-1">
+<label class="text-sm font-semibold text-[#171212] ml-1" for="phone">Número de celular</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary group-focus-within:scale-110 transition-transform duration-200">smartphone</span>
+</div>
+<input autocomplete="tel" class="block w-full rounded-xl border-gray-200 bg-gray-50/50 pl-12 pr-4 py-4 text-[#171212] placeholder:text-gray-400 focus:border-black focus:ring-black focus:bg-white transition-all duration-200 text-lg font-medium shadow-sm hover:border-gray-300" id="phone" name="phone" placeholder="55 1234 5678" type="tel"/>
+</div>
+</div>
+<!-- Button Section -->
+<button class="group relative w-full flex justify-center py-4 px-4 border border-transparent rounded-xl text-white bg-primary hover:bg-[#a92b2b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary font-bold text-lg shadow-lg shadow-primary/30 transition-all duration-200 transform active:scale-[0.98]" type="submit">
+<span class="absolute left-0 inset-y-0 flex items-center pl-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+<span class="material-symbols-outlined">arrow_forward</span>
+</span>
+                            Ingresar
+                        </button>
+<!-- Helper Text -->
+<div class="text-center px-4">
+<p class="text-xs text-[#826868] leading-relaxed">
+                                Al continuar, aceptas recibir un código de verificación por SMS. 
+                                <br class="hidden sm:block"/>Pueden aplicar tarifas estándar de mensajería.
+                            </p>
+</div>
+</form>
+</div>
+</div>
+<!-- Footer Links -->
+<div class="mt-8 text-center text-sm text-[#826868] relative z-10">
+<p>¿No tienes una cuenta? <a class="text-primary font-bold hover:underline" href="#">Regístrate aquí</a></p>
+</div>
+</main>
+<!-- Bottom abstract graphic -->
+<div class="h-2 w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent absolute bottom-0"></div>
+</div>
+<style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</body></html>

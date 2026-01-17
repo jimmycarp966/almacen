@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Catálogo de Productos</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E60000", // Vibrant Red as requested
+                        "primary-dark": "#cc0000",
+                        "background-light": "#ffffff",
+                        "text-black": "#000000",
+                        "surface-light": "#f8f9fa",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-black font-display antialiased h-screen flex flex-col overflow-hidden">
+<header class="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-8 z-30 shrink-0 shadow-sm relative">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">storefront</span>
+</div>
+<div>
+<h1 class="text-xl font-extrabold tracking-tight text-black leading-none">SHOP<span class="text-primary">RED</span></h1>
+<p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Catálogo Online</p>
+</div>
+</div>
+<div class="hidden md:flex items-center flex-1 max-w-xl mx-8 relative group">
+<span class="absolute left-4 text-gray-400 group-focus-within:text-primary transition-colors material-symbols-outlined">search</span>
+<input class="w-full bg-gray-50 border-gray-100 rounded-full py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-gray-400 text-black" placeholder="¿Qué estás buscando hoy?" type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-gray-50 rounded-full transition-colors text-gray-600 hover:text-black">
+<span class="material-symbols-outlined">favorite_border</span>
+</button>
+<div class="h-6 w-px bg-gray-200 mx-1"></div>
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-gray-100" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOSDeTjOgaYe03xlXKs5afCIDmjgy99r912pHIGCzPF5fEVw7vOhVPXbkR6pTuKUKGYt13HQGBeqG9Aqs1TB_W8P53pxOdf66GX299LlAgHs7Vjk_iuYor_OKbegqzsouEL8PeXCw1RnXxVIks8kB7-birEpxrLNeUcHCCHxBF0s4pLzr7RM7oNkZ6SuOCnr4bMrnP9ahXRbO8Tub1F0X-uAFJXLDH64tIFBDRbQiznhQRUspsKhfKITJWWTEo59CSWo6lE_8XO4I");'></div>
+<div class="hidden lg:block text-right leading-tight">
+<p class="text-xs font-bold text-black">Hola, Cliente</p>
+<p class="text-[10px] text-gray-400">Mi Cuenta</p>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<main class="flex-1 overflow-y-auto p-6 lg:p-8 scrollbar-hide bg-white">
+<div class="flex items-center gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
+<button class="flex flex-col items-center gap-2 min-w-[70px] group">
+<div class="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30 transition-transform group-hover:-translate-y-1">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+</div>
+<span class="text-xs font-bold text-primary">Todos</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[70px] group opacity-60 hover:opacity-100 transition-all">
+<div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-600 group-hover:bg-red-50 group-hover:text-primary flex items-center justify-center border border-gray-100 transition-transform group-hover:-translate-y-1">
+<span class="material-symbols-outlined text-2xl">checkroom</span>
+</div>
+<span class="text-xs font-medium text-gray-600 group-hover:text-primary">Ropa</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[70px] group opacity-60 hover:opacity-100 transition-all">
+<div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-600 group-hover:bg-red-50 group-hover:text-primary flex items-center justify-center border border-gray-100 transition-transform group-hover:-translate-y-1">
+<span class="material-symbols-outlined text-2xl">do_not_step</span>
+</div>
+<span class="text-xs font-medium text-gray-600 group-hover:text-primary">Calzado</span>
+</button>
+<button class="flex flex-col items-center gap-2 min-w-[70px] group opacity-60 hover:opacity-100 transition-all">
+<div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-600 group-hover:bg-red-50 group-hover:text-primary flex items-center justify-center border border-gray-100 transition-transform group-hover:-translate-y-1">
+<span class="material-symbols-outlined text-2xl">headphones</span>
+</div>
+<span class="text-xs font-medium text-gray-600 group-hover:text-primary">Tech</span>
+</button>
+</div>
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="text-2xl font-bold text-black">Tendencias</h2>
+<p class="text-gray-400 text-sm mt-1">Nuevos productos agregados hoy</p>
+</div>
+<div class="flex gap-2 text-sm">
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-primary hover:text-primary transition-colors">Más Populares</button>
+<button class="px-3 py-1.5 rounded-lg border border-gray-200 hover:border-primary hover:text-primary transition-colors">Precio: Menor a Mayor</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+<div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300 flex flex-col overflow-hidden relative">
+<div class="absolute top-3 left-3 z-10">
+<span class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">Nuevo</span>
+</div>
+<div class="relative h-64 overflow-hidden bg-gray-50 p-4">
+<img alt="Camiseta" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMlgh-D4q1p57oM3_D6EQdVElHoJ2eyuFeyIFL8MDfHsZ7DaRkwgqzJgIgig5oPMi2WsmoOmWIYrGIEUKB26WFdWagsKE1OM4ntzBfrSFkjk4Z5l18fy7lgo03IAuAy9oUlbTfXqMng6M87UXlzRg65FcK5OPb2xAXY14mha3mRH904solO2uc0K6WuQfRRgeLSyF2KkgenbfFWHkK5GtnnkAPBYo1oehfFvwD5zdiqMMZ2IYcb8NnVcaVGAD9LFKVnkrkVMJf_lI"/>
+<button class="absolute top-3 right-3 p-2 bg-white rounded-full text-gray-400 hover:text-primary hover:bg-red-50 transition-colors shadow-sm opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="mb-1">
+<span class="text-[10px] font-bold tracking-wider uppercase text-gray-400">Ropa</span>
+</div>
+<h3 class="text-lg font-bold text-black leading-tight mb-2 group-hover:text-primary transition-colors">Camiseta Básica Negra</h3>
+<div class="mt-auto flex items-end justify-between">
+<div>
+<span class="text-2xl font-bold text-black">$25.00</span>
+</div>
+<button class="bg-primary hover:bg-primary-dark text-white w-10 h-10 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-2xl border border-primary/20 shadow-md shadow-primary/5 transition-all duration-300 flex flex-col overflow-hidden relative ring-1 ring-primary/20">
+<div class="relative h-64 overflow-hidden bg-gray-50 p-4">
+<img alt="Zapatillas" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH3TdsLfvq3AvOqpMhZbFGsH8Pj3AkUk8DinQq1U8s1_RNAFy2CbSiW_fwS15pHfugq6bg-TRkrojF7GSlEZYmX3mxeZw6-3OC0gCCMc5S3f8OnPE0kSCTdgB5RPKVeIHhaO_f0UvTsyqlRQnYXPZQse6khVd79S_tkmZylGzab6Tqc7HKd6xlS55vD2f4exRMT1tmCluYnHY1jWHHm1tLX1lXTnc88iDB3Hl22MP-Qf_bZ1B_6U65L_UkLDnCKmKymF02GgFEcUQ"/>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="mb-1">
+<span class="text-[10px] font-bold tracking-wider uppercase text-gray-400">Calzado</span>
+</div>
+<h3 class="text-lg font-bold text-black leading-tight mb-2">Zapatillas Deportivas</h3>
+<div class="mt-auto flex items-end justify-between">
+<div>
+<span class="text-2xl font-bold text-primary">$89.99</span>
+</div>
+<div class="flex items-center gap-2 bg-red-50 rounded-xl p-1 border border-primary/10">
+<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-white hover:shadow-sm rounded-lg transition-all text-lg font-medium">-</button>
+<span class="font-bold text-primary text-sm w-4 text-center">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-white hover:shadow-sm rounded-lg transition-all text-lg font-medium">+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300 flex flex-col overflow-hidden relative">
+<div class="relative h-64 overflow-hidden bg-gray-50 p-4">
+<img alt="Jeans" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1a7Dp-ygZR9SDlPajFWTElaV36PftC3YXUDUlRMdFDBMSU7bWLF1u7_fjBpzth-RGed1qTxTcjAk3wvSE5y8xfDpA-Pui9nvBoJDUT5N8iKssjosQxdsqx9a6CEhREJhSeDhNr6DDqBMJRBzBs3dWL6dW6dJPhZV4DsxtGPx8JenDZyxqpGfJ7GHwyzysJwycnCi_S9XMxRyb_0-0sKHoU3IeRDxd-WaPqOaUoGKUhn1t6uDNgo--ErQZHFRtxz3UIcUsAkj6ZUg"/>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="mb-1">
+<span class="text-[10px] font-bold tracking-wider uppercase text-gray-400">Ropa</span>
+</div>
+<h3 class="text-lg font-bold text-black leading-tight mb-2 group-hover:text-primary transition-colors">Pantalón Jeans Slim</h3>
+<div class="mt-auto flex items-end justify-between">
+<div>
+<span class="text-2xl font-bold text-black">$45.50</span>
+</div>
+<button class="bg-white border-2 border-gray-100 hover:border-primary text-gray-400 hover:text-primary w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-95">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-2xl border border-primary/20 shadow-md shadow-primary/5 transition-all duration-300 flex flex-col overflow-hidden relative ring-1 ring-primary/20">
+<div class="absolute top-3 left-3 z-10">
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">local_fire_department</span> Pocos
+                        </span>
+</div>
+<div class="relative h-64 overflow-hidden bg-gray-50 p-4">
+<img alt="Auriculares" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFrj2zpCaI6nES87v1l0s0ItOMDFX3iB0zUu3WqjwepRNPduoPYPD0QD-IAMYWP-gOc6ytUxRCV-GDENR3dZ2XwTx2B9ZRSJAzt5i12_3v6Ad_N68p_ccDBNSGR3xeDG_soOnH3ikKzALZKKWfjUsxrFhxFXWljWbOMeF2XggG-Mo3dca73UXR9oDL4mnweB1PNmy-mSJed8d1rPRcHgDG6AQUAMB0kMHnoS2YrJcAaYSt1bBH_PbYvJfEr-hqXcdJ3jzKJIzCXj0"/>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="mb-1">
+<span class="text-[10px] font-bold tracking-wider uppercase text-gray-400">Electrónica</span>
+</div>
+<h3 class="text-lg font-bold text-black leading-tight mb-2">Auriculares Bluetooth</h3>
+<div class="mt-auto flex items-end justify-between">
+<div>
+<span class="text-2xl font-bold text-primary">$120.00</span>
+</div>
+<div class="flex items-center gap-2 bg-red-50 rounded-xl p-1 border border-primary/10">
+<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-white hover:shadow-sm rounded-lg transition-all text-lg font-medium">-</button>
+<span class="font-bold text-primary text-sm w-4 text-center">2</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-white hover:shadow-sm rounded-lg transition-all text-lg font-medium">+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300 flex flex-col overflow-hidden relative">
+<div class="relative h-64 overflow-hidden bg-gray-50 p-4">
+<img alt="Reloj" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqRlmsYlrkfCgzhunwRPjY9B_uh9FlzrSqASSDCL09Lg019WGkcaZdeIzCM30_M-nbouyAreiRycGpwQPF42cHj6t_037wzGcBzx7V8YKRq1JBnmXHMVohRdmYlI8k_U91Jh0rMxNsLMNZf7adKT66fyZjShm9nACRqKt6_mnEzcgOk7-x89vYKf1dfSdDNIxVAqWn6t2LiQEUuIcHaPgKIXixEn4yvHeoYDXkUn-VygQS9sVmCcS8rWJ2gZeCd8gDAJp6Kv51EyU"/>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="mb-1">
+<span class="text-[10px] font-bold tracking-wider uppercase text-gray-400">Electrónica</span>
+</div>
+<h3 class="text-lg font-bold text-black leading-tight mb-2 group-hover:text-primary transition-colors">Reloj Inteligente V2</h3>
+<div class="mt-auto flex items-end justify-between">
+<div>
+<span class="text-2xl font-bold text-black">$150.00</span>
+</div>
+<button class="bg-primary hover:bg-primary-dark text-white w-10 h-10 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center transition-transform active:scale-95">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex items-center justify-center gap-2">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 text-gray-400 hover:text-black hover:border-black transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-black text-white font-bold">1</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-50 font-medium">2</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-50 font-medium">3</button>
+<span class="text-gray-300">...</span>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 text-gray-400 hover:text-black hover:border-black transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</main>
+<aside class="w-[400px] bg-white border-l border-gray-100 flex flex-col z-20 shadow-2xl hidden xl:flex">
+<div class="p-8 border-b border-gray-100 flex items-center justify-between">
+<h2 class="text-2xl font-bold text-black flex items-center gap-3">
+                    Tu Pedido
+                </h2>
+<div class="bg-red-50 text-primary font-bold px-3 py-1 rounded-full text-sm border border-red-100">
+                    3 Artículos
+                </div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<div class="flex gap-4 p-4 rounded-xl bg-gray-50/50 border border-transparent hover:border-gray-200 transition-colors group">
+<div class="w-20 h-20 rounded-xl bg-white border border-gray-100 overflow-hidden flex-shrink-0 p-2">
+<img class="w-full h-full object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH3TdsLfvq3AvOqpMhZbFGsH8Pj3AkUk8DinQq1U8s1_RNAFy2CbSiW_fwS15pHfugq6bg-TRkrojF7GSlEZYmX3mxeZw6-3OC0gCCMc5S3f8OnPE0kSCTdgB5RPKVeIHhaO_f0UvTsyqlRQnYXPZQse6khVd79S_tkmZylGzab6Tqc7HKd6xlS55vD2f4exRMT1tmCluYnHY1jWHHm1tLX1lXTnc88iDB3Hl22MP-Qf_bZ1B_6U65L_UkLDnCKmKymF02GgFEcUQ"/>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-bold text-sm text-black leading-tight">Zapatillas Deportivas</h4>
+<button class="text-gray-300 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex justify-between items-end mt-2">
+<div class="flex items-center gap-3">
+<button class="w-6 h-6 rounded bg-white text-gray-400 hover:text-primary border border-gray-200 flex items-center justify-center text-xs transition-colors">-</button>
+<span class="text-sm font-bold text-black">1</span>
+<button class="w-6 h-6 rounded bg-white text-gray-400 hover:text-primary border border-gray-200 flex items-center justify-center text-xs transition-colors">+</button>
+</div>
+<span class="font-bold text-black text-sm">$89.99</span>
+</div>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-xl bg-gray-50/50 border border-transparent hover:border-gray-200 transition-colors group">
+<div class="w-20 h-20 rounded-xl bg-white border border-gray-100 overflow-hidden flex-shrink-0 p-2">
+<img class="w-full h-full object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFrj2zpCaI6nES87v1l0s0ItOMDFX3iB0zUu3WqjwepRNPduoPYPD0QD-IAMYWP-gOc6ytUxRCV-GDENR3dZ2XwTx2B9ZRSJAzt5i12_3v6Ad_N68p_ccDBNSGR3xeDG_soOnH3ikKzALZKKWfjUsxrFhxFXWljWbOMeF2XggG-Mo3dca73UXR9oDL4mnweB1PNmy-mSJed8d1rPRcHgDG6AQUAMB0kMHnoS2YrJcAaYSt1bBH_PbYvJfEr-hqXcdJ3jzKJIzCXj0"/>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-bold text-sm text-black leading-tight">Auriculares Bluetooth</h4>
+<button class="text-gray-300 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex justify-between items-end mt-2">
+<div class="flex items-center gap-3">
+<button class="w-6 h-6 rounded bg-white text-gray-400 hover:text-primary border border-gray-200 flex items-center justify-center text-xs transition-colors">-</button>
+<span class="text-sm font-bold text-black">2</span>
+<button class="w-6 h-6 rounded bg-white text-gray-400 hover:text-primary border border-gray-200 flex items-center justify-center text-xs transition-colors">+</button>
+</div>
+<span class="font-bold text-black text-sm">$240.00</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-8 bg-white border-t border-gray-100 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]">
+<div class="space-y-3 mb-6">
+<div class="flex justify-between text-sm text-gray-500">
+<span>Subtotal</span>
+<span class="font-medium text-black">$329.99</span>
+</div>
+<div class="flex justify-between text-sm text-gray-500">
+<span>Impuestos (8%)</span>
+<span class="font-medium text-black">$26.40</span>
+</div>
+<div class="flex justify-between text-xl font-extrabold text-black pt-4 border-t border-gray-100 mt-4">
+<span>Total</span>
+<span class="text-primary">$356.39</span>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-3 group active:scale-[0.98]">
+<span>Confirmar Pedido</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                    Pago 100% Seguro
+                </p>
+</div>
+</aside>
+</div>
+
+</body></html>

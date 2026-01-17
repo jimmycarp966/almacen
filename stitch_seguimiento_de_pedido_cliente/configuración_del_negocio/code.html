@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuración del Negocio</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e60000",
+                        "background-light": "#ffffff",
+                        "background-dark": "#17191c",
+                        "surface-light": "#f8f9fa",
+                        "surface-dark": "#1e2124",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="relative min-h-screen w-full bg-surface-light dark:bg-background-dark text-[#181010] dark:text-white font-display overflow-x-hidden">
+<!-- Top Navbar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f5f0f0] dark:border-b-[#2a2e33] bg-background-light dark:bg-background-dark px-10 py-3 shadow-sm">
+<div class="flex items-center gap-4 text-[#181010] dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+</div>
+<h2 class="text-[#181010] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Admin Panel</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<button class="text-[#8d5e5e] hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-transparent hover:border-primary cursor-pointer transition-all" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSeosbBXMMg9PtNTyzRKDU_l5gKEDbMCYkMCmTK9ooJ_XSItHwrTS991hDcDLt6_vaDdJJG0a09-PtlmJWiDWAEWOQ6I2L1_rArCUt5HZVOotderMXmM9e3FrODopgEwbPV_dvz0gBzsS6HtkW_9-EI9se8Hegi5eqfMGApq3guo_8fzBMPpVhmL-rjKOpK9rZbZm8u3oLaAjMFsT3RBaTRBpgxcpvGArEnuC94nByFAsNPx8OjEQaGEZ087PAzLknnAHNYtNPdsM");'></div>
+</div>
+</header>
+<div class="layout-container flex h-full grow flex-col pb-24">
+<!-- Breadcrumbs & Heading -->
+<div class="w-full flex justify-center pt-8 pb-4">
+<div class="flex flex-col max-w-[960px] w-full px-4 lg:px-0">
+<div class="flex flex-wrap gap-2 mb-4">
+<a class="text-[#8d5e5e] hover:text-primary dark:text-gray-400 dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Inicio</a>
+<span class="text-[#8d5e5e] dark:text-gray-500 text-sm font-medium leading-normal">/</span>
+<span class="text-[#181010] dark:text-white text-sm font-medium leading-normal">Configuración</span>
+</div>
+<div class="flex flex-wrap justify-between gap-3">
+<div class="flex min-w-72 flex-col gap-2">
+<h1 class="text-[#181010] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Configuración del Negocio</h1>
+<p class="text-[#8d5e5e] dark:text-gray-400 text-base font-normal leading-normal">Gestiona la identidad y disponibilidad de tu tienda para tus clientes.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="w-full flex justify-center">
+<div class="flex flex-col gap-8 max-w-[960px] w-full px-4 lg:px-0">
+<!-- Section: Información General -->
+<div class="flex flex-col rounded-xl bg-background-light dark:bg-surface-dark border border-[#f0f0f0] dark:border-[#333] shadow-[0px_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="px-6 py-5 border-b border-[#f0f0f0] dark:border-[#333]">
+<h2 class="text-[#181010] dark:text-white text-xl font-bold leading-tight">Información General</h2>
+</div>
+<div class="p-6 md:p-8 flex flex-col gap-8">
+<!-- Logo Uploader -->
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="relative group">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl h-32 w-32 shadow-inner border border-gray-100" data-alt="Business Logo Preview" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzgP8YbRMixyUfZ7ZKxVQt6jADeo8hnBW8LYZ0uP3_Tq99rTTL3qx-b6JTDzEJXrbmnt0FE1Xz_y6NWeZL5ujL3NRM-oo8SmJjKg5Je5Dc39rxgtP2m99SDcGW_8fMU6v9HVqU50r0OTQuTKt73i7SnWpOPjpMILU5O1sqHYK1AHNSOJuyaT4rkFOoP2COsgxI1b4HjvZX836gY_wncroeFATaSZGTzi9w8Fv5RNGROfT1JgeLnYMMBa_g081d13KWRiEC_lHH7E0");'></div>
+<div class="absolute inset-0 bg-black/40 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-white">edit</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-[#181010] dark:text-white text-lg font-bold">Logo de la Tienda</h3>
+<p class="text-[#8d5e5e] dark:text-gray-400 text-sm">Formato recomendado: PNG o JPG. Max 2MB. <br/>Dimensiones ideales: 500x500px.</p>
+<div class="flex gap-3 mt-2">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f5f0f0] hover:bg-gray-200 dark:bg-[#333] dark:hover:bg-[#444] text-[#181010] dark:text-white text-sm font-bold transition-colors">
+                                        Subir Nueva Imagen
+                                    </button>
+<button class="flex items-center justify-center rounded-lg h-9 px-4 text-primary text-sm font-bold hover:bg-primary/5 transition-colors">
+                                        Eliminar
+                                    </button>
+</div>
+</div>
+</div>
+<div class="grid gap-6 md:grid-cols-2">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#181010] dark:text-white">Nombre del Negocio</label>
+<input class="w-full h-11 rounded-lg border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-4 text-sm text-[#181010] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="Moda Express"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#181010] dark:text-white">Slogan (Opcional)</label>
+<input class="w-full h-11 rounded-lg border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-4 text-sm text-[#181010] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Ej. La mejor moda a tu alcance" type="text"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-sm font-bold text-[#181010] dark:text-white">Descripción del Negocio</label>
+<textarea class="w-full rounded-lg border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] p-4 text-sm text-[#181010] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none" rows="4">Tienda especializada en ropa casual y formal para toda la familia. Envíos a todo el país.</textarea>
+<span class="text-xs text-[#8d5e5e] dark:text-gray-500 self-end">0/500 caracteres</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Horarios de Atención -->
+<div class="flex flex-col rounded-xl bg-background-light dark:bg-surface-dark border border-[#f0f0f0] dark:border-[#333] shadow-[0px_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="px-6 py-5 border-b border-[#f0f0f0] dark:border-[#333] flex justify-between items-center">
+<h2 class="text-[#181010] dark:text-white text-xl font-bold leading-tight">Horarios de Atención</h2>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded">Zona Horaria: UTC-5</span>
+</div>
+<div class="p-0">
+<!-- Header Row -->
+<div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-[#f9fafb] dark:bg-[#25282c] text-xs font-bold text-[#8d5e5e] uppercase tracking-wider">
+<div class="col-span-4">Día</div>
+<div class="col-span-2 text-center">Estado</div>
+<div class="col-span-6">Horario</div>
+</div>
+<!-- Days Rows -->
+<div class="divide-y divide-[#f0f0f0] dark:divide-[#333]">
+<!-- Monday -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-gray-50 dark:hover:bg-[#2a2e33] transition-colors">
+<div class="col-span-1 md:col-span-4 flex items-center gap-3">
+<div class="size-8 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs">L</div>
+<span class="font-bold text-[#181010] dark:text-white">Lunes</span>
+</div>
+<div class="col-span-1 md:col-span-2 flex md:justify-center">
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 md:hidden">Abierto</span>
+</label>
+</div>
+<div class="col-span-1 md:col-span-6 flex items-center gap-2">
+<div class="relative flex-1">
+<input class="w-full h-10 rounded border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-3 text-sm text-[#181010] dark:text-white focus:border-primary outline-none" type="time" value="09:00"/>
+</div>
+<span class="text-[#8d5e5e]">-</span>
+<div class="relative flex-1">
+<input class="w-full h-10 rounded border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-3 text-sm text-[#181010] dark:text-white focus:border-primary outline-none" type="time" value="18:00"/>
+</div>
+</div>
+</div>
+<!-- Tuesday -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-5 items-center hover:bg-gray-50 dark:hover:bg-[#2a2e33] transition-colors">
+<div class="col-span-1 md:col-span-4 flex items-center gap-3">
+<div class="size-8 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs">M</div>
+<span class="font-bold text-[#181010] dark:text-white">Martes</span>
+</div>
+<div class="col-span-1 md:col-span-2 flex md:justify-center">
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="col-span-1 md:col-span-6 flex items-center gap-2">
+<div class="relative flex-1">
+<input class="w-full h-10 rounded border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-3 text-sm text-[#181010] dark:text-white focus:border-primary outline-none" type="time" value="09:00"/>
+</div>
+<span class="text-[#8d5e5e]">-</span>
+<div class="relative flex-1">
+<input class="w-full h-10 rounded border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-3 text-sm text-[#181010] dark:text-white focus:border-primary outline-none" type="time" value="18:00"/>
+</div>
+</div>
+</div>
+<!-- Sunday (Closed) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-5 items-center bg-gray-50/50 dark:bg-[#232529]">
+<div class="col-span-1 md:col-span-4 flex items-center gap-3 opacity-60">
+<div class="size-8 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 flex items-center justify-center font-bold text-xs">D</div>
+<span class="font-bold text-[#181010] dark:text-white">Domingo</span>
+</div>
+<div class="col-span-1 md:col-span-2 flex md:justify-center">
+<label class="inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+<span class="ml-3 text-sm font-medium text-gray-500 md:hidden">Cerrado</span>
+</label>
+</div>
+<div class="col-span-1 md:col-span-6 flex items-center gap-2 opacity-50 grayscale pointer-events-none select-none">
+<div class="relative flex-1">
+<input class="w-full h-10 rounded border border-[#e0e0e0] bg-gray-100 px-3 text-sm text-[#888]" disabled="" type="time" value="09:00"/>
+</div>
+<span class="text-[#8d5e5e]">-</span>
+<div class="relative flex-1">
+<input class="w-full h-10 rounded border border-[#e0e0e0] bg-gray-100 px-3 text-sm text-[#888]" disabled="" type="time" value="18:00"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Contacto y Redes -->
+<div class="flex flex-col rounded-xl bg-background-light dark:bg-surface-dark border border-[#f0f0f0] dark:border-[#333] shadow-[0px_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="px-6 py-5 border-b border-[#f0f0f0] dark:border-[#333]">
+<h2 class="text-[#181010] dark:text-white text-xl font-bold leading-tight">Contacto y Redes</h2>
+</div>
+<div class="p-6 md:p-8 grid gap-6 md:grid-cols-2">
+<!-- WhatsApp -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#181010] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-lg">chat</span>
+                                WhatsApp Business
+                            </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="text-gray-500 text-sm font-bold">+52</span>
+</div>
+<input class="w-full h-11 rounded-lg border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] pl-12 pr-4 text-sm text-[#181010] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="123 456 7890" type="tel"/>
+</div>
+</div>
+<!-- Instagram -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#181010] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-pink-600 text-lg">photo_camera</span>
+                                Instagram
+                            </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="text-gray-500 text-sm">@</span>
+</div>
+<input class="w-full h-11 rounded-lg border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] pl-8 pr-4 text-sm text-[#181010] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="mitienda.oficial" type="text"/>
+</div>
+</div>
+<!-- Address -->
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-sm font-bold text-[#181010] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                                Dirección Física
+                            </label>
+<div class="flex gap-2">
+<input class="flex-1 h-11 rounded-lg border border-[#e0e0e0] dark:border-[#444] bg-white dark:bg-[#2a2e33] px-4 text-sm text-[#181010] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Av. Principal #123, Colonia Centro" type="text"/>
+<button class="h-11 px-4 rounded-lg bg-gray-100 dark:bg-[#333] hover:bg-gray-200 dark:hover:bg-[#444] text-[#181010] dark:text-white font-medium text-sm flex items-center gap-2 transition-colors whitespace-nowrap">
+<span class="material-symbols-outlined text-lg">map</span>
+<span class="hidden sm:inline">Ubicar en Mapa</span>
+</button>
+</div>
+<!-- Mini Map Placeholder -->
+<div class="mt-2 w-full h-40 bg-gray-100 rounded-lg overflow-hidden relative border border-[#e0e0e0] dark:border-[#444]">
+<div class="bg-center bg-no-repeat bg-cover w-full h-full opacity-60 grayscale hover:grayscale-0 transition-all duration-500" data-alt="Map location preview" data-location="Mexico City" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBK-whL5-dZYXF7gvnKDWCefl9MYTJpAmseTXgmXAusYCpH_T0Kt4sF4DFfQ9slh3kPjas9i8rYWYNgrdwNdKIXNfrXnVoyv6j2mTcUPlwgYZGycpbaGAeFAlM0MTUkGiwWjR1pfns0sdKEvSQyJ6qghiLFYVG7PpkjaR6ep1asJKoI-abVPhxp19poKia5s_bnhGA_OTFsx3MtQ8dPeVcD3sTctzmSK9jIJDgGZJJxKXwtTh66UJ21r29auGwD7pkcwHQOPjbAz-w");'></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="bg-primary text-white p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer -->
+<div class="fixed bottom-0 left-0 w-full bg-white dark:bg-background-dark border-t border-[#f0f0f0] dark:border-[#333] py-4 px-6 md:px-10 z-40 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<div class="max-w-[960px] mx-auto flex items-center justify-between">
+<button class="text-[#8d5e5e] dark:text-gray-400 font-bold text-sm hover:text-[#181010] dark:hover:text-white transition-colors px-4 py-2">
+                Descartar Cambios
+            </button>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-primary hover:bg-[#cc0000] text-white rounded-lg px-8 py-3 text-sm font-bold shadow-lg shadow-primary/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+<span class="material-symbols-outlined text-lg">save</span>
+                    Guardar Cambios
+                </button>
+</div>
+</div>
+</div>
+</body></html>

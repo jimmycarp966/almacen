@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Catálogo Moderno</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e60000",
+                        "background-light": "#ffffff", 
+                        "background-dark": "#1a1a1a",
+                        "text-main": "#181010",
+                        "text-secondary": "#666666",
+                        "accent-gray": "#f5f5f5"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for horizontal tabs */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Hover card effect */
+        .product-card:hover .add-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased selection:bg-primary/20 selection:text-primary">
+<!-- Navbar -->
+<nav class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+<div class="w-10 h-10 bg-black text-white flex items-center justify-center rounded-lg group-hover:bg-primary transition-colors duration-300">
+<span class="material-symbols-outlined text-2xl">chair</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-text-main">MOBI</h1>
+</div>
+<!-- Desktop Menu -->
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="#">Inicio</a>
+<a class="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="#">Colecciones</a>
+<a class="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="#">Diseñadores</a>
+<a class="text-text-main hover:text-primary font-bold text-sm uppercase tracking-wide transition-colors" href="#">Blog</a>
+</div>
+<!-- Utilities -->
+<div class="flex items-center gap-2">
+<button class="p-2.5 rounded-full hover:bg-gray-100 transition-colors text-text-main">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2.5 rounded-full hover:bg-gray-100 transition-colors text-text-main">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Categories Tabs -->
+<div class="sticky top-20 z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-[0_2px_15px_-10px_rgba(0,0,0,0.05)]">
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex space-x-8 overflow-x-auto hide-scrollbar py-4">
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-primary text-primary font-bold text-sm tracking-wide">
+                    Todos los Productos
+                </button>
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-transparent text-text-secondary hover:text-text-main font-medium text-sm tracking-wide transition-colors">
+                    Nuevos Lanzamientos
+                </button>
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-transparent text-text-secondary hover:text-text-main font-medium text-sm tracking-wide transition-colors">
+                    Sofás &amp; Sillones
+                </button>
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-transparent text-text-secondary hover:text-text-main font-medium text-sm tracking-wide transition-colors">
+                    Mesas
+                </button>
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-transparent text-text-secondary hover:text-text-main font-medium text-sm tracking-wide transition-colors">
+                    Iluminación
+                </button>
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-transparent text-text-secondary hover:text-text-main font-medium text-sm tracking-wide transition-colors">
+                    Accesorios
+                </button>
+<button class="whitespace-nowrap pb-1 border-b-[3px] border-transparent text-text-secondary hover:text-text-main font-medium text-sm tracking-wide transition-colors">
+                    Exterior
+                </button>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+<div>
+<h2 class="text-3xl md:text-4xl font-extrabold text-text-main mb-2">Catálogo 2024</h2>
+<p class="text-text-secondary text-lg">Diseño minimalista para espacios modernos.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm font-bold text-text-main">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+                    Filtrar
+                 </button>
+<button class="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm font-bold text-text-main">
+<span class="material-symbols-outlined text-[20px]">sort</span>
+                    Ordenar
+                 </button>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+<!-- Product 1 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Modern grey armchair isolated in a minimal room" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBeY4tifv3I90JK95oIlp1z5U-GnjkWNbdSd5xPpe6q3yiGAo3IT9JOofhJqu6RJa8474nm8C02Aak0jWV8v5983UHaR4sBlj2cqIPgqQHTtR8tr33pey3JzoxpXfR4GYfcBNruqeHvmemtuvh0p48GAfZ8edDMD6TNTn4kdIHh_36cfE7j7FgA8v0VuZT-OFzHMzR7cFsEm5TXSJLZyTNIUGbhwBw7I_sjDwtleEU-uT6kGWCyQURrKnx2cojdJs0l_3lJAQbGj_s');"></div>
+<!-- Add Button -->
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+<!-- Badge -->
+<div class="absolute top-4 left-4 bg-primary text-white text-[10px] uppercase font-bold px-3 py-1.5 rounded-full tracking-wider">Nuevo</div>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Silla Lounge Eames</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Madera de Nogal &amp; Piel</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$850</span>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Minimalist pendant lamp hanging from ceiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsKLxx58icGdNAYUL1E64qAsRv-UM-y0VWr7Sp_0dq_jCP-_zm0YSSdIfsOAuwPXyjhosgzBxgmY7oVU_hpb-JMpRei1_xqRWeweLstJ8cljnm-JZDxs7316tK_Sz4OnGcWZ861Vk_xh4fa_wKLrS8AJFzKmEGmZC7AubCn7yAOoPKSstNANTC4HLxQNjH3zk4P7BJp92G7xVNgcoWgrtf4FLAvIDQBm79Wwc1ffVbQf59NNcYa0UAWGdAVyIOusANGwsCQ82gW9I');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Lámpara Halo</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Metal Negro Mate</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$220</span>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Modern grey fabric sofa in a white living room" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLelfvTk1HeJnwsBVBvvPsLQpR51ldge8EUslyyIFuSBAdnLwvSjJvyCziA9pNokBd_sGBABPn9bcwWgc3dkxuWjLVeafThrOBUcFQOwIwtPi_Dwc--h9pGNHQ_SLgqA_w1hG2f5TduoucafC_M7o-eIbMzApMak2IFQm6uu1blIpdA2fFjtmXWfAaLzgt_VpoRX-dKOQLb-f2GA4EidLWlQFHeWHMbc83ORWgoEYQSBrPpPBfDJ6-qR53MLVRa2LMMd-RHIytfnY');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Sofá Modular Cloud</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Tejido Premium Gris</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$1,299</span>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Wooden coffee table with geometric design" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvffJ0MhAP5wL1ISzL0Zfhk5vPEexyokawbPajLr42b3JCWoBvZNF3ePgM9j4DZgr0Zh4Nf5n_UuXe9q7SoxgBT4OgZ-VHX9aYcSLgHGXrgUx8M1nSXmSmWNLwC_Pie_mUAxJonoZ2vrsQQhPiOc2zmzeX23AAgw-t7BWdT7bH2m5WkRZ4ArAxP0H_XN1uzwaZdPTZR__M-xCnhMSFs7tdrF1T-dDkTv_wL0zBYDm99MDKHwsuT53N-umMoieUHeLCRBqXi_jNYf4');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Mesa de Centro Oaki</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Roble Natural</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$450</span>
+</div>
+</div>
+<!-- Product 5 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Interior decor plant pot on a stand" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDB9qiNWlJxgLDtjsQEQofY8SVB4emL-UA9hIFQPUReMRybN9TGVAf1TZNXeMcx9FzE6n5y4irs2n7c1GQ9ncU1KOppd8Hczdo4BTvBSgug1WpsKjGXIT8KZ8AZ40pavT8So_epCg9xLUNrj1kqHSRCi3kw73UJG9iQOfKADox53sikKmGBEZZV0sDOgm-icpiPDQCyGC-QW3T9GrxYs0BAvNhggwF0R0ELycZ6IAhiXU0tRtgagwDtOO9imJQuOvAMdasM8gYmC1Y');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="absolute top-4 left-4 bg-black/90 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">-20%</div>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Macetero Cerámico</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Blanco Mate</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xl font-extrabold text-text-main">$48</span>
+<span class="text-sm font-medium text-text-secondary line-through">$60</span>
+</div>
+</div>
+</div>
+<!-- Product 6 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Minimalist wooden desk against white wall" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTpPXVOMwm57c1ZCxKRpqzngDqBA6KY0I4zild6Df4HIXTdejXn8vtrix6njCXflw7UdGxfN4qiytRXhTRIi0EU65BD-2j9B4nvE_6bIEv92Ts8YZBM8FY75twCl0FUwhmHwrlv3y6B_5NqYXNdbQ4-3kJeuHyR3bjUKvDIDVQFILfPJCaF_WeOA1L-qPK31QwVVJMOftryhT0WdA6Gm1rgjygLdspltSwjVgltCbFfDXjd8vHf2zO1LZ0YOHSILIVIq2X7uKV1Jw');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Escritorio Studio</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Fresno y Metal</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$599</span>
+</div>
+</div>
+<!-- Product 7 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Modern bookshelf with geometric shelves" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYyPdiZCMnWjhxuzOw0EwZ7ISrRzEMm9d1dTKqdhbeLzhZ9yKaD-rh2M2YlkQRngYBVhaiicBrYFL6cGGnz7_wA-CFtnan912SiA9jO1-pLFs6NCNJ3UxDsAhm0x7_EIr-5LKfbEublwFVtkiMbR--jEuwtpMmEZOafPy8Dz0BrXcAi_G76barDUTCpMshb_T98AtEMdMVnonl7bYC7HiqCXlbi-PU2wdZPdR-w23-bLxm6APWjbW8nK0FrGSKkRmS8fZY_DR54P4');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Estantería Axis</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Diseño Modular</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$340</span>
+</div>
+</div>
+<!-- Product 8 -->
+<div class="group cursor-pointer product-card">
+<div class="relative overflow-hidden rounded-2xl bg-accent-gray aspect-[4/5] mb-5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Abstract wall art framed in black" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOOTw2Q0d-T-AV3UHIBCq7y02BShx1SNERv7ivfNJC80EAtNApgjYr70n5wrFBv4otJ9KUCmLyFxcij5OsJiCu8-WT7cvKMQcpkIrAzOteLYUdbAvwfyOA1IoVcJIgVuzGHJ5-iVrJw9cfCF6myCw5eTFGu0wLKVLjl-cErhkJFQObrBUNu9gWd1TAPaRstaFhYLl_9U2GSoJgvi708uG85x0Z0Q4qzwgrr4gaOAfY1GjgKZP10VlixlMpyjOqD4sqxq27z7BFqA4');"></div>
+<button class="add-btn absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-text-main opacity-0 translate-y-4 transition-all duration-300 hover:bg-primary hover:text-white group-hover:opacity-100 group-hover:translate-y-0">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div>
+<h3 class="text-xl font-bold text-text-main group-hover:text-primary transition-colors">Cuadro Abstracto V</h3>
+<p class="text-sm font-medium text-text-secondary mt-1">Impresión Giclée</p>
+</div>
+<span class="text-xl font-extrabold text-text-main">$120</span>
+</div>
+</div>
+</div>
+<!-- Meta Text -->
+<div class="mt-20 flex justify-center pb-32">
+<p class="text-text-secondary text-base font-medium">Mostrando 8 de 45 productos exclusivos</p>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<div class="fixed bottom-10 right-10 z-50 group">
+<button class="relative w-[72px] h-[72px] bg-primary text-white rounded-full shadow-[0_8px_30px_rgb(230,0,0,0.3)] flex items-center justify-center hover:scale-110 hover:shadow-[0_8px_35px_rgb(230,0,0,0.4)] transition-all duration-300 cursor-pointer outline-none ring-0">
+<span class="material-symbols-outlined text-[32px]">shopping_cart</span>
+<span class="absolute top-0 right-0 -mt-1 -mr-1 h-7 w-7 bg-white text-primary text-sm font-extrabold flex items-center justify-center rounded-full border-2 border-primary shadow-sm">2</span>
+</button>
+<!-- Tooltip -->
+<div class="absolute bottom-full right-1/2 translate-x-1/2 mb-4 w-max px-4 py-2 bg-black text-white text-sm font-bold rounded-lg opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-300 pointer-events-none shadow-lg">
+            Ver Carrito ($1,070)
+            <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-black rotate-45"></div>
+</div>
+</div>
+</body></html>

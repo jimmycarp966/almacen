@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalle de Pedido (Admin)</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c33737",
+                        "background-light": "#ffffff",
+                        "background-dark": "#18181b",
+                        "surface-light": "#f8f8f8",
+                        "surface-dark": "#27272a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col transition-colors duration-200">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-6 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<h2 class="text-neutral-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Admin Panel</h2>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-neutral-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Admin User</p>
+<p class="text-xs text-neutral-500">Gerente de Ventas</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile picture placeholder with abstract gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdgX1JIrRupXC1SgDf_SsLI423pvsrGjCJBr3zPIj_tEuZnAYMXhnQw1whH6ajam9sKBZerHNZaOeQbcxaInHzyPZ09TJ6vRdA_F4vVq83sfwUyGrtSy7PexTwA0in1vndOSTP7buFHg9wttW0ODLe0di3Bt8fyB_f3zlsmX8dEHqZS2ydZtRg716L9sq1hUCJT-E_uP3W8YLe2LEFLkCN8xO8fk9wIqbLHLmfPsVwnjxnVCgSzqsMHaYYYhxwBAms9YWRMxTw3uw");'>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex justify-center w-full py-8 px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col w-full max-w-[1024px] gap-8">
+<!-- Breadcrumbs & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-sm">
+<a class="text-neutral-500 hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Pedidos
+                    </a>
+<span class="text-neutral-300">/</span>
+<span class="text-neutral-900 dark:text-white font-medium">Detalle del Pedido</span>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                        Imprimir
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Factura
+                    </button>
+</div>
+</div>
+<!-- Order Header Card -->
+<div class="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm">
+<div class="flex flex-wrap items-start justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<h1 class="text-3xl md:text-4xl font-black text-neutral-900 dark:text-white tracking-tight">Pedido #3492</h1>
+<div class="flex items-center justify-center px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+<span class="size-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+<span class="text-primary text-xs font-bold uppercase tracking-wider">Pendiente</span>
+</div>
+</div>
+<p class="text-neutral-500 dark:text-neutral-400 text-sm">Realizado el 24 de Octubre, 2023 a las 14:30 PM</p>
+</div>
+<!-- Customer Quick Info -->
+<div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto p-4 bg-surface-light dark:bg-surface-dark rounded-lg border border-neutral-100 dark:border-neutral-800">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-neutral-200 dark:bg-neutral-700 overflow-hidden" data-alt="Customer avatar placeholder">
+<img alt="Customer Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFaplkePh83E0PDgNWsx1siAm2EzFRTRkWQftgzyCxNlgDNT_zKwG7vkh-9XzE8QtE4P7btDnf4qBMx49U0HMjyMyunbFKJDoBEYq0XqBhO4TNUDLllhQR2XGXOAivMnZuRLMQ3MTiqoYgMXLcmE-_PqPP-uPPxxwFUcr1aLDv0BRM7Agrn-PFOXLlqVZ_92pDjVCm0V0DNG1o2lFAKR70j1iQudDzxb9J9Q001Ji4crAPn5dsxIa3Thu8FhQiyoc5NpLegywW9Fs"/>
+</div>
+<div>
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Juan Pérez</p>
+<p class="text-xs text-neutral-500 dark:text-neutral-400">ID: C-88921</p>
+</div>
+</div>
+<div class="w-px h-10 bg-neutral-200 dark:bg-neutral-700 hidden sm:block"></div>
+<div class="flex flex-col gap-2 justify-center">
+<div class="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
+<span class="material-symbols-outlined text-[16px] text-primary">smartphone</span>
+                                +52 555 123 4567
+                            </div>
+<div class="flex gap-2">
+<button class="flex-1 flex items-center justify-center gap-1 bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1.5 rounded transition-colors">
+<span class="material-symbols-outlined text-[14px]">chat</span>
+                                    WhatsApp
+                                </button>
+<button class="flex-1 flex items-center justify-center gap-1 bg-primary hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded transition-colors">
+<span class="material-symbols-outlined text-[14px]">call</span>
+                                    Llamar
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Table & Details Layout -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Main Table Section -->
+<div class="flex-1 flex flex-col gap-4">
+<div class="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden shadow-sm">
+<div class="border-b border-neutral-200 dark:border-neutral-800 px-6 py-4 bg-surface-light dark:bg-surface-dark">
+<h3 class="font-bold text-neutral-900 dark:text-white">Detalle de Productos</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-white dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-800">
+<tr>
+<th class="px-6 py-4 font-medium uppercase tracking-wider text-xs">Producto</th>
+<th class="px-6 py-4 font-medium uppercase tracking-wider text-xs w-24 text-center">Cant.</th>
+<th class="px-6 py-4 font-medium uppercase tracking-wider text-xs w-32 text-right">Precio Unit.</th>
+<th class="px-6 py-4 font-medium uppercase tracking-wider text-xs w-32 text-right">Subtotal</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-800 dark:text-neutral-200">
+<tr class="hover:bg-neutral-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-neutral-100 dark:bg-neutral-800 rounded bg-cover bg-center" data-alt="Image of running shoes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAZ_snB7hPU9WOKcKzPGWUJKxUxczVQtCz-H-7VSX0ko_oyKij1lsYxbb8JnUVdrG7FCXMt38k3Tb9cms9f3WkwBKuOlD-tf1jBcPDDvIgGnAJz0L0Qp0EtyIQJk-tzZrU218Q_VArd8DI1uIkIe16Cq1owNNNG6gDdjJ2TgOD5YUFCpvQcpmwjzKG5TODrZe3Q3MjLOZFt462aJfz9nN2c-0k1-q1u5-yZD2CkgcMt7uw4hBjyRNVUPtRIV2J4u_K_dgbKauSKTW4");'></div>
+<div>
+<p class="font-bold text-neutral-900 dark:text-white">Nike Air Zoom Pegasus</p>
+<p class="text-xs text-neutral-500">Talla: 42 | Color: Negro</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">1</td>
+<td class="px-6 py-4 text-right tabular-nums">$2,400.00</td>
+<td class="px-6 py-4 text-right tabular-nums font-bold">$2,400.00</td>
+</tr>
+<tr class="hover:bg-neutral-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-neutral-100 dark:bg-neutral-800 rounded bg-cover bg-center" data-alt="Image of sports watch" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBzEj5D9r4eAG6nDezbZ8apg3ulKPZbunvOLBJ0yNZSXsWBRdIIgKdmmtVwB24PpW6D5vZzrp1Y79a7vh74SGsFOFllZJujRQ3Ocv-9XYut0asZOL5SkMqZasWYFyH1Y7tzVi8viUDZ_-2sHn-vMfuY-TPuWHj8bRtVhaZnAZxlVzVe6bQ1yM3nJdLwXxESJ6kjN3nEenzfm54KaqnZEWmoOwbnm079qFPntnvkli3wryZIjIf9SYLp4LvyETWxaZLWqoXjbI2HkYQ");'></div>
+<div>
+<p class="font-bold text-neutral-900 dark:text-white">Garmin Forerunner 245</p>
+<p class="text-xs text-neutral-500">Color: Gris Pizarra</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">1</td>
+<td class="px-6 py-4 text-right tabular-nums">$5,800.00</td>
+<td class="px-6 py-4 text-right tabular-nums font-bold">$5,800.00</td>
+</tr>
+<tr class="hover:bg-neutral-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-neutral-100 dark:bg-neutral-800 rounded bg-cover bg-center" data-alt="Image of running socks" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAy8Gqr7iLgMtEXtJhAiXjaxfBCSjd2hy_Gd9nl9qCcG4aStBfn7GISe1zxnq515rKgPJGjEOsqGKNMwUg9jThR2Nsn6Z21JXuN9wHBrtwbYw3Qli2LkX6arqp2L2HrtR-quz7fJEOMu9aUFB_2rnBIfi3bqlocGDI6XAmyYIBiUqp2x_TxIultuTXF4ANnJ-KxctP7AS0j1uApaCRRKn1QUHflSO2KUrEQXeHJ400kxfxzQxJzRGfzAWJ7UX65WPxwyi6ZDUVxLL4");'></div>
+<div>
+<p class="font-bold text-neutral-900 dark:text-white">Calcetines Dry-Fit (Pack x3)</p>
+<p class="text-xs text-neutral-500">Talla: M</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-medium">2</td>
+<td class="px-6 py-4 text-right tabular-nums">$250.00</td>
+<td class="px-6 py-4 text-right tabular-nums font-bold">$500.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Summary Sidebar -->
+<div class="w-full lg:w-80 flex flex-col gap-6 shrink-0">
+<!-- Cost Summary -->
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-neutral-200 dark:border-neutral-800">
+<h3 class="font-bold text-neutral-900 dark:text-white mb-4 text-lg">Resumen</h3>
+<div class="space-y-3 text-sm border-b border-dashed border-neutral-300 dark:border-neutral-700 pb-4 mb-4">
+<div class="flex justify-between text-neutral-600 dark:text-neutral-400">
+<span>Subtotal</span>
+<span class="font-medium text-neutral-900 dark:text-white tabular-nums">$8,700.00</span>
+</div>
+<div class="flex justify-between text-neutral-600 dark:text-neutral-400">
+<span>Envío</span>
+<span class="font-medium text-neutral-900 dark:text-white tabular-nums">$150.00</span>
+</div>
+<div class="flex justify-between text-neutral-600 dark:text-neutral-400">
+<span>Impuestos (16%)</span>
+<span class="font-medium text-neutral-900 dark:text-white tabular-nums">$1,392.00</span>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-neutral-900 dark:text-white font-bold text-lg">Total General</span>
+<span class="text-primary font-black text-2xl tabular-nums">$10,242.00</span>
+</div>
+</div>
+<!-- Shipping Address -->
+<div class="bg-white dark:bg-neutral-900 p-6 rounded-xl border border-neutral-200 dark:border-neutral-800">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-neutral-400">local_shipping</span>
+<h3 class="font-bold text-neutral-900 dark:text-white">Dirección de Envío</h3>
+</div>
+<p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                            Calle Reforma 222, Piso 14<br/>
+                            Col. Juárez, Cuauhtémoc<br/>
+                            06600, Ciudad de México<br/>
+                            México
+                        </p>
+<div class="mt-4 h-24 w-full rounded-lg bg-neutral-100 dark:bg-neutral-800 overflow-hidden relative border border-neutral-200 dark:border-neutral-700">
+<div class="w-full h-full bg-cover bg-center opacity-75 grayscale hover:grayscale-0 transition-all duration-500" data-location="Mexico City Map" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwQqpxwEJNr-5pM7tTrdMB8zwuQe5RDDTvI5J_YIHyxYVotTZQVZtMb6_OydI8ZI1AbdslBpMsNiyheHqUcAczGscsIvO139PSRMJcbcvKy4PiCFIwhTVhjg3vU08sfh00Lr7tJE3TGHbF2NuzynDywkzPnv67U-zphjjef8HTAboSwgsxcWj_2wPzOQs0TOHxQO9IEWV3OizEkw1_CAgfNlZAllnsoYKc3JGdKlEHM278Jd-F8s7XMSLHH3MtiRLSfZFhuEOjDlY")'></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-primary text-3xl drop-shadow-md">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Action Footer -->
+<div class="sticky bottom-6 z-40">
+<div class="bg-neutral-900 dark:bg-neutral-800 text-white rounded-xl shadow-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-neutral-800 dark:border-neutral-700 ring-1 ring-white/10 backdrop-blur-md bg-opacity-95">
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<div class="p-2 bg-neutral-800 rounded-lg">
+<span class="material-symbols-outlined text-neutral-400">tune</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-neutral-400 font-medium uppercase tracking-wider">Gestión del Estado</span>
+<span class="text-sm font-medium">Actualizar progreso del pedido</span>
+</div>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<div class="relative w-full sm:w-48 group">
+<select class="w-full appearance-none bg-neutral-800 border border-neutral-700 text-white text-sm rounded-lg pl-4 pr-10 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none cursor-pointer transition-colors hover:bg-neutral-700">
+<option selected="" value="pendiente">Pendiente</option>
+<option value="preparacion">En Preparación</option>
+<option value="enviado">Enviado</option>
+<option value="entregado">Entregado</option>
+<option value="cancelado">Cancelado</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-neutral-400">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+<button class="bg-primary hover:bg-red-700 text-white text-sm font-bold py-2.5 px-6 rounded-lg transition-all shadow-[0_4px_14px_0_rgba(195,55,55,0.39)] hover:shadow-[0_6px_20px_rgba(195,55,55,0.23)] active:scale-95 whitespace-nowrap flex-1 sm:flex-none">
+                            Actualizar Estado
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nueva Categoría - Sistema de Inventario</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c33737",
+                        "background-light": "#f8f9fa",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'modal': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex items-center justify-center relative overflow-hidden text-[#171212] dark:text-white">
+<!-- Decorative background elements to provide context without clutter -->
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+<div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-100 to-transparent dark:from-gray-900"></div>
+<!-- Abstract grid representation of an inventory table -->
+<div class="container mx-auto px-10 pt-32 hidden md:block">
+<div class="h-12 w-full bg-gray-200/50 dark:bg-gray-800/50 rounded-lg mb-4"></div>
+<div class="h-12 w-3/4 bg-gray-100/50 dark:bg-gray-800/30 rounded-lg mb-4"></div>
+<div class="h-12 w-5/6 bg-gray-100/50 dark:bg-gray-800/30 rounded-lg mb-4"></div>
+<div class="h-12 w-full bg-gray-100/50 dark:bg-gray-800/30 rounded-lg mb-4"></div>
+</div>
+</div>
+<!-- Backdrop Overlay -->
+<div class="fixed inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-sm z-10 transition-opacity"></div>
+<!-- Modal Container -->
+<div class="relative z-20 w-full max-w-[440px] m-4">
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-modal border border-gray-100 dark:border-gray-700 flex flex-col overflow-hidden transform transition-all">
+<!-- Header -->
+<div class="px-8 pt-8 pb-2">
+<h2 class="text-2xl font-bold tracking-tight text-[#171212] dark:text-white">Nueva Categoría</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Define los detalles para organizar tus productos.</p>
+</div>
+<!-- Form Content -->
+<div class="px-8 py-4 flex flex-col gap-6">
+<!-- Category Name Input -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#171212] dark:text-white" for="category-name">
+                        Nombre de la Categoría
+                    </label>
+<input autofocus="" class="w-full h-12 px-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 text-[#171212] dark:text-white placeholder:text-gray-400 focus:outline-none focus:border-black dark:focus:border-white focus:ring-0 transition-colors shadow-sm" id="category-name" placeholder="Ej. Electrónica, Ropa, Hogar..." type="text"/>
+</div>
+<!-- Icon Picker -->
+<div class="flex flex-col gap-3">
+<p class="text-sm font-semibold text-[#171212] dark:text-white">Icono Representativo</p>
+<div class="grid grid-cols-4 gap-3">
+<!-- Icon Option 1: Tag (Default) -->
+<label class="cursor-pointer relative">
+<input checked="" class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+</div>
+</label>
+<!-- Icon Option 2: Devices -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">devices</span>
+</div>
+</label>
+<!-- Icon Option 3: Clothes -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">checkroom</span>
+</div>
+</label>
+<!-- Icon Option 4: Home -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">chair</span>
+</div>
+</label>
+<!-- Icon Option 5: Tools -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">build</span>
+</div>
+</label>
+<!-- Icon Option 6: Food -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">grocery</span>
+</div>
+</label>
+<!-- Icon Option 7: Sports -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">sports_soccer</span>
+</div>
+</label>
+<!-- Icon Option 8: Box/Other -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="category_icon" type="radio"/>
+<div class="h-12 w-full flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all peer-checked:border-primary peer-checked:text-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="px-8 pb-8 pt-6 flex flex-col-reverse sm:flex-row gap-3">
+<button class="flex-1 h-12 items-center justify-center rounded-lg bg-[#17191c] dark:bg-black text-white text-base font-bold hover:bg-gray-800 transition-colors focus:ring-2 focus:ring-gray-500 focus:outline-none">
+                    Cerrar
+                </button>
+<button class="flex-1 h-12 items-center justify-center rounded-lg bg-primary text-white text-base font-bold hover:bg-red-700 transition-colors shadow-lg shadow-primary/25 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none">
+                    Crear Categoría
+                </button>
+</div>
+</div>
+</div>
+</body></html>

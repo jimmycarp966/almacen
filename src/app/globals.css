@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #000000;
+  --rojo: #FF0000;
+  --gris-claro: #F5F5F5;
+  --gris-medio: #E0E0E0;
+  --gris-oscuro: #757575;
+  --verde: #00C853;
+  --amarillo: #FFD600;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-black font-sans;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#FF0000] text-white hover:bg-[#CC0000] px-6 py-3 rounded-md font-semibold transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-center;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-[#FF0000] text-black hover:bg-[#FFF5F5] px-6 py-3 rounded-md font-semibold transition-colors text-center;
+  }
+  
+  .btn-destructive {
+    @apply bg-white text-[#FF0000] border-2 border-[#FF0000] hover:bg-red-50 px-4 py-2 rounded-md font-semibold text-center;
+  }
+
+  .card-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
