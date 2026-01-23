@@ -17,7 +17,9 @@ const orderSchema = z.object({
     metodo_pago: z.string(),
     cuotas: z.number().int().optional(),
     datos_entrega: z.object({
-        direccion: z.string().min(5)
+        tipo_entrega: z.enum(['domicilio', 'retiro']).optional(),
+        costo_entrega: z.number().optional(),
+        direccion: z.string().optional() // Ya no es obligatoria
     }),
     comprobante_url: z.string().nullable().optional()
 })
@@ -30,6 +32,12 @@ export async function createPedidoAction(data: OrderData) {
 
         // Usar datos mock - simular creación de pedido
         const newOrderId = 'PED-2026-' + String(mockPedidos.length + 1).padStart(3, '0')
+
+        // Log para debug (en producción iría a Supabase)
+        console.log('Nuevo pedido creado:', {
+            id: newOrderId,
+            ...validatedData
+        })
 
         revalidatePath('/admin/pedidos')
 
