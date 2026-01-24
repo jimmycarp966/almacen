@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { createPedidoAction } from '@/actions/orders'
 import { generateWhatsAppUrl, WhatsAppOrderData } from '@/lib/whatsapp'
-import { TARJETAS_CREDITO, METODOS_SIN_RECARGO, calcularRecargo, getCuotasDisponibles, getNombreMetodo } from '@/lib/payment-methods'
+import { TARJETAS_CREDITO, METODOS_SIN_RECARGO, calcularRecargo, getCuotasDisponibles, getNombreMetodo, getEtiquetaCuotas } from '@/lib/payment-methods'
 import Image from 'next/image'
 
 const COSTO_ENVIO = 500
@@ -327,21 +327,29 @@ export default function CarritoPage() {
                                     </label>
                                     <div className="grid grid-cols-3 gap-2">
                                         {cuotasDisponibles.map((c) => {
-                                            const recargoPorc = calcularRecargo(metodoPago, c, 100) // Porcentaje
+                                            const etiqueta = getEtiquetaCuotas(metodoPago, c)
+                                            const esZeta = metodoPago === 'naranja' && c === 3
                                             return (
                                                 <button
                                                     key={c}
                                                     type="button"
                                                     onClick={() => setCuotas(c)}
-                                                    className={`py-3 rounded-xl border-2 font-black transition-all text-sm ${cuotas === c
-                                                        ? 'border-primary bg-primary text-white shadow-lg'
+                                                    className={`py-3 px-2 rounded-xl border-2 font-black transition-all text-sm ${cuotas === c
+                                                        ? esZeta ? 'border-purple-500 bg-purple-500 text-white shadow-lg' : 'border-primary bg-primary text-white shadow-lg'
                                                         : 'border-gray-100 bg-white text-text-secondary hover:border-gray-200'
                                                         }`}
                                                 >
-                                                    <div>{c} {c === 1 ? 'pago' : 'pagos'}</div>
-                                                    <div className="text-[10px] font-medium opacity-80">
-                                                        +{recargoPorc}% recargo
-                                                    </div>
+                                                    {esZeta ? (
+                                                        <>
+                                                            <div className="text-xs">Zeta</div>
+                                                            <div className="text-[10px] font-medium opacity-80">3 cuotas +40%</div>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <div>{c} {c === 1 ? 'pago' : 'pagos'}</div>
+                                                            <div className="text-[10px] font-medium opacity-80">{etiqueta.includes('sin') ? 'sin recargo' : etiqueta.split('(')[1]?.replace(')', '') || ''}</div>
+                                                        </>
+                                                    )}
                                                 </button>
                                             )
                                         })}

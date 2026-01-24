@@ -35,7 +35,7 @@ export function ProductCard({ id, nombre, descripcion, precio, imagen_url, categ
     return (
         <div className="group cursor-pointer product-card">
             <div
-                className={`relative overflow-hidden rounded-2xl bg-accent-gray mb-3 sm:mb-4 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 ${compact ? 'aspect-square' : 'aspect-[4/5]'
+                className={`relative overflow-hidden rounded-2xl bg-accent-gray mb-3 sm:mb-4 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 ${compact ? 'aspect-[5/4]' : 'aspect-[4/5]'
                     }`}
                 style={{ backgroundImage: `url('${displayImage}')` }}
             >

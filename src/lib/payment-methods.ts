@@ -57,27 +57,17 @@ export const TARJETAS_CREDITO: MetodoPago[] = [
     {
         id: 'naranja',
         nombre: 'Naranja',
-        descripcion: 'Tarjeta Naranja',
+        descripcion: 'Tarjeta Naranja - 1 cuota o Zeta (3 cuotas)',
         icono: 'credit_card',
         imagen: '/cards/naranja.svg',
-        cuotasDisponibles: [1],
-        recargos: { 1: 0.20 },
-        activo: true
-    },
-    {
-        id: 'zeta',
-        nombre: 'Zeta (Z)',
-        descripcion: 'Tarjeta Zeta',
-        icono: 'credit_card',
-        imagen: '/cards/zeta.svg',
-        cuotasDisponibles: [1],
-        recargos: { 1: 0.20 },
+        cuotasDisponibles: [1, 3], // 1 cuota normal, 3 cuotas = Zeta
+        recargos: { 1: 0.20, 3: 0.40 }, // Zeta (3 cuotas) tiene 40%
         activo: true
     },
     {
         id: 'credicash',
         nombre: 'Credicash',
-        descripcion: 'Tarjeta Credicash',
+        descripcion: 'Tarjeta Credicash - Solo 1 pago',
         icono: 'credit_card',
         imagen: '/cards/credicash.svg',
         cuotasDisponibles: [1],
@@ -137,10 +127,17 @@ export function getCuotasDisponibles(metodoPagoId: string): number[] {
     return metodo?.cuotasDisponibles || [1]
 }
 
-// Función para obtener nombre del método
-export function getNombreMetodo(metodoPagoId: string): string {
+// Función para obtener nombre del método con cuotas
+export function getNombreMetodo(metodoPagoId: string, cuotas?: number): string {
     const metodo = TODOS_METODOS_PAGO.find(m => m.id === metodoPagoId)
-    return metodo?.nombre || metodoPagoId
+    if (!metodo) return metodoPagoId
+
+    // Caso especial: Naranja con 3 cuotas = Zeta
+    if (metodoPagoId === 'naranja' && cuotas === 3) {
+        return 'Naranja Zeta (3 cuotas)'
+    }
+
+    return metodo.nombre
 }
 
 // Función para verificar si tiene recargo
@@ -148,4 +145,18 @@ export function tieneRecargo(metodoPagoId: string): boolean {
     const metodo = TODOS_METODOS_PAGO.find(m => m.id === metodoPagoId)
     if (!metodo) return false
     return Object.values(metodo.recargos).some(r => r > 0)
+}
+
+// Función para obtener etiqueta de cuotas (Naranja especial)
+export function getEtiquetaCuotas(metodoPagoId: string, cuotas: number): string {
+    if (metodoPagoId === 'naranja') {
+        if (cuotas === 1) return '1 pago (+20%)'
+        if (cuotas === 3) return 'Zeta 3 cuotas (+40%)'
+    }
+
+    const metodo = TODOS_METODOS_PAGO.find(m => m.id === metodoPagoId)
+    const recargo = metodo?.recargos[cuotas] || 0
+
+    if (recargo === 0) return `${cuotas} ${cuotas === 1 ? 'pago' : 'pagos'} (sin recargo)`
+    return `${cuotas} ${cuotas === 1 ? 'pago' : 'pagos'} (+${recargo * 100}%)`
 }
