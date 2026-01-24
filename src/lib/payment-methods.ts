@@ -61,7 +61,7 @@ export const TARJETAS_CREDITO: MetodoPago[] = [
         icono: 'credit_card',
         imagen: '/cards/naranja.svg',
         cuotasDisponibles: [1, 3], // 1 cuota normal, 3 cuotas = Zeta
-        recargos: { 1: 0.20, 3: 0.40 }, // Zeta (3 cuotas) tiene 40%
+        recargos: { 1: 0.20, 3: 0.20 }, // Zeta ahora tiene 20%
         activo: true
     },
     {
@@ -151,7 +151,7 @@ export function tieneRecargo(metodoPagoId: string): boolean {
 export function getEtiquetaCuotas(metodoPagoId: string, cuotas: number): string {
     if (metodoPagoId === 'naranja') {
         if (cuotas === 1) return '1 pago (+20%)'
-        if (cuotas === 3) return 'Zeta 3 cuotas (+40%)'
+        if (cuotas === 3) return 'Zeta (+20%)'
     }
 
     const metodo = TODOS_METODOS_PAGO.find(m => m.id === metodoPagoId)

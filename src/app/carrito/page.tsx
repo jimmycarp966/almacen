@@ -342,7 +342,7 @@ export default function CarritoPage() {
                                                     {esZeta ? (
                                                         <>
                                                             <div className="text-xs">Zeta</div>
-                                                            <div className="text-[10px] font-medium opacity-80">3 cuotas +40%</div>
+                                                            <div className="text-[10px] font-medium opacity-80">+20% recargo</div>
                                                         </>
                                                     ) : (
                                                         <>
