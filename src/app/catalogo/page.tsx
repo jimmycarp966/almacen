@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
-import { getCategorias, getProductos } from '@/actions/catalog'
+import { getCategorias, getProductos, getOfertasSemana } from '@/actions/catalog'
 import { Navbar } from '@/components/layout/Navbar'
 import { ProductCard } from '@/components/client/ProductCard'
 import { CartFAB } from '@/components/client/CartFAB'
@@ -27,6 +27,7 @@ function CatalogContent() {
 
     const [categorias, setCategorias] = useState<any[]>([])
     const [productos, setProductos] = useState<any[]>([])
+    const [ofertas, setOfertas] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     const categoriaId = searchParams.get('categoria') || 'todos'
@@ -40,12 +41,14 @@ function CatalogContent() {
     const loadProducts = async () => {
         setLoading(true)
         try {
-            const [cats, prods] = await Promise.all([
+            const [cats, prods, ofertasSemana] = await Promise.all([
                 getCategorias(),
-                getProductos(categoriaId, searchQuery || undefined, filters)
+                getProductos(categoriaId, searchQuery || undefined, filters),
+                getOfertasSemana()
             ])
             setCategorias(cats)
             setProductos(prods)
+            setOfertas(ofertasSemana)
         } catch (error) {
             console.error('Error cargando productos:', error)
         } finally {
@@ -59,9 +62,24 @@ function CatalogContent() {
 
     if (!mounted) return null
 
+    const showOfertas = categoriaId === 'todos' && !searchQuery
+
     return (
         <div className="min-h-screen bg-background-light">
             <Navbar />
+
+            {/* Banner de confianza - Fijo debajo del navbar */}
+            <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2.5 px-4 shadow-sm">
+                <div className="max-w-[1600px] mx-auto flex items-center justify-center gap-3">
+                    <span className="material-symbols-outlined text-xl">verified_user</span>
+                    <p className="text-sm font-bold">
+                        💚 Pagás cuando recibís y controlás tu pedido en tu domicilio
+                    </p>
+                    <span className="hidden sm:inline text-xs bg-white/20 px-2 py-0.5 rounded-full">
+                        ¡Compra segura!
+                    </span>
+                </div>
+            </div>
 
             {/* Categories Tabs */}
             <div className="sticky top-20 z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-[0_2px_15px_-10px_rgba(0,0,0,0.05)]">
@@ -111,9 +129,62 @@ function CatalogContent() {
                         </div>
                     ) : (
                         <>
-                            {/* Product Grid - 3 columns to make room for sidebar */}
+                            {/* 🔥 OFERTAS DE LA SEMANA - Solo en la vista principal */}
+                            {showOfertas && ofertas.length > 0 && (
+                                <section className="mb-16">
+                                    {/* Header de ofertas con diseño premium */}
+                                    <div className="bg-gradient-to-r from-primary via-red-500 to-orange-500 rounded-2xl p-6 mb-8 relative overflow-hidden">
+                                        <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E\")" }}></div>
+                                        <div className="relative z-10 flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <div className="bg-white/20 rounded-full p-3">
+                                                    <span className="material-symbols-outlined text-4xl text-white">local_fire_department</span>
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+                                                        🔥 Ofertas de la Semana
+                                                    </h3>
+                                                    <p className="text-white/80 text-sm font-medium">
+                                                        ¡Aprovechá antes de que se terminen!
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="hidden sm:block bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
+                                                <p className="text-white text-xs font-bold uppercase">Solo esta semana</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Grid de ofertas - 5 columnas en desktop */}
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+                                        {ofertas.map((prod) => (
+                                            <ProductCard
+                                                key={prod.id}
+                                                id={prod.id}
+                                                nombre={prod.nombre}
+                                                descripcion={prod.descripcion}
+                                                precio={prod.precio}
+                                                imagen_url={prod.imagen_url}
+                                                categoria_id={prod.categoria_id}
+                                                esNuevo={prod.esNuevo}
+                                                descuento={prod.descuento}
+                                                compact
+                                            />
+                                        ))}
+                                    </div>
+
+                                    {/* Separador */}
+                                    <div className="border-t-2 border-dashed border-gray-200 mt-12 mb-8 relative">
+                                        <span className="absolute left-1/2 -translate-x-1/2 -top-4 bg-background-light px-4 text-text-secondary font-bold text-sm uppercase tracking-wider">
+                                            Todos los productos
+                                        </span>
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Product Grid - 4 columnas con imágenes más pequeñas */}
                             {productos.length > 0 ? (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                                     {productos.map((prod) => (
                                         <ProductCard
                                             key={prod.id}
@@ -125,6 +196,7 @@ function CatalogContent() {
                                             categoria_id={prod.categoria_id}
                                             esNuevo={prod.esNuevo}
                                             descuento={prod.descuento}
+                                            compact
                                         />
                                     ))}
                                 </div>
@@ -169,7 +241,7 @@ function CatalogContent() {
 
             {/* FAB visible only on mobile */}
             <CartFAB className="lg:hidden" />
-        </div>
+        </div >
     )
 }
 

@@ -94,3 +94,36 @@ export async function revalidateCatalog() {
     revalidatePath('/catalogo/[categoria]')
     return { revalidated: true }
 }
+
+/**
+ * Obtiene las ofertas de la semana (productos con descuento o marcados como oferta)
+ * Límite de 10 productos
+ */
+export async function getOfertasSemana() {
+    try {
+        const { data, error } = await supabase
+            .from('productos')
+            .select('*')
+            .eq('activo', true)
+            .or('es_oferta.eq.true,descuento.gt.0')
+            .limit(10)
+            .order('descuento', { ascending: false })
+
+        if (error || !data || data.length === 0) {
+            // Si no hay ofertas en la base de datos, usar los primeros 10 productos mock
+            return mockProductos.slice(0, 10).map((prod, index) => ({
+                ...prod,
+                esNuevo: index < 3, // Primeros 3 como nuevos
+                descuento: index % 2 === 0 ? 15 : 0 // Alternar descuentos para demo
+            }))
+        }
+        return data
+    } catch {
+        return mockProductos.slice(0, 10).map((prod, index) => ({
+            ...prod,
+            esNuevo: index < 3,
+            descuento: index % 2 === 0 ? 15 : 0
+        }))
+    }
+}
+

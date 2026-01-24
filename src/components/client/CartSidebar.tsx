@@ -123,29 +123,36 @@ export function CartSidebar({ className = '' }: CartSidebarProps) {
 
             {/* Footer / Totals */}
             <div className="bg-white border-t border-gray-200 p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-10">
+                {/* Mensaje de confianza */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-green-600 text-lg">verified_user</span>
+                    <p className="text-green-800 text-xs font-medium">
+                        Pagás cuando recibís y controlás tu pedido
+                    </p>
+                </div>
+
                 <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-sm text-text-secondary">
                         <span>Subtotal</span>
                         <span className="font-medium text-text-main">${subtotal.toLocaleString('es-AR')}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-text-secondary">
-                        <span>Impuestos (16%)</span>
-                        <span className="font-medium text-text-main">${impuestos.toLocaleString('es-AR')}</span>
-                    </div>
                     <div className="border-t border-dashed border-gray-200 my-2"></div>
                     <div className="flex justify-between items-end">
-                        <span className="text-base font-bold text-text-main">Total a Pagar</span>
+                        <span className="text-base font-bold text-text-main">Total</span>
                         <span className="text-2xl font-black text-text-main tracking-tight">
-                            ${total.toLocaleString('es-AR')}
+                            ${subtotal.toLocaleString('es-AR')}
                         </span>
                     </div>
+                    <p className="text-xs text-text-secondary text-center">
+                        * El recargo por cuotas se calcula en el checkout
+                    </p>
                 </div>
 
                 <Link
                     href="/carrito"
                     className={`w-full font-bold text-base py-4 px-6 rounded-xl shadow-lg transition-all flex justify-between items-center group ${items.length === 0
-                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none'
-                            : 'bg-primary hover:bg-primary-dark text-white shadow-primary/30 hover:translate-y-[-2px] active:translate-y-[0px]'
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none'
+                        : 'bg-primary hover:bg-primary-dark text-white shadow-primary/30 hover:translate-y-[-2px] active:translate-y-[0px]'
                         }`}
                     onClick={(e) => items.length === 0 && e.preventDefault()}
                 >

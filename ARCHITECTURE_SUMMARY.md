@@ -59,8 +59,17 @@ Proveer un sistema de supermercado online premium con catálogo de acceso libre 
 - **UI:** Responsive, modo claro exclusivo
 
 ## 🔧 Cambios Recientes (Ene 2026)
-- Eliminada autenticación obligatoria para clientes
-- Nuevo checkout en 4 pasos con WhatsApp
-- Selector de entrega: Domicilio ($500) / Retiro (gratis)
+- **Sistema de Pagos Renovado:**
+  - Eliminado pago en efectivo
+  - 7 tarjetas de crédito con recargos: Visa, Mastercard, Cabal, Maestro, Naranja, Zeta, Credicash
+  - 3 métodos sin recargo: Transferencia/QR, Débito, Tarjeta Alimentar
+  - Pago al momento de la entrega con posnet
+- **Catálogo Mejorado:**
+  - Sección "Ofertas de la Semana" con 10 productos destacados
+  - Imágenes de productos más compactas (grid 4-5 columnas)
+  - Banner de confianza verde
+- **Mensajes de Confianza:**
+  - "Pagás cuando recibís y controlás tu pedido" en navbar, checkout y WhatsApp
+- WhatsApp: 3865572025
 - Panel admin responsive con sidebar colapsable
-- Clientes pre-registrados (sin pedir dirección)
+

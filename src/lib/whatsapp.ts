@@ -10,6 +10,8 @@ export interface WhatsAppOrderData {
     tipoEntrega: 'domicilio' | 'retiro'
     costoEntrega: number
     metodoPago: string
+    cuotas?: number
+    recargo?: number
     subtotal: number
     total: number
 }
@@ -28,7 +30,7 @@ export function generateWhatsAppUrl(phoneNumber: string, orderData: WhatsAppOrde
  * Formatea el mensaje del pedido para WhatsApp
  */
 export function formatOrderMessage(orderData: WhatsAppOrderData): string {
-    const { items, tipoEntrega, costoEntrega, metodoPago, subtotal, total } = orderData
+    const { items, tipoEntrega, costoEntrega, metodoPago, cuotas, recargo, subtotal, total } = orderData
 
     // Header
     let message = `🛒 *NUEVO PEDIDO*\n`
@@ -53,12 +55,15 @@ export function formatOrderMessage(orderData: WhatsAppOrderData): string {
 
     // Método de pago
     message += `💳 *MÉTODO DE PAGO:*\n`
-    const metodosMap: Record<string, string> = {
-        'efectivo': '💵 Efectivo',
-        'tarjeta': '💳 Tarjeta',
-        'transferencia': '🏦 Transferencia'
+    message += `• ${metodoPago}`
+    if (cuotas && cuotas > 1) {
+        message += ` en ${cuotas} cuotas`
     }
-    message += `• ${metodosMap[metodoPago] || metodoPago}\n\n`
+    message += `\n`
+    if (recargo && recargo > 0) {
+        message += `• Recargo: +$${recargo.toLocaleString('es-AR')}\n`
+    }
+    message += `\n`
 
     // Totales
     message += `━━━━━━━━━━━━━━━━━\n`
@@ -66,8 +71,16 @@ export function formatOrderMessage(orderData: WhatsAppOrderData): string {
     if (costoEntrega > 0) {
         message += `🚚 Envío: +$${costoEntrega.toLocaleString('es-AR')}\n`
     }
+    if (recargo && recargo > 0) {
+        message += `💳 Recargo: +$${recargo.toLocaleString('es-AR')}\n`
+    }
     message += `💰 *TOTAL: $${total.toLocaleString('es-AR')}*\n`
     message += `━━━━━━━━━━━━━━━━━\n\n`
+
+    // Mensaje de confianza
+    message += `🛡️ *IMPORTANTE:*\n`
+    message += `El pago se realizará al momento de la entrega.\n`
+    message += `Pagás cuando recibís y controlás tu pedido.\n\n`
 
     message += `¡Gracias por tu pedido! 🙏`
 

@@ -9,16 +9,11 @@ import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { createPedidoAction } from '@/actions/orders'
 import { generateWhatsAppUrl, WhatsAppOrderData } from '@/lib/whatsapp'
+import { TARJETAS_CREDITO, METODOS_SIN_RECARGO, calcularRecargo, getCuotasDisponibles, getNombreMetodo } from '@/lib/payment-methods'
+import Image from 'next/image'
 
 const COSTO_ENVIO = 500
-const WHATSAPP_ADMIN = '5493814011673' // Número del admin configurable
-
-const CUOTAS_RECARGOS = {
-    1: 0,
-    3: 0.10,
-    6: 0.15,
-    12: 0.20
-}
+const WHATSAPP_ADMIN = '5493865572025' // Número del negocio
 
 const STEPS = ['Productos', 'Entrega', 'Pago', 'Confirmar']
 
@@ -32,21 +27,26 @@ export default function CarritoPage() {
 
     // Form states
     const [tipoEntrega, setTipoEntrega] = useState<'domicilio' | 'retiro'>('retiro')
-    const [metodoPago, setMetodoPago] = useState('efectivo')
+    const [metodoPago, setMetodoPago] = useState('visa')
     const [cuotas, setCuotas] = useState(1)
 
     useEffect(() => {
         setMounted(true)
     }, [])
 
+    // Resetear cuotas cuando cambia el método de pago
+    useEffect(() => {
+        const cuotasDisponibles = getCuotasDisponibles(metodoPago)
+        if (!cuotasDisponibles.includes(cuotas)) {
+            setCuotas(cuotasDisponibles[0] || 1)
+        }
+    }, [metodoPago, cuotas])
+
     const subtotal = useMemo(() => getTotal(), [getTotal])
     const costoEntrega = tipoEntrega === 'domicilio' ? COSTO_ENVIO : 0
 
     const recargo = useMemo(() => {
-        if (metodoPago === 'tarjeta') {
-            return subtotal * (CUOTAS_RECARGOS[cuotas as keyof typeof CUOTAS_RECARGOS] || 0)
-        }
-        return 0
+        return calcularRecargo(metodoPago, cuotas, subtotal)
     }, [subtotal, metodoPago, cuotas])
 
     const total = subtotal + costoEntrega + recargo
@@ -86,7 +86,7 @@ export default function CarritoPage() {
                 recargo,
                 total,
                 metodo_pago: metodoPago,
-                cuotas: metodoPago === 'tarjeta' ? cuotas : 0,
+                cuotas: cuotas,
                 datos_entrega: {
                     tipo_entrega: tipoEntrega,
                     costo_entrega: costoEntrega
@@ -107,7 +107,9 @@ export default function CarritoPage() {
                     })),
                     tipoEntrega,
                     costoEntrega,
-                    metodoPago,
+                    metodoPago: getNombreMetodo(metodoPago),
+                    cuotas,
+                    recargo,
                     subtotal,
                     total
                 }
@@ -135,6 +137,8 @@ export default function CarritoPage() {
     const nextStep = () => setStep(prev => Math.min(prev + 1, STEPS.length - 1))
     const prevStep = () => setStep(prev => Math.max(prev - 1, 0))
 
+    const cuotasDisponibles = getCuotasDisponibles(metodoPago)
+
     return (
         <div className="min-h-screen bg-background-light">
             <Navbar />
@@ -145,6 +149,15 @@ export default function CarritoPage() {
                 </h1>
 
                 <CheckoutSteps currentStep={step} steps={STEPS} />
+
+                {/* Banner de confianza */}
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 flex items-center gap-3">
+                    <span className="material-symbols-outlined text-green-600 text-2xl">verified_user</span>
+                    <div>
+                        <p className="text-green-800 font-bold text-sm">💚 Pagás cuando recibís y controlás tu pedido</p>
+                        <p className="text-green-700 text-xs">El pago se realiza en el momento de la entrega con posnet</p>
+                    </div>
+                </div>
 
                 {error && (
                     <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm font-bold border border-red-100 mb-6">
@@ -197,8 +210,8 @@ export default function CarritoPage() {
 
                             {/* Info adicional */}
                             <div className={`mt-6 p-4 rounded-xl border ${tipoEntrega === 'domicilio'
-                                    ? 'bg-red-50/50 border-red-100'
-                                    : 'bg-green-50/50 border-green-100'
+                                ? 'bg-red-50/50 border-red-100'
+                                : 'bg-green-50/50 border-green-100'
                                 }`}>
                                 <div className="flex items-start gap-3">
                                     <span className={`material-symbols-outlined text-xl ${tipoEntrega === 'domicilio' ? 'text-primary' : 'text-green-600'
@@ -220,6 +233,13 @@ export default function CarritoPage() {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Mensaje de confianza */}
+                            <div className="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-100">
+                                <p className="text-blue-800 text-xs text-center font-medium">
+                                    🛡️ El repartidor llevará posnet para que pagues al recibir
+                                </p>
+                            </div>
                         </div>
                     )}
 
@@ -228,68 +248,119 @@ export default function CarritoPage() {
                         <div className="p-4 sm:p-8 space-y-6">
                             <h3 className="text-lg font-bold text-text-main">Método de Pago</h3>
 
-                            <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                                {[
-                                    { key: 'efectivo', icon: 'payments', label: 'Efectivo' },
-                                    { key: 'tarjeta', icon: 'credit_card', label: 'Tarjeta' },
-                                    { key: 'transferencia', icon: 'account_balance', label: 'Transfer.' }
-                                ].map((m) => (
-                                    <button
-                                        key={m.key}
-                                        type="button"
-                                        onClick={() => setMetodoPago(m.key)}
-                                        className={`flex flex-col items-center justify-center gap-2 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all font-bold ${metodoPago === m.key
-                                                ? 'border-primary bg-red-50 text-primary scale-105 shadow-md'
-                                                : 'border-gray-50 bg-gray-50 hover:border-gray-100 text-text-secondary'
-                                            }`}
-                                    >
-                                        <span className="material-symbols-outlined text-xl sm:text-2xl">{m.icon}</span>
-                                        <span className="text-[10px] sm:text-xs">{m.label}</span>
-                                    </button>
-                                ))}
+                            {/* Mensaje de confianza */}
+                            <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-green-600">security</span>
+                                <p className="text-green-800 text-xs font-medium">
+                                    💳 El pago se realiza al momento de la entrega - Pagás cuando recibís y controlás tu pedido
+                                </p>
                             </div>
 
-                            {metodoPago === 'tarjeta' && (
+                            {/* Tarjetas con recargo */}
+                            <div>
+                                <p className="text-xs text-text-secondary font-bold uppercase tracking-wider mb-3">
+                                    Tarjetas de Crédito (con recargo según cuotas)
+                                </p>
+                                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                                    {TARJETAS_CREDITO.map((tarjeta) => (
+                                        <button
+                                            key={tarjeta.id}
+                                            type="button"
+                                            onClick={() => setMetodoPago(tarjeta.id)}
+                                            className={`flex flex-col items-center justify-center gap-1 p-2 sm:p-3 rounded-xl border-2 transition-all ${metodoPago === tarjeta.id
+                                                ? 'border-primary bg-red-50 scale-105 shadow-md'
+                                                : 'border-gray-100 bg-white hover:border-gray-200'
+                                                }`}
+                                        >
+                                            <Image
+                                                src={tarjeta.imagen || ''}
+                                                alt={tarjeta.nombre}
+                                                width={40}
+                                                height={28}
+                                                className="object-contain"
+                                            />
+                                            <span className="text-[8px] sm:text-[10px] font-bold text-text-secondary text-center">
+                                                {tarjeta.nombre}
+                                            </span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Sin recargo */}
+                            <div>
+                                <p className="text-xs text-text-secondary font-bold uppercase tracking-wider mb-3">
+                                    Sin Recargo ✨
+                                </p>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {METODOS_SIN_RECARGO.map((metodo) => (
+                                        <button
+                                            key={metodo.id}
+                                            type="button"
+                                            onClick={() => setMetodoPago(metodo.id)}
+                                            className={`flex flex-col items-center justify-center gap-2 p-3 sm:p-4 rounded-xl border-2 transition-all ${metodoPago === metodo.id
+                                                ? 'border-green-500 bg-green-50 scale-105 shadow-md'
+                                                : 'border-gray-100 bg-white hover:border-gray-200'
+                                                }`}
+                                        >
+                                            <Image
+                                                src={metodo.imagen || ''}
+                                                alt={metodo.nombre}
+                                                width={40}
+                                                height={28}
+                                                className="object-contain"
+                                            />
+                                            <span className="text-[10px] sm:text-xs font-bold text-text-secondary text-center">
+                                                {metodo.nombre}
+                                            </span>
+                                            <span className="text-[8px] text-green-600 font-bold">SIN RECARGO</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Cuotas (solo si tiene más de 1 opción) */}
+                            {cuotasDisponibles.length > 1 && (
                                 <div className="space-y-4 animate-fade-in-up">
                                     <label className="text-sm font-bold text-text-main uppercase tracking-wider">
                                         Cantidad de Cuotas
                                     </label>
-                                    <div className="grid grid-cols-4 gap-2">
-                                        {[1, 3, 6, 12].map((c) => (
-                                            <button
-                                                key={c}
-                                                type="button"
-                                                onClick={() => setCuotas(c)}
-                                                className={`py-3 rounded-xl border-2 font-black transition-all text-sm ${cuotas === c
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {cuotasDisponibles.map((c) => {
+                                            const recargoPorc = calcularRecargo(metodoPago, c, 100) // Porcentaje
+                                            return (
+                                                <button
+                                                    key={c}
+                                                    type="button"
+                                                    onClick={() => setCuotas(c)}
+                                                    className={`py-3 rounded-xl border-2 font-black transition-all text-sm ${cuotas === c
                                                         ? 'border-primary bg-primary text-white shadow-lg'
                                                         : 'border-gray-100 bg-white text-text-secondary hover:border-gray-200'
-                                                    }`}
-                                            >
-                                                {c}x
-                                            </button>
-                                        ))}
+                                                        }`}
+                                                >
+                                                    <div>{c} {c === 1 ? 'pago' : 'pagos'}</div>
+                                                    <div className="text-[10px] font-medium opacity-80">
+                                                        +{recargoPorc}% recargo
+                                                    </div>
+                                                </button>
+                                            )
+                                        })}
                                     </div>
-                                    <p className="text-[10px] text-text-secondary uppercase font-bold text-center">
-                                        {cuotas === 1 ? 'Sin recargo' : `Recargo del ${(CUOTAS_RECARGOS[cuotas as keyof typeof CUOTAS_RECARGOS] * 100).toFixed(0)}% incluido`}
-                                    </p>
                                 </div>
                             )}
 
-                            {metodoPago === 'transferencia' && (
-                                <div className="bg-blue-50/50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-blue-100">
-                                    <div className="flex items-start gap-3 sm:gap-4">
-                                        <div className="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center shrink-0">
-                                            <span className="material-symbols-outlined">info</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-blue-900 text-sm">Datos de Transferencia</h4>
-                                            <p className="text-xs text-blue-800 mt-1 leading-relaxed">
-                                                CBU: 12345678901234567890<br />
-                                                ALIAS: super.aguilares.ok<br />
-                                                BANCO: Banco Nación
-                                            </p>
-                                        </div>
-                                    </div>
+                            {/* Resumen de recargo */}
+                            {recargo > 0 ? (
+                                <div className="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                                    <p className="text-amber-800 text-sm font-medium">
+                                        💳 Recargo por pago en {cuotas} {cuotas === 1 ? 'cuota' : 'cuotas'}: <strong>+${recargo.toLocaleString('es-AR')}</strong>
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="bg-green-50 p-4 rounded-xl border border-green-200">
+                                    <p className="text-green-800 text-sm font-medium">
+                                        ✨ ¡Este método de pago no tiene recargo!
+                                    </p>
                                 </div>
                             )}
                         </div>
@@ -299,6 +370,17 @@ export default function CarritoPage() {
                     {step === 3 && (
                         <div className="p-4 sm:p-8">
                             <h3 className="text-lg font-bold text-text-main mb-6">Resumen del Pedido</h3>
+
+                            {/* Banner destacado */}
+                            <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white p-4 rounded-xl mb-6">
+                                <div className="flex items-center gap-3">
+                                    <span className="material-symbols-outlined text-3xl">verified_user</span>
+                                    <div>
+                                        <p className="font-bold">¡Comprá con tranquilidad!</p>
+                                        <p className="text-sm opacity-90">Pagás recién cuando recibís y controlás tu pedido</p>
+                                    </div>
+                                </div>
+                            </div>
 
                             {/* Lista de productos resumida */}
                             <div className="space-y-2 mb-6">
@@ -342,10 +424,14 @@ export default function CarritoPage() {
 
                                 <div className="flex justify-between text-sm">
                                     <span className="text-text-secondary flex items-center gap-2">
-                                        <span className="material-symbols-outlined text-base">
-                                            {metodoPago === 'efectivo' ? 'payments' : metodoPago === 'tarjeta' ? 'credit_card' : 'account_balance'}
-                                        </span>
-                                        Pago: {metodoPago.charAt(0).toUpperCase() + metodoPago.slice(1)}
+                                        <Image
+                                            src={`/cards/${metodoPago === 'transferencia_qr' ? 'qr' : metodoPago === 'alimentar' ? 'alimentar' : metodoPago}.svg`}
+                                            alt={getNombreMetodo(metodoPago)}
+                                            width={24}
+                                            height={16}
+                                            className="object-contain"
+                                        />
+                                        Pago: {getNombreMetodo(metodoPago)}
                                     </span>
                                 </div>
 
@@ -365,6 +451,8 @@ export default function CarritoPage() {
                                     <span className="material-symbols-outlined text-green-600 text-xl">chat</span>
                                     <p className="text-sm text-green-800">
                                         <strong>Al finalizar,</strong> se abrirá WhatsApp con tu pedido listo para enviar al negocio.
+                                        <br />
+                                        <span className="text-xs opacity-80">El pago lo realizás cuando recibís el pedido 🛡️</span>
                                     </p>
                                 </div>
                             </div>
