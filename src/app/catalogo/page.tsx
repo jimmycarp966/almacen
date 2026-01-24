@@ -131,55 +131,81 @@ function CatalogContent() {
                         <>
                             {/* 🔥 OFERTAS DE LA SEMANA - Solo en la vista principal */}
                             {showOfertas && ofertas.length > 0 && (
-                                <section className="mb-16">
-                                    {/* Header de ofertas con diseño premium */}
-                                    <div className="bg-gradient-to-r from-primary via-red-500 to-orange-500 rounded-2xl p-6 mb-8 relative overflow-hidden">
-                                        <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E\")" }}></div>
-                                        <div className="relative z-10 flex items-center justify-between">
-                                            <div className="flex items-center gap-4">
-                                                <div className="bg-white/20 rounded-full p-3">
-                                                    <span className="material-symbols-outlined text-4xl text-white">local_fire_department</span>
+                                <section className="mb-16 relative">
+                                    {/* Fondo distintivo con gradiente oscuro y bordes brillantes */}
+                                    <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl -z-10 overflow-hidden">
+                                        {/* Efecto de estrellas/partículas */}
+                                        <div className="absolute inset-0 opacity-30">
+                                            <div className="absolute top-4 left-[10%] w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                                            <div className="absolute top-8 left-[25%] w-1 h-1 bg-white rounded-full animate-ping"></div>
+                                            <div className="absolute top-6 left-[50%] w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse delay-100"></div>
+                                            <div className="absolute top-10 left-[75%] w-1 h-1 bg-yellow-300 rounded-full animate-ping delay-200"></div>
+                                            <div className="absolute top-4 right-[10%] w-2 h-2 bg-red-400 rounded-full animate-pulse delay-300"></div>
+                                            <div className="absolute bottom-8 left-[15%] w-1.5 h-1.5 bg-orange-300 rounded-full animate-ping delay-150"></div>
+                                            <div className="absolute bottom-6 left-[40%] w-1 h-1 bg-yellow-400 rounded-full animate-pulse delay-200"></div>
+                                            <div className="absolute bottom-10 right-[30%] w-2 h-2 bg-red-500 rounded-full animate-ping delay-100"></div>
+                                            <div className="absolute bottom-4 right-[15%] w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                                        </div>
+                                        {/* Overlay con gradiente */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                                        {/* Borde brillante animado */}
+                                        <div className="absolute inset-0 rounded-3xl border-2 border-orange-500/30"></div>
+                                        <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-transparent via-orange-500/20 to-transparent animate-pulse"></div>
+                                    </div>
+
+                                    {/* Contenido con padding interno */}
+                                    <div className="relative pt-4 sm:pt-6 px-4 sm:px-6 pb-6 sm:pb-8">
+                                        {/* Header de ofertas */}
+                                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 sm:mb-8">
+                                            <div className="flex items-center gap-3 sm:gap-4">
+                                                <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-full p-2.5 sm:p-3 shadow-lg shadow-orange-500/30 animate-pulse">
+                                                    <span className="material-symbols-outlined text-2xl sm:text-4xl text-white">local_fire_department</span>
                                                 </div>
-                                                <div>
-                                                    <h3 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+                                                <div className="text-center sm:text-left">
+                                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight drop-shadow-lg">
                                                         🔥 Ofertas de la Semana
                                                     </h3>
-                                                    <p className="text-white/80 text-sm font-medium">
+                                                    <p className="text-orange-200 text-xs sm:text-sm font-medium">
                                                         ¡Aprovechá antes de que se terminen!
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="hidden sm:block bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
-                                                <p className="text-white text-xs font-bold uppercase">Solo esta semana</p>
+                                            <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-full px-4 py-1.5 sm:py-2 shadow-lg animate-bounce">
+                                                <p className="text-white text-[10px] sm:text-xs font-black uppercase tracking-widest">
+                                                    🎉 Solo esta semana
+                                                </p>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    {/* Grid de ofertas - 5 columnas en desktop */}
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-                                        {ofertas.map((prod) => (
-                                            <ProductCard
-                                                key={prod.id}
-                                                id={prod.id}
-                                                nombre={prod.nombre}
-                                                descripcion={prod.descripcion}
-                                                precio={prod.precio}
-                                                imagen_url={prod.imagen_url}
-                                                categoria_id={prod.categoria_id}
-                                                esNuevo={prod.esNuevo}
-                                                descuento={prod.descuento}
-                                                compact
-                                            />
-                                        ))}
-                                    </div>
-
-                                    {/* Separador */}
-                                    <div className="border-t-2 border-dashed border-gray-200 mt-12 mb-8 relative">
-                                        <span className="absolute left-1/2 -translate-x-1/2 -top-4 bg-background-light px-4 text-text-secondary font-bold text-sm uppercase tracking-wider">
-                                            Todos los productos
-                                        </span>
+                                        {/* Grid de ofertas - 5 columnas en desktop */}
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
+                                            {ofertas.map((prod) => (
+                                                <div key={prod.id} className="bg-white/95 backdrop-blur-sm rounded-2xl p-2 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
+                                                    <ProductCard
+                                                        id={prod.id}
+                                                        nombre={prod.nombre}
+                                                        descripcion={prod.descripcion}
+                                                        precio={prod.precio}
+                                                        imagen_url={prod.imagen_url}
+                                                        categoria_id={prod.categoria_id}
+                                                        esNuevo={prod.esNuevo}
+                                                        descuento={prod.descuento}
+                                                        compact
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </section>
+                            )}
+
+                            {/* Separador visual */}
+                            {showOfertas && ofertas.length > 0 && (
+                                <div className="border-t-2 border-dashed border-gray-200 mt-4 mb-10 relative">
+                                    <span className="absolute left-1/2 -translate-x-1/2 -top-4 bg-background-light px-4 text-text-secondary font-bold text-sm uppercase tracking-wider">
+                                        Todos los productos
+                                    </span>
+                                </div>
                             )}
 
                             {/* Product Grid - 4 columnas con imágenes más pequeñas */}
