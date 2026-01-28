@@ -5,6 +5,7 @@ import { mockCategorias, mockProductos } from '@/lib/mockData'
 import { revalidatePath } from 'next/cache'
 
 export async function getCategorias() {
+    console.log('--- getCategorias START ---')
     try {
         const { data, error } = await supabase
             .from('categorias')
@@ -13,13 +14,19 @@ export async function getCategorias() {
             .order('nombre')
 
         if (error) {
-            console.error('Error al obtener categorías:', error)
-            return []
+            console.error('Error al obtener categorías de Supabase:', error)
+            console.log('Usando mockCategorias como fallback')
+            return mockCategorias.filter(c => c.activo)
         }
+
+        console.log(`getCategorias exitoso: ${data?.length || 0} categorías encontradas`)
         return data || []
     } catch (error) {
         console.error('Error inesperado al obtener categorías:', error)
-        return []
+        console.log('Usando mockCategorias como fallback (catch)')
+        return mockCategorias.filter(c => c.activo)
+    } finally {
+        console.log('--- getCategorias END ---')
     }
 }
 
@@ -29,6 +36,7 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
     inStock?: boolean
     sortBy?: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
 }) {
+    console.log('--- getProductos START ---', { categoriaId, searchQuery, filters })
     try {
         let query = supabase
             .from('productos')
@@ -81,13 +89,19 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
         const { data, error } = await query
 
         if (error) {
-            console.error('Error al obtener productos:', error)
-            return []
+            console.error('Error al obtener productos de Supabase:', error)
+            console.log('Usando mockProductos como fallback')
+            return mockProductos.filter(p => p.activo)
         }
+
+        console.log(`getProductos exitoso: ${data?.length || 0} productos encontrados`)
         return data || []
     } catch (error) {
         console.error('Error inesperado al obtener productos:', error)
-        return []
+        console.log('Usando mockProductos como fallback (catch)')
+        return mockProductos.filter(p => p.activo)
+    } finally {
+        console.log('--- getProductos END ---')
     }
 }
 
@@ -105,6 +119,7 @@ export async function revalidateCatalog() {
  * Límite de 10 productos
  */
 export async function getOfertasSemana() {
+    console.log('--- getOfertasSemana START ---')
     try {
         const { data, error } = await supabase
             .from('productos')
@@ -115,13 +130,19 @@ export async function getOfertasSemana() {
             .order('descuento', { ascending: false })
 
         if (error) {
-            console.error('Error al obtener ofertas:', error)
-            return []
+            console.error('Error al obtener ofertas de Supabase:', error)
+            console.log('Usando mock de ofertas como fallback')
+            return mockProductos.filter(p => p.activo && p.descuento).slice(0, 10)
         }
+
+        console.log(`getOfertasSemana exitoso: ${data?.length || 0} ofertas encontradas`)
         return data || []
     } catch (error) {
         console.error('Error inesperado al obtener ofertas:', error)
-        return []
+        console.log('Usando mock de ofertas como fallback (catch)')
+        return mockProductos.filter(p => p.activo && p.descuento).slice(0, 10)
+    } finally {
+        console.log('--- getOfertasSemana END ---')
     }
 }
 

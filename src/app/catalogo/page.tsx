@@ -29,6 +29,7 @@ function CatalogContent() {
     const [productos, setProductos] = useState<any[]>([])
     const [ofertas, setOfertas] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
 
     const categoriaId = searchParams.get('categoria') || 'todos'
     const searchQuery = searchParams.get('q') || ''
@@ -40,19 +41,28 @@ function CatalogContent() {
 
     const loadProducts = async () => {
         setLoading(true)
+        setError(null)
         try {
+            console.log('Catalog: Iniciando carga de productos...')
             const [cats, prods, ofertasSemana] = await Promise.all([
                 getCategorias(),
                 getProductos(categoriaId, searchQuery || undefined, filters),
                 getOfertasSemana()
             ])
+
+            if (cats.length === 0 && prods.length === 0) {
+                console.warn('Catalog: No se recibieron datos.')
+            }
+
             setCategorias(cats)
             setProductos(prods)
             setOfertas(ofertasSemana)
-        } catch (error) {
-            console.error('Error cargando productos:', error)
+        } catch (err) {
+            console.error('Catalog: Error en la carga:', err)
+            setError('No pudimos conectar con el servidor. Mostrando datos de respaldo.')
         } finally {
             setLoading(false)
+            console.log('Catalog: Carga finalizada.')
         }
     }
 
