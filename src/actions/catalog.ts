@@ -42,8 +42,9 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
 
         // Filtrar por búsqueda
         if (searchQuery && searchQuery.trim()) {
-            const queryLower = searchQuery.toLowerCase().trim()
-            query = query.or(`nombre.ilike.%${queryLower}%,descripcion.ilike.%${queryLower}%`)
+            const queryWords = searchQuery.toLowerCase().trim().split(/\s+/).filter(word => word.length > 0)
+            const searchPattern = `%${queryWords.join('%')}%`
+            query = query.or(`nombre.ilike.${searchPattern},descripcion.ilike.${searchPattern}`)
         }
 
         // Filtrar por precio

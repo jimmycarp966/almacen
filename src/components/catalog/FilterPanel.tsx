@@ -5,6 +5,7 @@ import { useState } from 'react'
 interface FilterPanelProps {
   onFilterChange: (filters: FilterState) => void
   initialFilters?: FilterState
+  categorias: any[]
 }
 
 export interface FilterState {
@@ -15,7 +16,7 @@ export interface FilterState {
   sortBy: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
 }
 
-export function FilterPanel({ onFilterChange, initialFilters }: FilterPanelProps) {
+export function FilterPanel({ onFilterChange, initialFilters, categorias }: FilterPanelProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [filters, setFilters] = useState<FilterState>(
     initialFilters || {
@@ -27,20 +28,11 @@ export function FilterPanel({ onFilterChange, initialFilters }: FilterPanelProps
     }
   )
 
-  const categories = [
-    { id: '1', nombre: 'Alimentos' },
-    { id: '2', nombre: 'Lácteos' },
-    { id: '3', nombre: 'Carnes' },
-    { id: '4', nombre: 'Bebidas' },
-    { id: '5', nombre: 'Panadería' },
-    { id: '6', nombre: 'Limpieza' },
-  ]
-
   const handleCategoryToggle = (categoryId: string) => {
     const newCategories = filters.categories.includes(categoryId)
       ? filters.categories.filter(id => id !== categoryId)
       : [...filters.categories, categoryId]
-    
+
     const newFilters = { ...filters, categories: newCategories }
     setFilters(newFilters)
     onFilterChange(newFilters)
@@ -132,7 +124,7 @@ export function FilterPanel({ onFilterChange, initialFilters }: FilterPanelProps
           <div className="mb-6">
             <label className="block text-sm font-bold text-text-main mb-3">Categorías</label>
             <div className="space-y-2 max-h-40 overflow-y-auto">
-              {categories.map((cat) => (
+              {categorias.map((cat) => (
                 <label key={cat.id} className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"

@@ -118,7 +118,7 @@ function CatalogContent() {
                         </div>
                         <div className="flex items-center gap-3">
                             <SearchBar placeholder="Buscar productos..." />
-                            <FilterPanel onFilterChange={handleFilterChange} initialFilters={filters} />
+                            <FilterPanel onFilterChange={handleFilterChange} initialFilters={filters} categorias={categorias} />
                         </div>
                     </div>
 

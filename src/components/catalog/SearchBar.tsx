@@ -15,11 +15,13 @@ export function SearchBar({ placeholder = 'Buscar productos...', onSearch }: Sea
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      const params = new URLSearchParams(searchParams?.toString() || '')
       if (query.trim()) {
-        const params = new URLSearchParams(searchParams?.toString() || '')
         params.set('q', query)
-        router.push(`/catalogo?${params.toString()}`)
+      } else {
+        params.delete('q')
       }
+      router.push(`/catalogo?${params.toString()}`)
     }, 300)
 
     return () => clearTimeout(timeoutId)
