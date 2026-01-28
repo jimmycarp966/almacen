@@ -12,12 +12,14 @@ export async function getCategorias() {
             .eq('activo', true)
             .order('nombre')
 
-        if (error || !data || data.length === 0) {
-            return mockCategorias
+        if (error) {
+            console.error('Error al obtener categorías:', error)
+            return []
         }
-        return data
-    } catch {
-        return mockCategorias
+        return data || []
+    } catch (error) {
+        console.error('Error inesperado al obtener categorías:', error)
+        return []
     }
 }
 
@@ -77,12 +79,14 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
 
         const { data, error } = await query
 
-        if (error || !data || data.length === 0) {
-            return mockProductos
+        if (error) {
+            console.error('Error al obtener productos:', error)
+            return []
         }
-        return data
-    } catch {
-        return mockProductos
+        return data || []
+    } catch (error) {
+        console.error('Error inesperado al obtener productos:', error)
+        return []
     }
 }
 
@@ -105,25 +109,18 @@ export async function getOfertasSemana() {
             .from('productos')
             .select('*')
             .eq('activo', true)
-            .or('es_oferta.eq.true,descuento.gt.0')
+            .gt('descuento', 0)
             .limit(10)
             .order('descuento', { ascending: false })
 
-        if (error || !data || data.length === 0) {
-            // Si no hay ofertas en la base de datos, usar los primeros 10 productos mock
-            return mockProductos.slice(0, 10).map((prod, index) => ({
-                ...prod,
-                esNuevo: index < 3, // Primeros 3 como nuevos
-                descuento: index % 2 === 0 ? 15 : 0 // Alternar descuentos para demo
-            }))
+        if (error) {
+            console.error('Error al obtener ofertas:', error)
+            return []
         }
-        return data
-    } catch {
-        return mockProductos.slice(0, 10).map((prod, index) => ({
-            ...prod,
-            esNuevo: index < 3,
-            descuento: index % 2 === 0 ? 15 : 0
-        }))
+        return data || []
+    } catch (error) {
+        console.error('Error inesperado al obtener ofertas:', error)
+        return []
     }
 }
 

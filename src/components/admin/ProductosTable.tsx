@@ -8,6 +8,7 @@ interface Producto {
     nombre: string
     descripcion: string
     precio: number
+    descuento: number
     stock: number
     activo: boolean
     imagen_url: string | null
@@ -22,17 +23,17 @@ interface ProductosTableProps {
 export function ProductosTable({ productos: initialProductos, categoriasMap }: ProductosTableProps) {
     const [productos, setProductos] = useState(initialProductos)
     const [editingId, setEditingId] = useState<string | null>(null)
-    const [editValues, setEditValues] = useState<{ precio: number; stock: number }>({ precio: 0, stock: 0 })
+    const [editValues, setEditValues] = useState<{ precio: number; stock: number; descuento: number }>({ precio: 0, stock: 0, descuento: 0 })
     const [saving, setSaving] = useState(false)
 
     const startEditing = (prod: Producto) => {
         setEditingId(prod.id)
-        setEditValues({ precio: prod.precio, stock: prod.stock })
+        setEditValues({ precio: prod.precio, stock: prod.stock, descuento: prod.descuento || 0 })
     }
 
     const cancelEditing = () => {
         setEditingId(null)
-        setEditValues({ precio: 0, stock: 0 })
+        setEditValues({ precio: 0, stock: 0, descuento: 0 })
     }
 
     const saveChanges = async (id: string) => {
@@ -40,13 +41,14 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
         try {
             const result = await updateProducto(id, {
                 precio: editValues.precio,
-                stock: editValues.stock
+                stock: editValues.stock,
+                descuento: editValues.descuento
             })
 
             if (!result.error) {
                 // Actualizar estado local
                 setProductos(prev => prev.map(p =>
-                    p.id === id ? { ...p, precio: editValues.precio, stock: editValues.stock } : p
+                    p.id === id ? { ...p, precio: editValues.precio, stock: editValues.stock, descuento: editValues.descuento } : p
                 ))
                 setEditingId(null)
             } else {
@@ -76,6 +78,7 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Producto</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Categoría</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Precio</th>
+                            <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Dcto (%)</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Stock</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Estado</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider text-right">Acciones</th>
@@ -110,7 +113,28 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                                             className="w-24 px-2 py-1 border border-primary rounded-lg text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary"
                                         />
                                     ) : (
-                                        <p className="text-sm font-extrabold text-text-main">${Number(prod.precio).toLocaleString('es-AR')}</p>
+                                        <div className="flex flex-col">
+                                            <p className="text-sm font-extrabold text-text-main">${Number(prod.precio).toLocaleString('es-AR')}</p>
+                                            {prod.descuento > 0 && (
+                                                <p className="text-[10px] text-emerald-600 font-bold uppercase">Oferta activa</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {editingId === prod.id ? (
+                                        <input
+                                            type="number"
+                                            value={editValues.descuento}
+                                            onChange={(e) => setEditValues(prev => ({ ...prev, descuento: Number(e.target.value) }))}
+                                            className="w-16 px-2 py-1 border border-primary rounded-lg text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary"
+                                            min="0"
+                                            max="100"
+                                        />
+                                    ) : (
+                                        <p className={`text-sm font-bold ${prod.descuento > 0 ? 'text-emerald-600' : 'text-text-secondary opacity-50'}`}>
+                                            {prod.descuento > 0 ? `${prod.descuento}%` : '-'}
+                                        </p>
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
@@ -134,8 +158,8 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                                     <button
                                         onClick={() => toggleActivo(prod)}
                                         className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${prod.activo
-                                                ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-                                                : 'bg-red-100 text-red-700 hover:bg-red-200'
+                                            ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                                            : 'bg-red-100 text-red-700 hover:bg-red-200'
                                             }`}
                                     >
                                         {prod.activo ? 'Activo' : 'Inactivo'}
