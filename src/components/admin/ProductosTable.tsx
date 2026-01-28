@@ -23,17 +23,27 @@ interface ProductosTableProps {
 export function ProductosTable({ productos: initialProductos, categoriasMap }: ProductosTableProps) {
     const [productos, setProductos] = useState(initialProductos)
     const [editingId, setEditingId] = useState<string | null>(null)
-    const [editValues, setEditValues] = useState<{ precio: number; stock: number; descuento: number }>({ precio: 0, stock: 0, descuento: 0 })
+    const [editValues, setEditValues] = useState<{ precio: number; stock: number; descuento: number; imagen_url: string }>({
+        precio: 0,
+        stock: 0,
+        descuento: 0,
+        imagen_url: ''
+    })
     const [saving, setSaving] = useState(false)
 
     const startEditing = (prod: Producto) => {
         setEditingId(prod.id)
-        setEditValues({ precio: prod.precio, stock: prod.stock, descuento: prod.descuento || 0 })
+        setEditValues({
+            precio: prod.precio,
+            stock: prod.stock,
+            descuento: prod.descuento || 0,
+            imagen_url: prod.imagen_url || ''
+        })
     }
 
     const cancelEditing = () => {
         setEditingId(null)
-        setEditValues({ precio: 0, stock: 0, descuento: 0 })
+        setEditValues({ precio: 0, stock: 0, descuento: 0, imagen_url: '' })
     }
 
     const saveChanges = async (id: string) => {
@@ -42,13 +52,20 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
             const result = await updateProducto(id, {
                 precio: editValues.precio,
                 stock: editValues.stock,
-                descuento: editValues.descuento
+                descuento: editValues.descuento,
+                imagen_url: editValues.imagen_url
             })
 
             if (!result.error) {
                 // Actualizar estado local
                 setProductos(prev => prev.map(p =>
-                    p.id === id ? { ...p, precio: editValues.precio, stock: editValues.stock, descuento: editValues.descuento } : p
+                    p.id === id ? {
+                        ...p,
+                        precio: editValues.precio,
+                        stock: editValues.stock,
+                        descuento: editValues.descuento,
+                        imagen_url: editValues.imagen_url
+                    } : p
                 ))
                 setEditingId(null)
             } else {
@@ -75,6 +92,7 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-gray-50 border-b border-gray-100">
+                            <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Imagen</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Producto</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Categoría</th>
                             <th className="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">Precio</th>
@@ -89,10 +107,21 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                             <tr key={prod.id} className="hover:bg-gray-50/50 transition-colors group">
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div
-                                            className="w-10 h-10 rounded-lg bg-gray-100 bg-cover bg-center shrink-0"
-                                            style={{ backgroundImage: `url('${prod.imagen_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}')` }}
-                                        />
+                                        <div className="flex flex-col gap-2 shrink-0">
+                                            <div
+                                                className="w-12 h-12 rounded-lg bg-gray-100 bg-cover bg-center border border-gray-100"
+                                                style={{ backgroundImage: `url('${(editingId === prod.id ? editValues.imagen_url : prod.imagen_url) || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}')` }}
+                                            />
+                                            {editingId === prod.id && (
+                                                <input
+                                                    type="text"
+                                                    value={editValues.imagen_url}
+                                                    onChange={(e) => setEditValues(prev => ({ ...prev, imagen_url: e.target.value }))}
+                                                    placeholder="URL imagen"
+                                                    className="w-24 px-1 py-0.5 border border-primary rounded text-[9px] focus:outline-none focus:ring-1 focus:ring-primary"
+                                                />
+                                            )}
+                                        </div>
                                         <div>
                                             <p className="text-sm font-bold text-text-main group-hover:text-primary transition-colors">{prod.nombre}</p>
                                             <p className="text-xs text-text-secondary truncate max-w-[150px]">{prod.descripcion || 'Sin descripción'}</p>

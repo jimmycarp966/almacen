@@ -14,6 +14,7 @@ export default function AdminProductosAgregarPage() {
     const [stock, setStock] = useState('')
     const [descuento, setDescuento] = useState('0')
     const [codigo, setCodigo] = useState('')
+    const [imagenUrl, setImagenUrl] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [categorias, setCategorias] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
@@ -41,6 +42,7 @@ export default function AdminProductosAgregarPage() {
                 descuento: Number(descuento),
                 codigo: codigo || `PROD-${Date.now().toString().slice(-6)}`,
                 descripcion,
+                imagen_url: imagenUrl,
                 activo: true
             })
 
@@ -91,22 +93,35 @@ export default function AdminProductosAgregarPage() {
                                 {/* Upload Zone */}
                                 <div className="lg:col-span-5 order-last lg:order-first">
                                     <label className="block text-sm font-bold text-[#181111] mb-2">
-                                        Imagen del Producto
+                                        Imagen del Producto (URL)
                                     </label>
-                                    <div className="relative group w-full h-full min-h-[240px] rounded-xl border-2 border-dashed border-primary bg-primary/[0.02] hover:bg-primary/[0.04] transition-all duration-300 flex flex-col items-center justify-center text-center p-6 cursor-pointer overflow-hidden">
-                                        <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-neutral-100">
-                                            <span className="material-symbols-outlined text-3xl text-primary">cloud_upload</span>
+                                    <div className="flex flex-col gap-4">
+                                        <div className="relative group w-full aspect-square max-h-[240px] rounded-xl border-2 border-dashed border-primary bg-primary/[0.02] hover:bg-primary/[0.04] transition-all duration-300 flex flex-col items-center justify-center text-center overflow-hidden">
+                                            {imagenUrl ? (
+                                                <img src={imagenUrl} alt="Preview" className="w-full h-full object-cover" />
+                                            ) : (
+                                                <>
+                                                    <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 border border-neutral-100">
+                                                        <span className="material-symbols-outlined text-3xl text-primary">image</span>
+                                                    </div>
+                                                    <p className="text-[#181111] font-bold text-lg mb-1">Sin Imagen</p>
+                                                    <p className="text-sm text-neutral-500 max-w-[200px]">
+                                                        Pega una URL abajo para ver la previsualización
+                                                    </p>
+                                                </>
+                                            )}
                                         </div>
-                                        <p className="text-[#181111] font-bold text-lg mb-1">Subir Imagen</p>
-                                        <p className="text-sm text-neutral-500 mb-4 max-w-[200px]">
-                                            Arrastra tu imagen aquí o haz clic para explorar
-                                        </p>
-                                        <span className="text-xs font-mono text-neutral-400 bg-white/20 px-2 py-1 rounded">
-                                            JPG, PNG (Max 5MB)
-                                        </span>
-                                        <input className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" type="file" accept="image/*" />
+                                        <div className="group/url">
+                                            <input
+                                                className="w-full h-12 px-4 rounded-lg border border-neutral-200 bg-white text-[#181111] text-xs placeholder:text-neutral-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-200"
+                                                placeholder="https://ejemplo.com/foto.jpg"
+                                                type="text"
+                                                value={imagenUrl}
+                                                onChange={(e) => setImagenUrl(e.target.value)}
+                                            />
+                                        </div>
                                     </div>
-                                    <p className="mt-2 text-[10px] text-neutral-400 uppercase font-bold tracking-widest text-center">Próximamente: Carga de fotos real</p>
+                                    <p className="mt-2 text-[10px] text-neutral-400 uppercase font-bold tracking-widest text-center">Pega el link de la imagen de internet</p>
                                 </div>
 
                                 {/* Core Details */}
