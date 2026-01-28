@@ -10,6 +10,7 @@ const MENU_ITEMS = [
     { label: 'Dashboard', icon: 'dashboard', href: '/admin' },
     { label: 'Pedidos', icon: 'shopping_bag', href: '/admin/pedidos' },
     { label: 'Productos', icon: 'inventory_2', href: '/admin/productos' },
+    { label: 'Ofertas', icon: 'local_offer', href: '/admin/ofertas' },
     { label: 'Caja Diaria', icon: 'account_balance_wallet', href: '/admin/caja' },
     { label: 'Reportes', icon: 'analytics', href: '/admin/reportes' },
     { label: 'Configuración', icon: 'settings', href: '/admin/configuracion' },

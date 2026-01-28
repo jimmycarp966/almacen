@@ -125,8 +125,9 @@ export async function getOfertasSemana() {
             .from('productos')
             .select('*')
             .eq('activo', true)
-            .gt('descuento', 0)
+            .or('es_oferta.eq.true,descuento.gt.0')
             .limit(10)
+            .order('es_oferta', { ascending: false })
             .order('descuento', { ascending: false })
 
         if (error) {
