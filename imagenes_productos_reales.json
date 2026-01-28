@@ -1,0 +1,59 @@
+{
+  "nota_importante": "Estas son imágenes GENÉRICAS de productos similares. Las marcas específicas (Coca Cola, Pepsi, Johnnie Walker, etc.) tienen derechos de autor y no se encuentran en bancos de imágenes libres.",
+  "fecha_actualizacion": "2026-01-28",
+  
+  "vinos": {
+    "vino_tinto_botella_1": "https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?w=600&h=800&fit=crop",
+    "vino_tinto_botella_2": "https://images.unsplash.com/photo-1559563362-c667ba5f5480?w=600&h=800&fit=crop",
+    "vino_tinto_botella_3": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=600&h=800&fit=crop",
+    "vino_tinto_botella_4": "https://images.unsplash.com/photo-1516594915307-2954856ed83a?w=600&h=800&fit=crop",
+    "vino_blanco_botella": "https://images.unsplash.com/photo-1566995541428-f2246c17cda1?w=600&h=800&fit=crop",
+    "vino_rosado_botella": "https://images.unsplash.com/photo-1598306442928-4d90f32c6866?w=600&h=800&fit=crop",
+    "vino_copa": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&h=800&fit=crop",
+    "vino_malbec": "https://images.unsplash.com/photo-1560148218-1a83060f7b32?w=600&h=800&fit=crop"
+  },
+  
+  "cervezas": {
+    "cerveza_botella_1": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600&h=800&fit=crop",
+    "cerveza_botella_2": "https://images.unsplash.com/photo-1586993451228-b2d7c3976f08?w=600&h=800&fit=crop",
+    "cerveza_botella_3": "https://images.unsplash.com/photo-1566633806327-68e152aaf26d?w=600&h=800&fit=crop",
+    "cerveza_botella_4": "https://images.unsplash.com/photo-1612528443702-f6741f70a049?w=600&h=800&fit=crop",
+    "cerveza_botella_5": "https://images.unsplash.com/photo-1575037614876-c38a4c44f5bd?w=600&h=800&fit=crop",
+    "cerveza_artesanal": "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=600&h=800&fit=crop",
+    "cerveza_lata": "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&h=800&fit=crop"
+  },
+  
+  "gaseosas": {
+    "nota": "Las marcas de gaseosas (Coca Cola, Pepsi, Sprite, Fanta) son marcas registradas. Usa estas alternativas genéricas o considera usar imágenes de tu propio stock.",
+    "refresco_cola_generico": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&h=800&fit=crop",
+    "refresco_naranja_generico": "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&h=800&fit=crop",
+    "refresco_limon_generico": "https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=600&h=800&fit=crop",
+    "gaseosa_botella_plastico": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600&h=800&fit=crop",
+    "gaseosa_botella_vidrio": "https://images.unsplash.com/photo-1543253687-c931c8e01820?w=600&h=800&fit=crop",
+    "bebida_gaseosa_lata": "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&h=800&fit=crop"
+  },
+  
+  "whisky": {
+    "whisky_botella_1": "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=600&h=800&fit=crop",
+    "whisky_botella_2": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=600&h=800&fit=crop",
+    "whisky_botella_3": "https://images.unsplash.com/photo-1575023782549-62ca0d244b39?w=600&h=800&fit=crop",
+    "whisky_botella_4": "https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=600&h=800&fit=crop",
+    "whisky_copa": "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&h=800&fit=crop",
+    "bourbon_botella": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=800&fit=crop"
+  },
+  
+  "otros": {
+    "agua_mineral_botella": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=600&h=800&fit=crop",
+    "jugo_naranja_botella": "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&h=800&fit=crop",
+    "vodka_botella": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=600&h=800&fit=crop",
+    "ron_botella": "https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=600&h=800&fit=crop"
+  },
+  
+  "recomendaciones": {
+    "1": "Para un e-commerce real, contrata un fotógrafo profesional o usa imágenes proporcionadas por los proveedores/distribuidores oficiales",
+    "2": "Muchas marcas tienen 'media kits' con imágenes oficiales para distribuidores - contacta a los representantes de marca",
+    "3": "Pexels Pro ofrece imágenes comerciales de productos reales por una suscripción",
+    "4": "Shutterstock, iStock y Adobe Stock tienen imágenes de productos con licencia comercial",
+    "5": "Para desarrollo/testing, estas imágenes genéricas de Unsplash son suficientes"
+  }
+}
