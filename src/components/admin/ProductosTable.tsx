@@ -106,25 +106,37 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                         {productos.map((prod) => (
                             <tr key={prod.id} className="hover:bg-gray-50/50 transition-colors group">
                                 <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-4">
                                         <div className="flex flex-col gap-2 shrink-0">
-                                            <div
-                                                className="w-12 h-12 rounded-lg bg-gray-100 bg-cover bg-center border border-gray-100"
-                                                style={{ backgroundImage: `url('${(editingId === prod.id ? editValues.imagen_url : prod.imagen_url) || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}')` }}
-                                            />
-                                            {editingId === prod.id && (
-                                                <input
-                                                    type="text"
-                                                    value={editValues.imagen_url}
-                                                    onChange={(e) => setEditValues(prev => ({ ...prev, imagen_url: e.target.value }))}
-                                                    placeholder="URL imagen"
-                                                    className="w-24 px-1 py-0.5 border border-primary rounded text-[9px] focus:outline-none focus:ring-1 focus:ring-primary"
+                                            <div className="relative group/img">
+                                                <div
+                                                    className="w-16 h-16 rounded-2xl bg-gray-100 bg-cover bg-center border border-gray-100 shadow-sm group-hover/img:shadow-md transition-all duration-300"
+                                                    style={{ backgroundImage: `url('${(editingId === prod.id ? editValues.imagen_url : prod.imagen_url) || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}')` }}
                                                 />
+                                                {prod.imagen_url && (
+                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity rounded-2xl flex items-center justify-center cursor-pointer">
+                                                        <span className="material-symbols-outlined text-white text-[20px]">zoom_in</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            {editingId === prod.id && (
+                                                <div className="flex flex-col gap-1 w-48">
+                                                    <label className="text-[10px] font-black uppercase text-text-secondary tracking-tighter">URL Imagen</label>
+                                                    <input
+                                                        type="text"
+                                                        value={editValues.imagen_url}
+                                                        onChange={(e) => setEditValues(prev => ({ ...prev, imagen_url: e.target.value }))}
+                                                        placeholder="Pegar URL aquí..."
+                                                        className="w-full px-2 py-1.5 border border-primary/30 rounded-lg text-[11px] focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all font-mono"
+                                                    />
+                                                </div>
                                             )}
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-bold text-text-main group-hover:text-primary transition-colors">{prod.nombre}</p>
-                                            <p className="text-xs text-text-secondary truncate max-w-[150px]">{prod.descripcion || 'Sin descripción'}</p>
+                                        <div className="flex flex-col">
+                                            <p className="text-sm font-extrabold text-text-main group-hover:text-primary transition-colors leading-tight mb-1">{prod.nombre}</p>
+                                            <p className="text-[11px] text-text-secondary line-clamp-2 max-w-[200px] font-medium leading-relaxed italic">
+                                                {prod.descripcion || 'Sin descripción...'}
+                                            </p>
                                         </div>
                                     </div>
                                 </td>

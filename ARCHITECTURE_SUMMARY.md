@@ -59,6 +59,9 @@ Proveer un sistema de supermercado online premium con catálogo de acceso libre 
 - **UI:** Responsive, modo claro exclusivo
 
 ## 🔧 Cambios Recientes (Ene 2026)
+- **Asociación de Imágenes Reales (Ene 2026):**
+  - Integración de 15 fotos reales de productos clave vía VtexAssets y Wikimedia.
+  - Mejora en `ProductosTable.tsx` con previsualización ampliada y edición de URL optimizada.
 - **Sistema de Pagos Renovado:**
   - Eliminado pago en efectivo
   - 7 tarjetas de crédito con recargos: Visa, Mastercard, Cabal, Maestro, Naranja, Zeta, Credicash

@@ -57,7 +57,7 @@ Para desarrollo local, el sistema utiliza datos mock de un supermercado argentin
 - **Panel Admin:**
   - Dashboard con métricas clave
   - Gestión de pedidos (cambio de estado)
-  - Gestión de productos (CRUD)
+  - Gestión de productos (CRUD con previsualización de imágenes reales)
   - Caja diaria (ingresos/egresos)
   - Reportes de ventas
   - Configuración del negocio
