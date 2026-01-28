@@ -139,78 +139,30 @@ function CatalogContent() {
                         </div>
                     ) : (
                         <>
-                            {/* 🔥 OFERTAS DE LA SEMANA - Solo en la vista principal */}
+                            {/* Ofertas - Lista de 10 productos sin foto */}
                             {showOfertas && ofertas.length > 0 && (
-                                <section className="mb-16">
-                                    {/* Contenedor con fondo distintivo */}
-                                    <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-4 sm:p-6 md:p-8 relative overflow-hidden">
-                                        {/* Efecto de estrellas/partículas */}
-                                        <div className="absolute inset-0 pointer-events-none">
-                                            <div className="absolute top-4 left-[10%] w-2 h-2 bg-yellow-400 rounded-full animate-pulse opacity-60"></div>
-                                            <div className="absolute top-8 left-[25%] w-1 h-1 bg-white rounded-full animate-ping opacity-40"></div>
-                                            <div className="absolute top-6 left-[50%] w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse opacity-50"></div>
-                                            <div className="absolute top-10 left-[75%] w-1 h-1 bg-yellow-300 rounded-full animate-ping opacity-40"></div>
-                                            <div className="absolute top-4 right-[10%] w-2 h-2 bg-red-400 rounded-full animate-pulse opacity-60"></div>
-                                            <div className="absolute bottom-8 left-[15%] w-1.5 h-1.5 bg-orange-300 rounded-full animate-ping opacity-40"></div>
-                                            <div className="absolute bottom-6 left-[40%] w-1 h-1 bg-yellow-400 rounded-full animate-pulse opacity-50"></div>
-                                            <div className="absolute bottom-10 right-[30%] w-2 h-2 bg-red-500 rounded-full animate-ping opacity-40"></div>
-                                            <div className="absolute bottom-4 right-[15%] w-1 h-1 bg-white rounded-full animate-pulse opacity-60"></div>
-                                        </div>
-
-                                        {/* Borde brillante */}
-                                        <div className="absolute inset-0 rounded-3xl border-2 border-orange-500/40 pointer-events-none"></div>
-
-                                        {/* Header de ofertas */}
-                                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 relative z-10">
-                                            <div className="flex items-center gap-3 sm:gap-4">
-                                                <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-full p-2.5 sm:p-3 shadow-lg shadow-orange-500/30 animate-pulse">
-                                                    <span className="material-symbols-outlined text-2xl sm:text-4xl text-white">local_fire_department</span>
-                                                </div>
-                                                <div className="text-center sm:text-left">
-                                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight drop-shadow-lg">
-                                                        🔥 Ofertas de la Semana
-                                                    </h3>
-                                                    <p className="text-orange-200 text-xs sm:text-sm font-medium">
-                                                        ¡Aprovechá antes de que se terminen!
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-full px-4 py-1.5 sm:py-2 shadow-lg animate-bounce">
-                                                <p className="text-white text-[10px] sm:text-xs font-black uppercase tracking-widest">
-                                                    🎉 Solo esta semana
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        {/* Grid de ofertas */}
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 relative z-10">
-                                            {ofertas.map((prod) => (
-                                                <div key={prod.id} className="bg-white rounded-2xl p-2 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]">
-                                                    <ProductCard
-                                                        id={prod.id}
-                                                        nombre={prod.nombre}
-                                                        descripcion={prod.descripcion}
-                                                        precio={prod.precio}
-                                                        imagen_url={prod.imagen_url}
-                                                        categoria_id={prod.categoria_id}
-                                                        esNuevo={prod.esNuevo}
-                                                        descuento={prod.descuento}
-                                                        compact
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
+                                <section className="mb-12">
+                                    <div className="mb-6">
+                                        <h3 className="text-2xl md:text-3xl font-extrabold text-text-main">Ofertas</h3>
+                                        <p className="text-text-secondary">Productos con descuentos especiales</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {ofertas.map((prod) => (
+                                            <ProductCard
+                                                key={prod.id}
+                                                id={prod.id}
+                                                nombre={prod.nombre}
+                                                descripcion={prod.descripcion}
+                                                precio={prod.precio}
+                                                imagen_url={prod.imagen_url}
+                                                categoria_id={prod.categoria_id}
+                                                esNuevo={prod.esNuevo}
+                                                descuento={prod.descuento}
+                                                listMode
+                                            />
+                                        ))}
                                     </div>
                                 </section>
-                            )}
-
-                            {/* Separador visual */}
-                            {showOfertas && ofertas.length > 0 && (
-                                <div className="border-t-2 border-dashed border-gray-200 mt-4 mb-10 relative">
-                                    <span className="absolute left-1/2 -translate-x-1/2 -top-4 bg-background-light px-4 text-text-secondary font-bold text-sm uppercase tracking-wider">
-                                        Todos los productos
-                                    </span>
-                                </div>
                             )}
 
                             {/* Product Grid - 4 columnas con imágenes más pequeñas */}
