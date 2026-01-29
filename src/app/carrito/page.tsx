@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation'
 import { createPedidoAction } from '@/actions/orders'
 import { generateWhatsAppUrl, WhatsAppOrderData } from '@/lib/whatsapp'
 import { TARJETAS_CREDITO, METODOS_SIN_RECARGO, calcularRecargo, getCuotasDisponibles, getNombreMetodo, getEtiquetaCuotas } from '@/lib/payment-methods'
-import Image from 'next/image'
 
 const COSTO_ENVIO = 500
 const WHATSAPP_ADMIN = '5493865572025' // Número del negocio
@@ -272,13 +271,7 @@ export default function CarritoPage() {
                                                 : 'border-gray-100 bg-white hover:border-gray-200'
                                                 }`}
                                         >
-                                            <Image
-                                                src={tarjeta.imagen || ''}
-                                                alt={tarjeta.nombre}
-                                                width={40}
-                                                height={28}
-                                                className="object-contain"
-                                            />
+                                            <span className="material-symbols-outlined text-2xl text-gray-600">credit_card</span>
                                             <span className="text-[8px] sm:text-[10px] font-bold text-text-secondary text-center">
                                                 {tarjeta.nombre}
                                             </span>
@@ -303,13 +296,7 @@ export default function CarritoPage() {
                                                 : 'border-gray-100 bg-white hover:border-gray-200'
                                                 }`}
                                         >
-                                            <Image
-                                                src={metodo.imagen || ''}
-                                                alt={metodo.nombre}
-                                                width={40}
-                                                height={28}
-                                                className="object-contain"
-                                            />
+                                            <span className="material-symbols-outlined text-2xl text-gray-600">payments</span>
                                             <span className="text-[10px] sm:text-xs font-bold text-text-secondary text-center">
                                                 {metodo.nombre}
                                             </span>
@@ -432,13 +419,9 @@ export default function CarritoPage() {
 
                                 <div className="flex justify-between text-sm">
                                     <span className="text-text-secondary flex items-center gap-2">
-                                        <Image
-                                            src={`/cards/${metodoPago === 'transferencia_qr' ? 'qr' : metodoPago === 'alimentar' ? 'alimentar' : metodoPago}.svg`}
-                                            alt={getNombreMetodo(metodoPago)}
-                                            width={24}
-                                            height={16}
-                                            className="object-contain"
-                                        />
+                                        <span className="material-symbols-outlined text-base">
+                                            payment
+                                        </span>
                                         Pago: {getNombreMetodo(metodoPago)}
                                     </span>
                                 </div>

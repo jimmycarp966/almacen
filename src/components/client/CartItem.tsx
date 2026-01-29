@@ -47,12 +47,6 @@ export function CartItem({ item }: CartItemProps) {
 
     return (
         <div className="flex gap-4 group animate-fade-in-up">
-            <div className="size-20 min-w-20 bg-white rounded-lg border border-gray-100 overflow-hidden">
-                <div
-                    className="w-full h-full bg-center bg-cover"
-                    style={{ backgroundImage: `url('${item.imagen_url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop'}')` }}
-                ></div>
-            </div>
             <div className="flex flex-col flex-1 justify-between py-1">
                 <div>
                     <div className="flex justify-between items-start">
