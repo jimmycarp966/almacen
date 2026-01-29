@@ -30,7 +30,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body
-        className={`${manrope.variable} font-sans antialiased bg-background-light text-text-main`}
+        className={`${manrope.variable} font-sans antialiased bg-background-light text-text-main overflow-x-hidden`}
       >
         <NotificationSetup />
         {children}

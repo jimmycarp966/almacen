@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getAdminProductosOferta, toggleOfertaProducto, updateDescuentoOferta } from '@/actions/offers.actions'
+import { getAdminProductosOferta, toggleOfertaProducto } from '@/actions/offers.actions'
 
 export default function OfertasAdminPage() {
     const [productos, setProductos] = useState<any[]>([])
@@ -37,20 +37,6 @@ export default function OfertasAdminPage() {
         }
     }
 
-    async function handleUpdateDescuento(id: string, value: string) {
-        const discount = parseFloat(value) || 0
-
-        // Optimistic update
-        setProductos(prev => prev.map(p =>
-            p.id === id ? { ...p, descuento: discount, es_oferta: discount > 0 } : p
-        ))
-
-        const result = await updateDescuentoOferta(id, discount)
-        if (!result.success) {
-            loadData()
-            alert('Error al actualizar descuento')
-        }
-    }
 
     return (
         <div className="space-y-8">
@@ -77,67 +63,41 @@ export default function OfertasAdminPage() {
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredProductos.map((p) => (
-                        <div
-                            key={p.id}
-                            className={`bg-white rounded-[2rem] p-6 border transition-all duration-300 ${p.es_oferta
-                                    ? 'border-primary ring-1 ring-primary/20 shadow-xl'
-                                    : 'border-gray-100 hover:border-gray-200 shadow-sm'
-                                }`}
-                        >
-                            <div className="flex items-start gap-4">
-                                <div className="w-20 h-20 rounded-2xl bg-gray-50 overflow-hidden flex-shrink-0 border border-gray-100">
-                                    {p.imagen_url ? (
-                                        <img src={p.imagen_url} alt={p.nombre} className="w-full h-full object-cover" />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-gray-300">
-                                            <span className="material-symbols-outlined text-3xl">image</span>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <h3 className="font-bold text-text-main truncate leading-tight">{p.nombre}</h3>
-                                    <p className="text-primary font-black mt-1">
-                                        ${p.precio.toLocaleString('es-AR')}
-                                    </p>
-
-                                    <div className="flex items-center gap-2 mt-3">
-                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${p.es_oferta ? 'bg-primary/10 text-primary' : 'bg-gray-100 text-gray-400'
-                                            }`}>
-                                            {p.es_oferta ? 'En Oferta' : 'Normal'}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-6 pt-6 border-t border-gray-50 space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm font-bold text-text-secondary">Mostrar en Ofertas</span>
-                                    <button
-                                        onClick={() => handleToggleOferta(p.id, p.es_oferta)}
-                                        className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${p.es_oferta ? 'bg-primary' : 'bg-gray-200'
-                                            }`}
+                <div className="bg-white rounded-2xl shadow-soft border border-gray-100 overflow-hidden -mx-4 lg:mx-0">
+                    <div className="max-h-[70vh] overflow-y-auto overflow-x-auto px-4 lg:px-0">
+                        <table className="w-full">
+                            <thead className="bg-gray-50 sticky top-0">
+                                <tr>
+                                    <th className="text-left py-4 px-6 font-bold text-text-secondary text-sm">Producto</th>
+                                    <th className="text-center py-4 px-6 font-bold text-text-secondary text-sm">Precio</th>
+                                    <th className="text-center py-4 px-6 font-bold text-text-secondary text-sm">En Ofertas</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {filteredProductos.map((p) => (
+                                    <tr
+                                        key={p.id}
+                                        className={`hover:bg-gray-50 transition-colors ${p.es_oferta ? 'bg-red-50/50' : ''}`}
                                     >
-                                        <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${p.es_oferta ? 'left-7' : 'left-1'
-                                            }`} />
-                                    </button>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm font-bold text-text-secondary">Descuento (%)</span>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        max="100"
-                                        className="w-20 text-right font-bold text-sm py-1 px-2 rounded-lg border border-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 bg-gray-50"
-                                        value={p.descuento || 0}
-                                        onChange={(e) => handleUpdateDescuento(p.id, e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                                        <td className="py-4 px-6">
+                                            <span className="font-medium text-text-main">{p.nombre}</span>
+                                        </td>
+                                        <td className="py-4 px-6 text-center">
+                                            <span className="font-bold text-text-main">${p.precio.toLocaleString('es-AR')}</span>
+                                        </td>
+                                        <td className="py-4 px-6 text-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={p.es_oferta || false}
+                                                onChange={() => handleToggleOferta(p.id, p.es_oferta)}
+                                                className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )}
 

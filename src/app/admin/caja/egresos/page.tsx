@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { NumberInput } from '@/components/ui/NumberInput'
 
 export default function AdminCajaEgresosPage() {
     const [concepto, setConcepto] = useState('')
-    const [monto, setMonto] = useState('')
+    const [monto, setMonto] = useState<number | null>(null)
     const [categoria, setCategoria] = useState('')
     const [metodo, setMetodo] = useState('efectivo')
 
@@ -71,15 +72,14 @@ export default function AdminCajaEgresosPage() {
                             <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center pointer-events-none">
                                 <span className="text-primary font-bold text-xl">$</span>
                             </div>
-                            <input
+                            <NumberInput
                                 className="w-full h-16 pl-12 pr-4 bg-white border-2 border-primary rounded-lg text-2xl font-bold text-[#171212] placeholder:text-gray-300 focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all shadow-glow"
                                 id="monto"
                                 placeholder="0.00"
-                                type="number"
                                 step="0.01"
-                                min="0"
-                                value={monto}
-                                onChange={(e) => setMonto(e.target.value)}
+                                min={0}
+                                value={monto ?? 0}
+                                onChange={setMonto}
                                 required
                             />
                         </div>

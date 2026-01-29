@@ -12,58 +12,40 @@ function CartItemRow({ item }: { item: CartItem }) {
     const { updateQuantity, removeItem } = useCartStore()
 
     return (
-        <div className="flex gap-4">
-            {/* Thumbnail */}
-            <div className="size-20 min-w-20 bg-white rounded-lg border border-gray-100 overflow-hidden">
-                {item.imagen_url ? (
-                    <div
-                        className="w-full h-full bg-center bg-cover"
-                        style={{ backgroundImage: `url("${item.imagen_url}")` }}
-                    />
-                ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                        <span className="material-symbols-outlined text-gray-300 text-2xl">inventory_2</span>
-                    </div>
-                )}
+        <div className="flex flex-col gap-2">
+            {/* Details */}
+            <div className="flex justify-between items-start">
+                <h4 className="font-bold text-sm text-text-main">{item.nombre}</h4>
+                <button
+                    onClick={() => removeItem(item.id)}
+                    className="text-gray-400 hover:text-primary transition-colors p-1"
+                >
+                    <span className="material-symbols-outlined text-lg">close</span>
+                </button>
             </div>
 
-            {/* Details */}
-            <div className="flex flex-col flex-1 justify-between py-1">
-                <div>
-                    <div className="flex justify-between items-start">
-                        <h4 className="font-bold text-sm text-text-main leading-tight">{item.nombre}</h4>
-                        <button
-                            onClick={() => removeItem(item.id)}
-                            className="text-gray-400 hover:text-primary transition-colors"
-                        >
-                            <span className="material-symbols-outlined text-lg">close</span>
-                        </button>
-                    </div>
+            <div className="flex items-center justify-between">
+                {/* Quantity Controls */}
+                <div className="flex items-center border border-gray-200 rounded-md bg-white h-8">
+                    <button
+                        onClick={() => updateQuantity(item.id, item.cantidad - 1)}
+                        className="w-8 h-full flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-50 rounded-l-md transition-colors"
+                    >
+                        <span className="material-symbols-outlined text-xs">remove</span>
+                    </button>
+                    <span className="text-xs font-bold px-2 min-w-[20px] text-center">{item.cantidad}</span>
+                    <button
+                        onClick={() => updateQuantity(item.id, item.cantidad + 1)}
+                        className="w-8 h-full flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-50 rounded-r-md transition-colors"
+                    >
+                        <span className="material-symbols-outlined text-xs">add</span>
+                    </button>
                 </div>
 
-                <div className="flex items-center justify-between mt-2">
-                    {/* Quantity Controls */}
-                    <div className="flex items-center border border-gray-200 rounded-md bg-white h-8">
-                        <button
-                            onClick={() => updateQuantity(item.id, item.cantidad - 1)}
-                            className="w-8 h-full flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-50 rounded-l-md transition-colors"
-                        >
-                            <span className="material-symbols-outlined text-xs">remove</span>
-                        </button>
-                        <span className="text-xs font-bold px-2 min-w-[20px] text-center">{item.cantidad}</span>
-                        <button
-                            onClick={() => updateQuantity(item.id, item.cantidad + 1)}
-                            className="w-8 h-full flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-50 rounded-r-md transition-colors"
-                        >
-                            <span className="material-symbols-outlined text-xs">add</span>
-                        </button>
-                    </div>
-
-                    {/* Price */}
-                    <span className="font-bold text-sm">
-                        ${(item.precio * item.cantidad).toLocaleString('es-AR')}
-                    </span>
-                </div>
+                {/* Price */}
+                <span className="font-bold text-sm">
+                    ${(item.precio * item.cantidad).toLocaleString('es-AR')}
+                </span>
             </div>
         </div>
     )

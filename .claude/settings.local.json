@@ -6,7 +6,12 @@
       "Bash(npm run build:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "mcp__supabase__apply_migration",
+      "Bash(npx tsc:*)",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__execute_sql"
     ]
   },
   "enableAllProjectMcpServers": true,

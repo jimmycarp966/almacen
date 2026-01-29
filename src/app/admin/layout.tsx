@@ -7,13 +7,9 @@ import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const MENU_ITEMS = [
-    { label: 'Dashboard', icon: 'dashboard', href: '/admin' },
     { label: 'Pedidos', icon: 'shopping_bag', href: '/admin/pedidos' },
     { label: 'Productos', icon: 'inventory_2', href: '/admin/productos' },
     { label: 'Ofertas', icon: 'local_offer', href: '/admin/ofertas' },
-    { label: 'Caja Diaria', icon: 'account_balance_wallet', href: '/admin/caja' },
-    { label: 'Reportes', icon: 'analytics', href: '/admin/reportes' },
-    { label: 'Configuración', icon: 'settings', href: '/admin/configuracion' },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -26,11 +22,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         setMounted(true)
-    }, [])
+        // Redirigir /admin a /admin/pedidos
+        if (pathname === '/admin') {
+            router.push('/admin/pedidos')
+        }
+    }, [pathname, router])
 
     const handleLogout = () => {
         clearSession()
-        router.push('/')
+        router.push('/catalogo')
     }
 
     if (!mounted) return null

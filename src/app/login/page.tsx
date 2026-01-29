@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
                                 id="phone"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
-                                placeholder="3814011673"
+                                placeholder=""
                                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white text-text-main placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-lg font-medium"
                                 required
                                 pattern="[0-9]{10}"

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { NumberInput } from '@/components/ui/NumberInput'
 
 interface FilterPanelProps {
   onFilterChange: (filters: FilterState) => void
@@ -9,8 +10,8 @@ interface FilterPanelProps {
 }
 
 export interface FilterState {
-  minPrice: number
-  maxPrice: number
+  minPrice: number | null
+  maxPrice: number | null
   categories: string[]
   inStock: boolean
   sortBy: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
@@ -20,8 +21,8 @@ export function FilterPanel({ onFilterChange, initialFilters, categorias }: Filt
   const [isOpen, setIsOpen] = useState(false)
   const [filters, setFilters] = useState<FilterState>(
     initialFilters || {
-      minPrice: 0,
-      maxPrice: 50000,
+      minPrice: null,
+      maxPrice: null,
       categories: [],
       inStock: false,
       sortBy: 'nombre',
@@ -38,9 +39,8 @@ export function FilterPanel({ onFilterChange, initialFilters, categorias }: Filt
     onFilterChange(newFilters)
   }
 
-  const handlePriceChange = (field: 'minPrice' | 'maxPrice', value: string) => {
-    const numValue = value ? parseInt(value) : 0
-    const newFilters = { ...filters, [field]: numValue }
+  const handlePriceChange = (field: 'minPrice' | 'maxPrice', value: number | null) => {
+    const newFilters = { ...filters, [field]: value }
     setFilters(newFilters)
     onFilterChange(newFilters)
   }
@@ -59,8 +59,8 @@ export function FilterPanel({ onFilterChange, initialFilters, categorias }: Filt
 
   const clearFilters = () => {
     const newFilters: FilterState = {
-      minPrice: 0,
-      maxPrice: 50000,
+      minPrice: null,
+      maxPrice: null,
       categories: [],
       inStock: false,
       sortBy: 'nombre',
@@ -69,24 +69,24 @@ export function FilterPanel({ onFilterChange, initialFilters, categorias }: Filt
     onFilterChange(newFilters)
   }
 
-  const hasActiveFilters = filters.categories.length > 0 || filters.minPrice > 0 || filters.maxPrice < 50000 || filters.inStock
+  const hasActiveFilters = filters.categories.length > 0 || filters.minPrice !== null || filters.maxPrice !== null || filters.inStock
 
   return (
-    <div className="relative">
+    <div className="relative flex-shrink-0">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-3 bg-white rounded-xl shadow-soft border border-gray-100 hover:border-gray-200 transition-colors"
+        className="flex items-center gap-2 px-3 sm:px-4 py-3 bg-white rounded-xl shadow-soft border border-gray-100 hover:border-gray-200 transition-colors"
       >
         <span className="material-symbols-outlined text-text-main">tune</span>
-        <span className="text-text-main font-bold">Filtros</span>
+        <span className="text-text-main font-bold text-sm">Filtros</span>
         {hasActiveFilters && (
-          <span className="h-2 w-2 rounded-full bg-primary" />
+          <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0" />
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-2xl shadow-soft border border-gray-100 p-6 z-50">
-          <div className="flex justify-between items-center mb-6">
+        <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-80 bg-white rounded-2xl shadow-soft border border-gray-100 p-4 sm:p-6 z-50 max-h-[80vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
             <h3 className="text-lg font-bold text-text-main">Filtros</h3>
             {hasActiveFilters && (
               <button
@@ -102,19 +102,17 @@ export function FilterPanel({ onFilterChange, initialFilters, categorias }: Filt
           <div className="mb-6">
             <label className="block text-sm font-bold text-text-main mb-3">Rango de Precio</label>
             <div className="flex items-center gap-3">
-              <input
-                type="number"
+              <NumberInput
                 placeholder="Mín"
-                value={filters.minPrice || ''}
-                onChange={(e) => handlePriceChange('minPrice', e.target.value)}
+                value={filters.minPrice ?? ''}
+                onChange={(value) => handlePriceChange('minPrice', value)}
                 className="w-full px-3 py-2 bg-background-light rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-text-main text-sm"
               />
               <span className="text-text-secondary">-</span>
-              <input
-                type="number"
+              <NumberInput
                 placeholder="Máx"
-                value={filters.maxPrice || ''}
-                onChange={(e) => handlePriceChange('maxPrice', e.target.value)}
+                value={filters.maxPrice ?? ''}
+                onChange={(value) => handlePriceChange('maxPrice', value)}
                 className="w-full px-3 py-2 bg-background-light rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary text-text-main text-sm"
               />
             </div>

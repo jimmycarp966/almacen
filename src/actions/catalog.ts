@@ -31,8 +31,8 @@ export async function getCategorias() {
 }
 
 export async function getProductos(categoriaId?: string, searchQuery?: string, filters?: {
-    minPrice?: number
-    maxPrice?: number
+    minPrice?: number | null
+    maxPrice?: number | null
     inStock?: boolean
     sortBy?: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
 }) {
@@ -115,8 +115,7 @@ export async function revalidateCatalog() {
 }
 
 /**
- * Obtiene las ofertas de la semana (productos con descuento o marcados como oferta)
- * Límite de 10 productos
+ * Obtiene los productos marcados como oferta (es_oferta = true)
  */
 export async function getOfertasSemana() {
     console.log('--- getOfertasSemana START ---')
@@ -125,23 +124,18 @@ export async function getOfertasSemana() {
             .from('productos')
             .select('*')
             .eq('activo', true)
-            .or('es_oferta.eq.true,descuento.gt.0')
-            .limit(10)
-            .order('es_oferta', { ascending: false })
-            .order('descuento', { ascending: false })
+            .eq('es_oferta', true)
 
         if (error) {
             console.error('Error al obtener ofertas de Supabase:', error)
-            console.log('Usando mock de ofertas como fallback')
-            return mockProductos.filter(p => p.activo && p.descuento).slice(0, 10)
+            return []
         }
 
         console.log(`getOfertasSemana exitoso: ${data?.length || 0} ofertas encontradas`)
         return data || []
     } catch (error) {
         console.error('Error inesperado al obtener ofertas:', error)
-        console.log('Usando mock de ofertas como fallback (catch)')
-        return mockProductos.filter(p => p.activo && p.descuento).slice(0, 10)
+        return []
     } finally {
         console.log('--- getOfertasSemana END ---')
     }

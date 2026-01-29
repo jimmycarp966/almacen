@@ -17,6 +17,19 @@
   body {
     @apply bg-white text-black font-sans;
   }
+
+  * {
+    max-width: 100%;
+  }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Prevenir scroll horizontal */
+  div, section, article, main, aside, nav {
+    overflow-x: hidden;
+  }
 }
 
 @layer components {
