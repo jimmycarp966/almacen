@@ -106,7 +106,7 @@ function CatalogContent() {
                 <main className="flex-1 px-4 sm:px-6 lg:px-12 py-8 lg:pr-8 overflow-x-hidden">
                     {/* Header */}
                     <div className="flex flex-col md:flex-row justify-between items-center md:items-center mb-6 gap-4">
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-text-main text-center md:text-left">Catálogo 2026</h2>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-text-main text-center md:text-left">Thomas - Catálogo</h2>
                         <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
                             <SearchBar placeholder="Buscar..." />
                             <FilterPanel onFilterChange={handleFilterChange} initialFilters={filters} categorias={categorias} />
