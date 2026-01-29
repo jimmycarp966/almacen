@@ -1,9 +1,9 @@
 # 🛒 SISTEMA DE VENTAS POR CATÁLOGO
 ## Especificación Completa para Desarrollo con IA
 
-**Fecha:** 16 de Enero de 2026  
-**Versión:** 1.0  
-**Estado:** ✅ Listo para desarrollo
+**Fecha:** 28 de Enero de 2026
+**Versión:** 1.1
+**Estado:** 🚀 PRODUCCIÓN
 
 ---
 
@@ -1113,13 +1113,22 @@ export function OrderTimeline({ estado, historial }: TimelineProps) {
 
 ### MÓDULO ADMIN
 
-#### 1. Dashboard (`/admin`)
+> **Nota:** El panel de administración ha sido simplificado. Solo se mantienen 3 secciones: Pedidos, Productos y Ofertas. Dashboard, Caja Diaria, Reportes y Configuración han sido eliminados.
 
-**Componentes:**
-- Resumen del día (pedidos nuevos, ventas, pagos pendientes)
-- Últimos pedidos
-- Productos con stock bajo
-- Acciones rápidas
+#### 1. Panel Principal (`/admin`)
+
+**Redirección:**
+- `/admin` → `/admin/productos` (página principal de administración)
+- Logout → `/catalogo` (redirige al catálogo del cliente)
+
+**Menú de Administración:**
+```
+┌─────────────────────┐
+│  🛒 Pedidos         │
+│  📦 Productos       │ ← Principal
+│  🏷️ Ofertas        │
+└─────────────────────┘
+```
 
 **Server Action:**
 ```typescript
@@ -1755,16 +1764,59 @@ TWILIO_AUTH_TOKEN=
 
 **ESTE DOCUMENTO ES LA FUENTE ÚNICA DE VERDAD PARA EL PROYECTO**
 
-✅ Listo para ser usado por una IA  
-✅ Incluye todas las reglas de desarrollo  
-✅ Incluye toda la arquitectura  
-✅ Incluye todos los flujos  
-✅ Incluye toda la base de datos  
-✅ Incluye guía de inicio completa  
+✅ Listo para ser usado por una IA
+✅ Incluye todas las reglas de desarrollo
+✅ Incluye toda la arquitectura
+✅ Incluye todos los flujos
+✅ Incluye toda la base de datos
+✅ Incluye guía de inicio completa
 
-**Versión:** 1.0  
-**Fecha:** 16/01/2026  
+**Versión:** 1.1
+**Fecha:** 28/01/2026
 **Estado:** 🚀 PRODUCCIÓN
+
+---
+
+## 📋 HISTORIAL DE CAMBIOS
+
+### Versión 1.1 (28/01/2026)
+
+**Simplificación del Panel de Administración:**
+- ✅ Eliminadas secciones: Dashboard, Caja Diaria, Reportes, Configuración
+- ✅ Menú admin reducido a: Pedidos, Productos, Ofertas
+- ✅ `/admin` redirige a `/admin/productos`
+- ✅ Logout redirige a `/catalogo` (catálogo cliente)
+- ✅ Eliminados todos los datos mock del sistema
+- ✅ Eliminadas imágenes del catálogo y admin
+- ✅ Producto simplificado: solo nombre, categoría, precio
+- ✅ Campos eliminados: stock, comentarios, descuento
+
+**Mejoras Responsive:**
+- ✅ Corregido overflow horizontal en todo el sitio
+- ✅ Tablas con overflow controlado
+- ✅ Componentes adaptados para móvil
+- ✅ Navbar simplificado (sin búsqueda, sin menú usuario)
+
+**Sistema de Ofertas:**
+- ✅ Gestión solo por checkbox en admin (`/admin/ofertas`)
+- ✅ Banner rojo destacado en catálogo
+- ✅ Sin descuentos porcentuales en productos
+- ✅ Contador de ofertas visible
+
+**Componentes Nuevos:**
+- ✅ `NumberInput` - inputs numéricos borrables
+- ✅ `WeightInput` - para productos por peso (preparado para balanza)
+
+---
+
+### Versión 1.0 (16/01/2026)
+
+**Lanzamiento inicial del sistema**
+- Catálogo de productos
+- Carrito de compras
+- Sistema de pedidos
+- Panel de administración completo
+- Integración con Supabase
 
 ---
 
