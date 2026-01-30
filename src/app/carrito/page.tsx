@@ -17,7 +17,6 @@ const WHATSAPP_ADMIN = '5493865572025' // Número del negocio
 const STEPS = ['Productos', 'Entrega', 'Pago', 'Confirmar']
 
 export default function CarritoPage() {
-    const { items, getTotal, clearCart } = useCartStore()
     const [mounted, setMounted] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -41,16 +40,59 @@ export default function CarritoPage() {
         }
     }, [metodoPago, cuotas])
 
-    const subtotal = useMemo(() => getTotal(), [getTotal])
+    // Mostrar loading mientras hidrata
+    if (!mounted) {
+        return (
+            <div className="min-h-screen bg-background-light flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+        )
+    }
+
+    // Ahora es seguro usar el store
+    return <CarritoContent
+        loading={loading}
+        setLoading={setLoading}
+        error={error}
+        setError={setError}
+        step={step}
+        setStep={setStep}
+        tipoEntrega={tipoEntrega}
+        setTipoEntrega={setTipoEntrega}
+        metodoPago={metodoPago}
+        setMetodoPago={setMetodoPago}
+        cuotas={cuotas}
+        setCuotas={setCuotas}
+        router={router}
+    />
+}
+
+function CarritoContent({
+    loading, setLoading, error, setError, step, setStep,
+    tipoEntrega, setTipoEntrega, metodoPago, setMetodoPago,
+    cuotas, setCuotas, router
+}: {
+    loading: boolean
+    setLoading: (v: boolean) => void
+    error: string
+    setError: (v: string) => void
+    step: number
+    setStep: (v: number | ((p: number) => number)) => void
+    tipoEntrega: 'domicilio' | 'retiro'
+    setTipoEntrega: (v: 'domicilio' | 'retiro') => void
+    metodoPago: string
+    setMetodoPago: (v: string) => void
+    cuotas: number
+    setCuotas: (v: number) => void
+    router: ReturnType<typeof useRouter>
+}) {
+    const { items, getTotal, clearCart } = useCartStore()
+
+    const subtotal = getTotal()
     const costoEntrega = tipoEntrega === 'domicilio' ? COSTO_ENVIO : 0
-
-    const recargo = useMemo(() => {
-        return calcularRecargo(metodoPago, cuotas, subtotal)
-    }, [subtotal, metodoPago, cuotas])
-
+    const recargo = calcularRecargo(metodoPago, cuotas, subtotal)
     const total = subtotal + costoEntrega + recargo
 
-    if (!mounted) return null
 
     if (items.length === 0) {
         return (
