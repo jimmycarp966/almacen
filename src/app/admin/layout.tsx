@@ -27,18 +27,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (pathname === '/admin') {
             router.push('/admin/productos')
         }
-    }, [pathname, router])
+
+        // Protección de ruta - mover a useEffect para evitar Error #310 en React 19
+        if (_hasHydrated && (!user || user.rol !== 'admin')) {
+            router.replace('/login')
+        }
+    }, [pathname, router, _hasHydrated, user])
 
     const handleLogout = () => {
         clearSession()
         router.push('/catalogo')
     }
 
-    if (!mounted) return null
+    if (!mounted || !_hasHydrated) return null
 
-    // Protección básica de ruta admin - esperar a la hidratación para evitar falsos negativos
-    if (_hasHydrated && (!user || user.rol !== 'admin')) {
-        redirect('/login')
+    // Mientras no hay usuario, mostrar nada (el useEffect se encarga de la redirección)
+    if (!user || user.rol !== 'admin') {
+        return null
     }
 
     return (

@@ -1,7 +1,7 @@
 // Service Worker para Super Aguilares
 // Maneja notificaciones push y caching offline básico
 
-const CACHE_NAME = 'super-aguilares-v1'
+const CACHE_NAME = 'super-aguilares-v1';
 const urlsToCache = [
   '/',
   '/catalogo',
@@ -9,68 +9,68 @@ const urlsToCache = [
   '/historial',
   '/icon-192.png',
   '/icon-512.png',
-]
+];
 
 // Evento de instalación del Service Worker
-self.addEventListener('install', (event: ExtendableEvent) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache)
+      return cache.addAll(urlsToCache);
     })
-  )
-})
+  );
+});
 
 // Evento de activación del Service Worker
-self.addEventListener('activate', (event: ExtendableEvent) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName)
+            return caches.delete(cacheName);
           }
         })
-      )
+      );
     })
-  )
-})
+  );
+});
 
 // Evento de fetch para caching
-self.addEventListener('fetch', (event: FetchEvent) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
       // Cache hit - return response
       if (response) {
-        return response
+        return response;
       }
 
       // Clone the request
-      const fetchRequest = event.request.clone()
+      const fetchRequest = event.request.clone();
 
       return fetch(fetchRequest).then((response) => {
         // Check if valid response
         if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response
+          return response;
         }
 
         // Clone the response
-        const responseToCache = response.clone()
+        const responseToCache = response.clone();
 
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache)
-        })
+          cache.put(event.request, responseToCache);
+        });
 
-        return response
-      })
+        return response;
+      });
     })
-  )
-})
+  );
+});
 
 // Evento de notificación push
-self.addEventListener('push', (event: PushEvent) => {
-  const options = event.data?.json() || {}
-  
-  const notificationOptions: NotificationOptions = {
+self.addEventListener('push', (event) => {
+  const options = event.data ? event.data.json() : {};
+
+  const notificationOptions = {
     body: options.body || 'Tienes una nueva notificación de Super Aguilares',
     icon: '/icon-192.png',
     badge: '/icon-192.png',
@@ -88,68 +88,65 @@ self.addEventListener('push', (event: PushEvent) => {
         icon: '/icon-192.png',
       },
     ],
-  }
+  };
 
   event.waitUntil(
     self.registration.showNotification(options.title || 'Super Aguilares', notificationOptions)
-  )
-})
+  );
+});
 
 // Evento de clic en notificación
-self.addEventListener('notificationclick', (event: NotificationEvent) => {
-  event.notification.close()
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
 
   if (event.action === 'view') {
-    const orderId = event.notification.data?.orderId
+    const orderId = event.notification.data ? event.notification.data.orderId : null;
     if (orderId) {
       event.waitUntil(
         clients.openWindow(`/seguimiento/${orderId}`)
-      )
+      );
     } else {
       event.waitUntil(
         clients.openWindow('/')
-      )
+      );
     }
   } else if (event.action === 'dismiss') {
     // Cerrar notificación sin acción
   } else {
     // Clic en la notificación (sin acción específica)
-    const orderId = event.notification.data?.orderId
+    const orderId = event.notification.data ? event.notification.data.orderId : null;
     if (orderId) {
       event.waitUntil(
         clients.openWindow(`/seguimiento/${orderId}`)
-      )
+      );
     } else {
       event.waitUntil(
         clients.openWindow('/')
-      )
+      );
     }
   }
-})
+});
 
 // Evento de sincronización en segundo plano
-self.addEventListener('sync', (event: any) => {
+self.addEventListener('sync', (event) => {
   if (event.tag === 'sync-orders') {
-    event.waitUntil(syncOrders())
+    event.waitUntil(syncOrders());
   }
-})
+});
 
 // Función para sincronizar pedidos
 async function syncOrders() {
   try {
     // Aquí puedes implementar la lógica de sincronización
-    // Por ejemplo, enviar pedidos pendientes al servidor
-    console.log('Sincronizando pedidos...')
+    console.log('Sincronizando pedidos...');
   } catch (error) {
-    console.error('Error sincronizando pedidos:', error)
+    console.error('Error sincronizando pedidos:', error);
   }
 }
 
 // Evento de mensaje
-self.addEventListener('message', (event: ExtendableMessageEvent) => {
+self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting()
+    self.skipWaiting();
   }
-})
-
-export {}
+});
