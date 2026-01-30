@@ -21,6 +21,12 @@ function AdminContent({ children }: { children: React.ReactNode }) {
     const [dateDisplay, setDateDisplay] = useState('')
     const [sessionData, setSessionData] = useState<{ nombre: string; rol: string } | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [isMounted, setIsMounted] = useState(false)
+
+    // Efecto de montaje para evitar problemas de hidratación
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     useEffect(() => {
         console.log('[DEBUG AdminContent] useEffect triggered')
@@ -67,22 +73,12 @@ function AdminContent({ children }: { children: React.ReactNode }) {
         router.push('/catalogo')
     }
 
-    // Mostrar loader mientras carga sesión
-    if (isLoading) {
-        console.log('[DEBUG AdminContent] Loading state')
-        return (
-            <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            </div>
-        )
-    }
-
-    console.log('[DEBUG AdminContent] Rendering full layout')
+    console.log('[DEBUG AdminContent] Rendering layout (isLoading:', isLoading, ')')
 
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">
             {/* Mobile Overlay */}
-            {sidebarOpen && (
+            {isMounted && sidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden"
                     onClick={() => setSidebarOpen(false)}
@@ -173,11 +169,17 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                 </header>
 
                 <div className="p-4 lg:p-10">
-                    <ErrorBoundary>
-                        <ClientRender>
-                            {children}
-                        </ClientRender>
-                    </ErrorBoundary>
+                    {isLoading ? (
+                        <div className="flex items-center justify-center py-20">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                        </div>
+                    ) : (
+                        <ErrorBoundary>
+                            <ClientRender>
+                                {children}
+                            </ClientRender>
+                        </ErrorBoundary>
+                    )}
                 </div>
             </main>
         </div>
