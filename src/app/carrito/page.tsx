@@ -17,11 +17,13 @@ const WHATSAPP_ADMIN = '5493865572025' // Número del negocio
 const STEPS = ['Productos', 'Entrega', 'Pago', 'Confirmar']
 
 export default function CarritoPage() {
+    console.log('[DEBUG CarritoPage] Render inicial')
     const [mounted, setMounted] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [step, setStep] = useState(0)
     const router = useRouter()
+    console.log('[DEBUG CarritoPage] Después de useState/useRouter, mounted:', mounted)
 
     // Form states
     const [tipoEntrega, setTipoEntrega] = useState<'domicilio' | 'retiro'>('retiro')
@@ -29,6 +31,7 @@ export default function CarritoPage() {
     const [cuotas, setCuotas] = useState(1)
 
     useEffect(() => {
+        console.log('[DEBUG CarritoPage] useEffect montaje ejecutado')
         setMounted(true)
     }, [])
 
@@ -42,12 +45,16 @@ export default function CarritoPage() {
 
     // Mostrar loading mientras hidrata
     if (!mounted) {
+        console.log('[DEBUG CarritoPage] Retornando loading (no mounted)')
         return (
             <div className="min-h-screen bg-background-light flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
         )
     }
+
+    console.log('[DEBUG CarritoPage] Retornando CarritoContent (mounted)')
+
 
     // Ahora es seguro usar el store
     return <CarritoContent

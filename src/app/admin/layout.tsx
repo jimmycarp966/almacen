@@ -12,36 +12,44 @@ const MENU_ITEMS = [
 
 // Componente interno que maneja la sesión de forma segura
 function AdminContent({ children }: { children: React.ReactNode }) {
+    console.log('[DEBUG AdminContent] Render inicial')
     const pathname = usePathname()
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [dateDisplay, setDateDisplay] = useState('')
     const [sessionData, setSessionData] = useState<{ nombre: string; rol: string } | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    console.log('[DEBUG AdminContent] Después de useState, isLoading:', isLoading, 'sessionData:', sessionData)
 
     useEffect(() => {
+        console.log('[DEBUG AdminContent] useEffect ejecutándose')
         // Cargar fecha solo en cliente
         setDateDisplay(new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }))
 
         // Cargar sesión desde localStorage de forma segura
         try {
             const stored = localStorage.getItem('super-aguilares-session')
+            console.log('[DEBUG AdminContent] localStorage stored:', stored ? 'existe' : 'null')
             if (stored) {
                 const parsed = JSON.parse(stored)
+                console.log('[DEBUG AdminContent] parsed rol:', parsed?.state?.user?.rol)
                 if (parsed?.state?.user?.rol === 'admin') {
                     setSessionData({
                         nombre: parsed.state.user.nombre || 'Admin',
                         rol: parsed.state.user.rol || 'admin'
                     })
                 } else {
+                    console.log('[DEBUG AdminContent] No es admin, redirigiendo a login')
                     router.replace('/login')
                     return
                 }
             } else {
+                console.log('[DEBUG AdminContent] No hay sesión, redirigiendo a login')
                 router.replace('/login')
                 return
             }
-        } catch {
+        } catch (e) {
+            console.log('[DEBUG AdminContent] Error parseando sesión:', e)
             router.replace('/login')
             return
         }
@@ -51,6 +59,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
             router.push('/admin/productos')
         }
 
+        console.log('[DEBUG AdminContent] setIsLoading(false)')
         setIsLoading(false)
     }, [pathname, router])
 
@@ -61,12 +70,15 @@ function AdminContent({ children }: { children: React.ReactNode }) {
 
     // Mostrar loader mientras carga
     if (isLoading) {
+        console.log('[DEBUG AdminContent] Retornando loader (isLoading)')
         return (
             <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
         )
     }
+
+    console.log('[DEBUG AdminContent] Retornando UI completa')
 
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">

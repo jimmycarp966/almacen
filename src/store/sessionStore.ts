@@ -17,20 +17,35 @@ interface SessionState {
     setHasHydrated: (state: boolean) => void
 }
 
+console.log('[DEBUG sessionStore] Creando store')
+
 export const useSessionStore = create<SessionState>()(
     persist(
         (set) => ({
             user: null,
             isAuthenticated: false,
             _hasHydrated: false,
-            setSession: (user) => set({ user, isAuthenticated: !!user }),
-            clearSession: () => set({ user: null, isAuthenticated: false }),
-            setHasHydrated: (state) => set({ _hasHydrated: state }),
+            setSession: (user) => {
+                console.log('[DEBUG sessionStore] setSession llamado:', user)
+                set({ user, isAuthenticated: !!user })
+            },
+            clearSession: () => {
+                console.log('[DEBUG sessionStore] clearSession llamado')
+                set({ user: null, isAuthenticated: false })
+            },
+            setHasHydrated: (state) => {
+                console.log('[DEBUG sessionStore] setHasHydrated:', state)
+                set({ _hasHydrated: state })
+            },
         }),
         {
             name: 'super-aguilares-session',
-            onRehydrateStorage: (state) => {
-                return () => state.setHasHydrated(true)
+            onRehydrateStorage: () => {
+                console.log('[DEBUG sessionStore] onRehydrateStorage iniciado')
+                return (state: SessionState | undefined) => {
+                    console.log('[DEBUG sessionStore] Rehidratación completa, state:', state?.user)
+                    state?.setHasHydrated(true)
+                }
             }
         }
     )
