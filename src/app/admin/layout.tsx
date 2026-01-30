@@ -24,8 +24,21 @@ function AdminContent({ children }: { children: React.ReactNode }) {
 
     // Efecto de montaje para evitar problemas de hidratación
     useEffect(() => {
-        console.log('[DEBUG AdminContent] isMounted effect')
+        console.log('[DEBUG AdminContent] isMounted effect - DESREGISTRANDO SERVICE WORKER')
         setIsMounted(true)
+
+        // DESREGISTRAR SERVICE WORKER para evitar error #310
+        if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then((registrations) => {
+                console.log('[DEBUG SW] Found registrations:', registrations.length)
+                for (const registration of registrations) {
+                    console.log('[DEBUG SW] Unregistering:', registration.scope)
+                    registration.unregister().then((success) => {
+                        console.log('[DEBUG SW] Unregister success:', success)
+                    })
+                }
+            })
+        }
     }, [])
 
     useEffect(() => {
