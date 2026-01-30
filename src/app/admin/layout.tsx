@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ClientRender } from '@/components/ClientRender'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const MENU_ITEMS = [
     { label: 'Pedidos', icon: 'shopping_bag', href: '/admin/pedidos' },
@@ -13,6 +14,7 @@ const MENU_ITEMS = [
 
 // Componente interno que maneja la sesión de forma segura
 function AdminContent({ children }: { children: React.ReactNode }) {
+    console.log('[DEBUG AdminContent] Render start')
     const pathname = usePathname()
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -21,12 +23,14 @@ function AdminContent({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
+        console.log('[DEBUG AdminContent] useEffect triggered')
         // Cargar fecha solo en cliente
         setDateDisplay(new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }))
 
         // Cargar sesión desde localStorage de forma segura
         try {
             const stored = localStorage.getItem('super-aguilares-session')
+            console.log('[DEBUG AdminContent] stored session exists:', !!stored)
             if (stored) {
                 const parsed = JSON.parse(stored)
                 if (parsed?.state?.user?.rol === 'admin') {
@@ -35,10 +39,12 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                         rol: parsed.state.user.rol || 'admin'
                     })
                 } else {
+                    console.log('[DEBUG AdminContent] No admin role, redirecting')
                     router.replace('/login')
                     return
                 }
             } else {
+                console.log('[DEBUG AdminContent] No session, redirecting')
                 router.replace('/login')
                 return
             }
@@ -52,6 +58,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
             router.push('/admin/productos')
         }
 
+        console.log('[DEBUG AdminContent] Setting isLoading false')
         setIsLoading(false)
     }, [pathname, router])
 
@@ -62,12 +69,15 @@ function AdminContent({ children }: { children: React.ReactNode }) {
 
     // Mostrar loader mientras carga sesión
     if (isLoading) {
+        console.log('[DEBUG AdminContent] Loading state')
         return (
             <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
         )
     }
+
+    console.log('[DEBUG AdminContent] Rendering full layout')
 
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">
@@ -163,7 +173,11 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                 </header>
 
                 <div className="p-4 lg:p-10">
-                    <ClientRender>{children}</ClientRender>
+                    <ErrorBoundary>
+                        <ClientRender>
+                            {children}
+                        </ClientRender>
+                    </ErrorBoundary>
                 </div>
             </main>
         </div>

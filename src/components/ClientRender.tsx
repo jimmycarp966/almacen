@@ -3,13 +3,16 @@
 import { useState, useEffect } from 'react'
 
 export function ClientRender({ children }: { children: React.ReactNode }) {
+    console.log('[DEBUG ClientRender] Render (server/client mismatch check)')
     const [isMounted, setIsMounted] = useState(false)
 
     useEffect(() => {
+        console.log('[DEBUG ClientRender] useEffect montando')
         setIsMounted(true)
     }, [])
 
     if (!isMounted) {
+        console.log('[DEBUG ClientRender] Retornando skeleton')
         return (
             <div className="flex items-center justify-center p-10">
                 <div className="animate-pulse flex space-x-4">
@@ -25,5 +28,6 @@ export function ClientRender({ children }: { children: React.ReactNode }) {
         )
     }
 
+    console.log('[DEBUG ClientRender] Retornando children')
     return <>{children}</>
 }
