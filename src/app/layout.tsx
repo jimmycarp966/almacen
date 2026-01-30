@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="light">
+    <html lang="es" className="light" suppressHydrationWarning>
       <head>
         <link
           rel="stylesheet"
@@ -31,6 +31,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${manrope.variable} font-sans antialiased bg-background-light text-text-main overflow-x-hidden`}
+        suppressHydrationWarning
       >
         <NotificationSetup />
         {children}
