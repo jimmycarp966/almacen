@@ -11,13 +11,21 @@ export function NotificationSetup() {
   // No ejecutar en el admin para evitar errores de hidratación
   const isAdmin = pathname?.startsWith('/admin')
 
+  console.log('[DEBUG NotificationSetup] pathname:', pathname, 'isAdmin:', isAdmin)
+
   useEffect(() => {
     setHasMounted(true)
   }, [])
 
   useEffect(() => {
-    if (!hasMounted || isAdmin) return
+    console.log('[DEBUG NotificationSetup] useEffect - hasMounted:', hasMounted, 'isAdmin:', isAdmin)
 
+    if (!hasMounted || isAdmin) {
+      console.log('[DEBUG NotificationSetup] SALTANDO registro SW - isAdmin:', isAdmin, 'hasMounted:', hasMounted)
+      return
+    }
+
+    console.log('[DEBUG NotificationSetup] Registrando Service Worker...')
     // Solicitar permisos de notificación y registrar Service Worker
     setupNotifications().then((result) => {
       console.log('Notificaciones configuradas:', result)
