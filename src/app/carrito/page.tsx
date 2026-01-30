@@ -17,13 +17,11 @@ const WHATSAPP_ADMIN = '5493865572025' // Número del negocio
 const STEPS = ['Productos', 'Entrega', 'Pago', 'Confirmar']
 
 export default function CarritoPage() {
-    console.log('[DEBUG CarritoPage] Render inicial')
     const [mounted, setMounted] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [step, setStep] = useState(0)
     const router = useRouter()
-    console.log('[DEBUG CarritoPage] Después de useState/useRouter, mounted:', mounted)
 
     // Form states
     const [tipoEntrega, setTipoEntrega] = useState<'domicilio' | 'retiro'>('retiro')
@@ -31,7 +29,6 @@ export default function CarritoPage() {
     const [cuotas, setCuotas] = useState(1)
 
     useEffect(() => {
-        console.log('[DEBUG CarritoPage] useEffect montaje ejecutado')
         setMounted(true)
     }, [])
 

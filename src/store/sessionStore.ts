@@ -26,24 +26,19 @@ export const useSessionStore = create<SessionState>()(
             isAuthenticated: false,
             _hasHydrated: false,
             setSession: (user) => {
-                console.log('[DEBUG sessionStore] setSession llamado:', user)
                 set({ user, isAuthenticated: !!user })
             },
             clearSession: () => {
-                console.log('[DEBUG sessionStore] clearSession llamado')
                 set({ user: null, isAuthenticated: false })
             },
             setHasHydrated: (state) => {
-                console.log('[DEBUG sessionStore] setHasHydrated:', state)
                 set({ _hasHydrated: state })
             },
         }),
         {
             name: 'super-aguilares-session',
             onRehydrateStorage: () => {
-                console.log('[DEBUG sessionStore] onRehydrateStorage iniciado')
                 return (state: SessionState | undefined) => {
-                    console.log('[DEBUG sessionStore] Rehidratación completa, state:', state?.user)
                     state?.setHasHydrated(true)
                 }
             }

@@ -4,9 +4,7 @@ import { useSessionStore } from '@/store/sessionStore'
 import Link from 'next/link'
 
 export function Navbar() {
-    console.log('[DEBUG Navbar] Render inicial, llamando useSessionStore')
     const user = useSessionStore((state) => state.user)
-    console.log('[DEBUG Navbar] user obtenido:', user)
 
     return (
         <nav className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">

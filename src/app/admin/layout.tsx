@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { ClientRender } from '@/components/ClientRender'
 
 const MENU_ITEMS = [
     { label: 'Pedidos', icon: 'shopping_bag', href: '/admin/pedidos' },
@@ -12,44 +13,36 @@ const MENU_ITEMS = [
 
 // Componente interno que maneja la sesión de forma segura
 function AdminContent({ children }: { children: React.ReactNode }) {
-    console.log('[DEBUG AdminContent] Render inicial')
     const pathname = usePathname()
     const router = useRouter()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [dateDisplay, setDateDisplay] = useState('')
     const [sessionData, setSessionData] = useState<{ nombre: string; rol: string } | null>(null)
     const [isLoading, setIsLoading] = useState(true)
-    console.log('[DEBUG AdminContent] Después de useState, isLoading:', isLoading, 'sessionData:', sessionData)
 
     useEffect(() => {
-        console.log('[DEBUG AdminContent] useEffect ejecutándose')
         // Cargar fecha solo en cliente
         setDateDisplay(new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }))
 
         // Cargar sesión desde localStorage de forma segura
         try {
             const stored = localStorage.getItem('super-aguilares-session')
-            console.log('[DEBUG AdminContent] localStorage stored:', stored ? 'existe' : 'null')
             if (stored) {
                 const parsed = JSON.parse(stored)
-                console.log('[DEBUG AdminContent] parsed rol:', parsed?.state?.user?.rol)
                 if (parsed?.state?.user?.rol === 'admin') {
                     setSessionData({
                         nombre: parsed.state.user.nombre || 'Admin',
                         rol: parsed.state.user.rol || 'admin'
                     })
                 } else {
-                    console.log('[DEBUG AdminContent] No es admin, redirigiendo a login')
                     router.replace('/login')
                     return
                 }
             } else {
-                console.log('[DEBUG AdminContent] No hay sesión, redirigiendo a login')
                 router.replace('/login')
                 return
             }
-        } catch (e) {
-            console.log('[DEBUG AdminContent] Error parseando sesión:', e)
+        } catch {
             router.replace('/login')
             return
         }
@@ -59,7 +52,6 @@ function AdminContent({ children }: { children: React.ReactNode }) {
             router.push('/admin/productos')
         }
 
-        console.log('[DEBUG AdminContent] setIsLoading(false)')
         setIsLoading(false)
     }, [pathname, router])
 
@@ -68,17 +60,14 @@ function AdminContent({ children }: { children: React.ReactNode }) {
         router.push('/catalogo')
     }
 
-    // Mostrar loader mientras carga
+    // Mostrar loader mientras carga sesión
     if (isLoading) {
-        console.log('[DEBUG AdminContent] Retornando loader (isLoading)')
         return (
             <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
         )
     }
-
-    console.log('[DEBUG AdminContent] Retornando UI completa')
 
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">
@@ -110,7 +99,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
 
                 <nav className="flex-1 px-4 space-y-1 overflow-y-auto pt-4">
                     {MENU_ITEMS.map((item) => {
-                        const isActive = pathname === item.href
+                        const isActive = pathname.startsWith(item.href)
                         return (
                             <Link
                                 key={item.href}
@@ -158,7 +147,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                     </button>
 
                     <h2 className="text-lg lg:text-xl font-bold text-text-main">
-                        {MENU_ITEMS.find(i => i.href === pathname)?.label || 'Admin'}
+                        {MENU_ITEMS.find(i => pathname.startsWith(i.href))?.label || 'Panel de Control'}
                     </h2>
 
                     <div className="flex items-center gap-2 lg:gap-4">
@@ -174,7 +163,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                 </header>
 
                 <div className="p-4 lg:p-10">
-                    {children}
+                    <ClientRender>{children}</ClientRender>
                 </div>
             </main>
         </div>
