@@ -170,13 +170,16 @@ function AdminContent({ children }: { children: React.ReactNode }) {
 
                 <div className="p-4 lg:p-10" suppressHydrationWarning>
                     <ErrorBoundary>
-                        {isLoading ? (
+                        {/* Loader encima cuando carga */}
+                        {isLoading && (
                             <div className="flex items-center justify-center py-20">
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                             </div>
-                        ) : (
-                            children
                         )}
+                        {/* Children SIEMPRE se renderizan para mantener hooks consistentes */}
+                        <div style={{ display: isLoading ? 'none' : 'block' }}>
+                            {children}
+                        </div>
                     </ErrorBoundary>
                 </div>
             </main>
