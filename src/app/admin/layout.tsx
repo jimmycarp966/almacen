@@ -2,8 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useSessionStore } from '@/store/sessionStore'
-import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const MENU_ITEMS = [
@@ -12,40 +10,63 @@ const MENU_ITEMS = [
     { label: 'Ofertas', icon: 'local_offer', href: '/admin/ofertas' },
 ]
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+// Componente interno que maneja la sesión de forma segura
+function AdminContent({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
-    const user = useSessionStore((state) => state.user)
-    const _hasHydrated = useSessionStore((state) => state._hasHydrated)
-    const clearSession = useSessionStore((state) => state.clearSession)
-    const [mounted, setMounted] = useState(false)
-    const [sidebarOpen, setSidebarOpen] = useState(false)
     const router = useRouter()
-
-    // Evitar desajustes de hidratación con las fechas
+    const [sidebarOpen, setSidebarOpen] = useState(false)
     const [dateDisplay, setDateDisplay] = useState('')
+    const [sessionData, setSessionData] = useState<{ nombre: string; rol: string } | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        setMounted(true)
+        // Cargar fecha solo en cliente
         setDateDisplay(new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }))
 
-        // Redirigir /admin a /admin/productos (consistente con page.tsx)
+        // Cargar sesión desde localStorage de forma segura
+        try {
+            const stored = localStorage.getItem('super-aguilares-session')
+            if (stored) {
+                const parsed = JSON.parse(stored)
+                if (parsed?.state?.user?.rol === 'admin') {
+                    setSessionData({
+                        nombre: parsed.state.user.nombre || 'Admin',
+                        rol: parsed.state.user.rol || 'admin'
+                    })
+                } else {
+                    router.replace('/login')
+                    return
+                }
+            } else {
+                router.replace('/login')
+                return
+            }
+        } catch {
+            router.replace('/login')
+            return
+        }
+
+        // Redirigir /admin a /admin/productos
         if (pathname === '/admin') {
             router.push('/admin/productos')
         }
 
-        // Protección de ruta - mover a useEffect para evitar Error #310 en React 19
-        if (_hasHydrated && (!user || user.rol !== 'admin')) {
-            router.replace('/login')
-        }
-    }, [pathname, router, _hasHydrated, user])
+        setIsLoading(false)
+    }, [pathname, router])
 
     const handleLogout = () => {
-        clearSession()
+        localStorage.removeItem('super-aguilares-session')
         router.push('/catalogo')
     }
 
-    // No retornar null globalmente para evitar destruir el árbol de hidratación
-    const showContent = _hasHydrated && user?.rol === 'admin'
+    // Mostrar loader mientras carga
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+        )
+    }
 
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">
@@ -100,11 +121,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="p-4 lg:p-6 border-t border-gray-50 mt-auto">
                     <div className="bg-gray-50 rounded-2xl p-4 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                            {user?.nombre?.charAt(0) || 'A'}
+                            {sessionData?.nombre?.charAt(0) || 'A'}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-text-main truncate">{user?.nombre || 'Admin'}</p>
-                            <p className="text-xs text-text-secondary truncate capitalize">{user?.rol || 'Administrador'}</p>
+                            <p className="text-sm font-bold text-text-main truncate">{sessionData?.nombre || 'Admin'}</p>
+                            <p className="text-xs text-text-secondary truncate capitalize">{sessionData?.rol || 'Administrador'}</p>
                         </div>
                         <button onClick={handleLogout} className="text-gray-400 hover:text-primary transition-colors">
                             <span className="material-symbols-outlined text-lg">logout</span>
@@ -141,13 +162,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </header>
 
                 <div className="p-4 lg:p-10">
-                    {showContent ? children : (
-                        <div className="flex items-center justify-center py-20">
-                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
-                        </div>
-                    )}
+                    {children}
                 </div>
             </main>
         </div>
     )
+}
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+    return <AdminContent>{children}</AdminContent>
 }
