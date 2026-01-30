@@ -27,10 +27,15 @@ export async function getAdminProductosOferta() {
  */
 export async function toggleOfertaProducto(productoId: string, esOferta: boolean) {
     try {
-        const { error } = await supabase
+        console.log('toggleOfertaProducto:', { productoId, esOferta })
+
+        const { data, error } = await supabase
             .from('productos')
             .update({ es_oferta: esOferta })
             .eq('id', productoId)
+            .select()
+
+        console.log('Resultado update:', { data, error })
 
         if (error) throw error
 
