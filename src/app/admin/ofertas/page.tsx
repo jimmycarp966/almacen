@@ -24,16 +24,27 @@ export default function OfertasAdminPage() {
     )
 
     async function handleToggleOferta(id: string, currentStatus: boolean) {
+        console.log('[OFERTAS CLIENT] Toggle clicked:', { id, currentStatus })
+
+        const newStatus = !currentStatus
+
         // Optimistic update
         setProductos(prev => prev.map(p =>
-            p.id === id ? { ...p, es_oferta: !currentStatus } : p
+            p.id === id ? { ...p, es_oferta: newStatus } : p
         ))
 
-        const result = await toggleOfertaProducto(id, !currentStatus)
+        const result = await toggleOfertaProducto(id, newStatus)
+        console.log('[OFERTAS CLIENT] Result:', result)
+
         if (!result.success) {
             // Revert on error
+            console.error('[OFERTAS CLIENT] Error:', result.error)
             loadData()
-            alert('Error al actualizar oferta')
+            alert('Error al actualizar oferta: ' + JSON.stringify(result.error))
+        } else {
+            // Recargar para confirmar el cambio en la DB
+            console.log('[OFERTAS CLIENT] Recargando datos...')
+            loadData()
         }
     }
 
