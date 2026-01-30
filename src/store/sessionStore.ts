@@ -11,8 +11,10 @@ interface User {
 interface SessionState {
     user: User | null
     isAuthenticated: boolean
+    _hasHydrated: boolean
     setSession: (user: User | null) => void
     clearSession: () => void
+    setHasHydrated: (state: boolean) => void
 }
 
 export const useSessionStore = create<SessionState>()(
@@ -20,11 +22,16 @@ export const useSessionStore = create<SessionState>()(
         (set) => ({
             user: null,
             isAuthenticated: false,
+            _hasHydrated: false,
             setSession: (user) => set({ user, isAuthenticated: !!user }),
             clearSession: () => set({ user: null, isAuthenticated: false }),
+            setHasHydrated: (state) => set({ _hasHydrated: state }),
         }),
         {
             name: 'super-aguilares-session',
+            onRehydrateStorage: (state) => {
+                return () => state.setHasHydrated(true)
+            }
         }
     )
 )

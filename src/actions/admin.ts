@@ -3,22 +3,22 @@
 import { supabase } from '@/lib/supabase'
 
 export async function getDashboardStats() {
-    const { count: pedidosHoy, error: err1 } = await supabase
+    const { count: pedidosHoy } = await supabase
         .from('pedidos')
         .select('*', { count: 'exact', head: true })
         .gte('fecha_creacion', new Date().toISOString().split('T')[0])
 
-    const { count: pedidosPendientes, error: err2 } = await supabase
+    const { count: pedidosPendientes } = await supabase
         .from('pedidos')
         .select('*', { count: 'exact', head: true })
         .eq('estado', 'recibido')
 
-    const { count: totalProductos, error: err3 } = await supabase
+    const { count: totalProductos } = await supabase
         .from('productos')
         .select('*', { count: 'exact', head: true })
 
     // Obtener ventas del día
-    const { data: ventasHoy, error: err4 } = await supabase
+    const { data: ventasHoy } = await supabase
         .from('pedidos')
         .select('total')
         .gte('fecha_creacion', new Date().toISOString().split('T')[0])

@@ -15,6 +15,7 @@ const MENU_ITEMS = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
     const user = useSessionStore((state) => state.user)
+    const _hasHydrated = useSessionStore((state) => state._hasHydrated)
     const clearSession = useSessionStore((state) => state.clearSession)
     const [mounted, setMounted] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -22,9 +23,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         setMounted(true)
-        // Redirigir /admin a /admin/pedidos
+        // Redirigir /admin a /admin/productos (consistente con page.tsx)
         if (pathname === '/admin') {
-            router.push('/admin/pedidos')
+            router.push('/admin/productos')
         }
     }, [pathname, router])
 
@@ -35,8 +36,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     if (!mounted) return null
 
-    // Protección básica de ruta admin
-    if (!user || user.rol !== 'admin') {
+    // Protección básica de ruta admin - esperar a la hidratación para evitar falsos negativos
+    if (_hasHydrated && (!user || user.rol !== 'admin')) {
         redirect('/login')
     }
 
