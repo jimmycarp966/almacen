@@ -168,16 +168,16 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                     </div>
                 </header>
 
-                <div className="p-4 lg:p-10">
-                    {isLoading ? (
-                        <div className="flex items-center justify-center py-20">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                        </div>
-                    ) : (
-                        <ErrorBoundary>
-                            {children}
-                        </ErrorBoundary>
-                    )}
+                <div className="p-4 lg:p-10" suppressHydrationWarning>
+                    <ErrorBoundary>
+                        {isLoading ? (
+                            <div className="flex items-center justify-center py-20">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                            </div>
+                        ) : (
+                            children
+                        )}
+                    </ErrorBoundary>
                 </div>
             </main>
         </div>
