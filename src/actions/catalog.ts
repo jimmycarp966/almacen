@@ -36,7 +36,7 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
     inStock?: boolean
     sortBy?: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
 }) {
-    console.log('--- getProductos START ---', { categoriaId, searchQuery, filters })
+    console.log('[DEBUG getProductos] START', { categoriaId, searchQuery, filters })
     try {
         let query = supabase
             .from('productos')
@@ -89,19 +89,20 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
         const { data, error } = await query
 
         if (error) {
-            console.error('Error al obtener productos de Supabase:', error)
-            console.log('Usando mockProductos como fallback')
+            console.error('[DEBUG getProductos] Error de Supabase:', error)
+            console.log('[DEBUG getProductos] Usando mockProductos como fallback')
             return mockProductos.filter(p => p.activo)
         }
 
-        console.log(`getProductos exitoso: ${data?.length || 0} productos encontrados`)
+        console.log(`[DEBUG getProductos] Exitoso: ${data?.length || 0} productos encontrados`)
+        console.log('[DEBUG getProductos] Primeros 3 productos:', JSON.stringify(data?.slice(0, 3)))
         return data || []
     } catch (error) {
-        console.error('Error inesperado al obtener productos:', error)
-        console.log('Usando mockProductos como fallback (catch)')
+        console.error('[DEBUG getProductos] Error inesperado:', error)
+        console.log('[DEBUG getProductos] Usando mockProductos como fallback (catch)')
         return mockProductos.filter(p => p.activo)
     } finally {
-        console.log('--- getProductos END ---')
+        console.log('[DEBUG getProductos] END')
     }
 }
 

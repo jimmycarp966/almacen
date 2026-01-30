@@ -26,12 +26,20 @@ export async function updateCategoria(id: string, updates: any) {
 
 // Productos
 export async function createProducto(producto: any) {
+    console.log('[DEBUG createProducto] Producto a crear:', JSON.stringify(producto))
+
     const { data, error } = await supabase
         .from('productos')
         .insert([producto])
         .select()
 
-    if (!error) revalidatePath('/admin/productos')
+    console.log('[DEBUG createProducto] Resultado data:', JSON.stringify(data))
+    console.log('[DEBUG createProducto] Resultado error:', JSON.stringify(error))
+
+    if (!error) {
+        console.log('[DEBUG createProducto] Revalidando /admin/productos')
+        revalidatePath('/admin/productos')
+    }
     return { data, error }
 }
 

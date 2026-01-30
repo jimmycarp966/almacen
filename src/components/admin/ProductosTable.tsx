@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { updateProducto } from '@/actions/catalog_admin'
 import { NumberInput } from '@/components/ui/NumberInput'
 
@@ -22,6 +22,12 @@ interface ProductosTableProps {
 
 export function ProductosTable({ productos: initialProductos, categoriasMap }: ProductosTableProps) {
     const [productos, setProductos] = useState(initialProductos)
+
+    // Recargar productos desde el servidor cuando el componente se monta
+    // Esto asegura que siempre tengamos los datos más frescos
+    useEffect(() => {
+        setProductos(initialProductos)
+    }, [initialProductos])
     const [editingId, setEditingId] = useState<string | null>(null)
     const [editValues, setEditValues] = useState<{ precio: number | null }>({
         precio: null,
