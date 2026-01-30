@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { ClientRender } from '@/components/ClientRender'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const MENU_ITEMS = [
@@ -25,6 +24,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
 
     // Efecto de montaje para evitar problemas de hidratación
     useEffect(() => {
+        console.log('[DEBUG AdminContent] isMounted effect')
         setIsMounted(true)
     }, [])
 
@@ -175,9 +175,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
                         </div>
                     ) : (
                         <ErrorBoundary>
-                            <ClientRender>
-                                {children}
-                            </ClientRender>
+                            {children}
                         </ErrorBoundary>
                     )}
                 </div>
