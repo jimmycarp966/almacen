@@ -21,8 +21,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const router = useRouter()
 
+    // Evitar desajustes de hidratación con las fechas
+    const [dateDisplay, setDateDisplay] = useState('')
+
     useEffect(() => {
         setMounted(true)
+        setDateDisplay(new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }))
+
         // Redirigir /admin a /admin/productos (consistente con page.tsx)
         if (pathname === '/admin') {
             router.push('/admin/productos')
@@ -39,12 +44,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         router.push('/catalogo')
     }
 
-    if (!mounted || !_hasHydrated) return null
-
-    // Mientras no hay usuario, mostrar nada (el useEffect se encarga de la redirección)
-    if (!user || user.rol !== 'admin') {
-        return null
-    }
+    // No retornar null globalmente para evitar destruir el árbol de hidratación
+    const showContent = _hasHydrated && user?.rol === 'admin'
 
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">
@@ -99,11 +100,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="p-4 lg:p-6 border-t border-gray-50 mt-auto">
                     <div className="bg-gray-50 rounded-2xl p-4 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                            {user.nombre.charAt(0)}
+                            {user?.nombre?.charAt(0) || 'A'}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-text-main truncate">{user.nombre}</p>
-                            <p className="text-xs text-text-secondary truncate capitalize">{user.rol}</p>
+                            <p className="text-sm font-bold text-text-main truncate">{user?.nombre || 'Admin'}</p>
+                            <p className="text-xs text-text-secondary truncate capitalize">{user?.rol || 'Administrador'}</p>
                         </div>
                         <button onClick={handleLogout} className="text-gray-400 hover:text-primary transition-colors">
                             <span className="material-symbols-outlined text-lg">logout</span>
@@ -134,13 +135,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         </button>
                         <div className="hidden lg:block w-px h-6 bg-gray-200 mx-2"></div>
                         <p className="hidden lg:block text-sm font-bold text-text-main">
-                            {new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })}
+                            {dateDisplay}
                         </p>
                     </div>
                 </header>
 
                 <div className="p-4 lg:p-10">
-                    {children}
+                    {showContent ? children : (
+                        <div className="flex items-center justify-center py-20">
+                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+                        </div>
+                    )}
                 </div>
             </main>
         </div>
