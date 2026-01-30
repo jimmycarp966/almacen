@@ -38,7 +38,7 @@ ALTER TABLE categorias ENABLE ROW LEVEL SECURITY;
 -- 3. TABLA: productos
 CREATE TABLE IF NOT EXISTS productos (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  codigo TEXT UNIQUE NOT NULL,
+  codigo TEXT UNIQUE,
   nombre TEXT NOT NULL,
   descripcion TEXT,
   precio DECIMAL(10,2) NOT NULL,

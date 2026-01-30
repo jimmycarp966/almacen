@@ -55,6 +55,7 @@ export default function AdminProductosAgregarPage() {
             })
 
             if (!result.error) {
+                router.refresh()
                 router.push('/admin/productos')
             } else {
                 setError('Error al guardar: ' + result.error.message)
