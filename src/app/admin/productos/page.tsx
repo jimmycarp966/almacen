@@ -33,13 +33,10 @@ export default async function AdminProductosPage() {
             </div>
 
             {/* Table */}
-            <div className="p-4 bg-yellow-100 text-yellow-800 rounded-lg">
-                DEBUG: Tablas desactivadas para verificar renderizado. Si ves esto, el layout funciona y el error está en ProductosTable.
-            </div>
-            {/* <ProductosTable
+            <ProductosTable
                 productos={productos}
                 categoriasMap={categoriasMap}
-            /> */}
+            />
         </div>
     )
 }
