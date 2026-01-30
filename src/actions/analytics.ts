@@ -107,7 +107,7 @@ export async function getTopProducts(limit: number = 10, periodo: 'hoy' | 'seman
   const ventasPorProducto = new Map<string, { cantidad: number; total: number }>()
 
   pedidosPeriodo.forEach(pedido => {
-    pedido.pedido_items.forEach(item => {
+    pedido.pedido_items.forEach((item: any) => {
       const productoId = item.id
       const cantidad = item.cantidad
       const total = item.precio_unitario * cantidad
