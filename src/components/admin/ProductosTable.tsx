@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { updateProducto } from '@/actions/catalog_admin'
+import { updateProducto, deleteProducto } from '@/actions/catalog_admin'
 import { NumberInput } from '@/components/ui/NumberInput'
 
 interface Producto {
@@ -35,6 +35,8 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
         precio: null,
     })
     const [saving, setSaving] = useState(false)
+
+    const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
 
     const startEditing = (prod: Producto) => {
         setEditingId(prod.id)
@@ -84,6 +86,18 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
             setProductos(prev => prev.map(p =>
                 p.id === prod.id ? { ...p, activo: !p.activo } : p
             ))
+        }
+    }
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('¿Eliminar este producto? Esta acción no se puede deshacer.')) return
+
+        const result = await deleteProducto(id)
+        if (!result.error) {
+            setProductos(prev => prev.filter(p => p.id !== id))
+            setDeleteConfirm(null)
+        } else {
+            alert('Error al eliminar: ' + result.error?.message || 'Error desconocido')
         }
     }
 
@@ -162,14 +176,40 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
                                                     <span className="material-symbols-outlined text-[18px] sm:text-[20px]">close</span>
                                                 </button>
                                             </>
+                                        ) : deleteConfirm === prod.id ? (
+                                            <>
+                                                <button
+                                                    onClick={() => handleDelete(prod.id)}
+                                                    className="p-1.5 sm:p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                    title="Confirmar eliminar"
+                                                >
+                                                    <span className="material-symbols-outlined text-[18px] sm:text-[20px]">check</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => setDeleteConfirm(null)}
+                                                    className="p-1.5 sm:p-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-colors"
+                                                    title="Cancelar"
+                                                >
+                                                    <span className="material-symbols-outlined text-[18px] sm:text-[20px]">close</span>
+                                                </button>
+                                            </>
                                         ) : (
-                                            <button
-                                                onClick={() => startEditing(prod)}
-                                                className="p-1.5 sm:p-2 text-gray-400 hover:text-primary hover:bg-red-50 rounded-lg transition-colors"
-                                                title="Editar precio"
-                                            >
-                                                <span className="material-symbols-outlined text-[18px] sm:text-[20px]">edit</span>
-                                            </button>
+                                            <>
+                                                <button
+                                                    onClick={() => startEditing(prod)}
+                                                    className="p-1.5 sm:p-2 text-gray-400 hover:text-primary hover:bg-red-50 rounded-lg transition-colors"
+                                                    title="Editar precio"
+                                                >
+                                                    <span className="material-symbols-outlined text-[18px] sm:text-[20px]">edit</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => setDeleteConfirm(prod.id)}
+                                                    className="p-1.5 sm:p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                    title="Eliminar producto"
+                                                >
+                                                    <span className="material-symbols-outlined text-[18px] sm:text-[20px]">delete</span>
+                                                </button>
+                                            </>
                                         )}
                                     </div>
                                 </td>
