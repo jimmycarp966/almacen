@@ -23,9 +23,11 @@ interface ProductosTableProps {
 export function ProductosTable({ productos: initialProductos, categoriasMap }: ProductosTableProps) {
     const [productos, setProductos] = useState(initialProductos)
 
-    // Recargar productos desde el servidor cuando el componente se monta
-    // Esto asegura que siempre tengamos los datos más frescos
+    // DEBUG: Log en cliente
     useEffect(() => {
+        console.log('[DEBUG ProductosTable] initialProductos.length:', initialProductos.length)
+        console.log('[DEBUG ProductosTable] productos.length:', productos.length)
+        console.log('[DEBUG ProductosTable] Primeros 3 productos:', initialProductos.slice(0, 3).map(p => ({ id: p.id, nombre: p.nombre })))
         setProductos(initialProductos)
     }, [initialProductos])
     const [editingId, setEditingId] = useState<string | null>(null)
@@ -87,6 +89,10 @@ export function ProductosTable({ productos: initialProductos, categoriasMap }: P
 
     return (
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden -mx-4 lg:mx-0">
+            {/* DEBUG INFO */}
+            <div className="bg-gray-100 px-4 py-2 text-xs font-mono">
+                Mostrando {productos.length} productos
+            </div>
             <div className="overflow-x-auto px-2 sm:px-4 lg:px-0">
                 <table className="w-full text-left">
                     <thead>
