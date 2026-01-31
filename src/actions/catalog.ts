@@ -158,6 +158,104 @@ export async function getAllProductosForAdmin() {
 }
 
 /**
+ * Obtiene TODOS los productos con paginación para el catálogo de clientes
+ * Incluye filtros de categoría, búsqueda y ordenamiento
+ */
+export async function getAllProductos(categoriaId?: string, searchQuery?: string, filters?: {
+    minPrice?: number | null
+    maxPrice?: number | null
+    inStock?: boolean
+    sortBy?: 'nombre' | 'precio_asc' | 'precio_desc' | 'popularidad'
+}) {
+    console.log('[DEBUG getAllProductos] START', { categoriaId, searchQuery, filters })
+    const PAGE_SIZE = 1000
+    let allProductos: any[] = []
+    let page = 0
+    let hasMore = true
+
+    try {
+        while (hasMore) {
+            const start = page * PAGE_SIZE
+            const end = start + PAGE_SIZE - 1
+
+            let query = supabase
+                .from('productos')
+                .select('*')
+                .eq('activo', true)
+
+            // Filtrar por categoría
+            if (categoriaId && categoriaId !== 'todos') {
+                query = query.eq('categoria_id', categoriaId)
+            }
+
+            // Filtrar por búsqueda
+            if (searchQuery && searchQuery.trim()) {
+                const queryWords = searchQuery.toLowerCase().trim().split(/\s+/).filter(word => word.length > 0)
+                const searchPattern = `%${queryWords.join('%')}%`
+                query = query.or(`nombre.ilike.${searchPattern},descripcion.ilike.${searchPattern}`)
+            }
+
+            // Filtrar por precio
+            if (filters?.minPrice !== undefined && filters.minPrice !== null) {
+                query = query.gte('precio', filters.minPrice)
+            }
+            if (filters?.maxPrice !== undefined && filters.maxPrice !== null) {
+                query = query.lte('precio', filters.maxPrice)
+            }
+
+            // Filtrar por disponibilidad
+            if (filters?.inStock) {
+                query = query.gt('stock', 0)
+            }
+
+            // Ordenar productos
+            switch (filters?.sortBy) {
+                case 'nombre':
+                    query = query.order('nombre', { ascending: true })
+                    break
+                case 'precio_asc':
+                    query = query.order('precio', { ascending: true })
+                    break
+                case 'precio_desc':
+                    query = query.order('precio', { ascending: false })
+                    break
+                case 'popularidad':
+                    query = query.order('stock', { ascending: false })
+                    break
+                default:
+                    query = query.order('nombre', { ascending: true })
+            }
+
+            // Aplicar rango para paginación
+            query = query.range(start, end)
+
+            const { data, error } = await query
+
+            if (error) {
+                console.error('[DEBUG getAllProductos] Error:', error)
+                break
+            }
+
+            if (data && data.length > 0) {
+                allProductos = allProductos.concat(data)
+                page++
+                hasMore = data.length === PAGE_SIZE
+            } else {
+                hasMore = false
+            }
+        }
+
+        console.log(`[DEBUG getAllProductos] Total productos: ${allProductos.length}`)
+        return allProductos
+    } catch (error) {
+        console.error('[DEBUG getAllProductos] Error inesperado:', error)
+        return []
+    } finally {
+        console.log('[DEBUG getAllProductos] END')
+    }
+}
+
+/**
  * Revalida el catálogo para actualizar datos en ISR
  */
 export async function revalidateCatalog() {

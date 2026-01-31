@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
-import { getCategorias, getProductos, getOfertasSemana } from '@/actions/catalog'
+import { getCategorias, getAllProductos, getOfertasSemana } from '@/actions/catalog'
 import { Navbar } from '@/components/layout/Navbar'
 import { ProductCard } from '@/components/client/ProductCard'
 import { CartFAB } from '@/components/client/CartFAB'
@@ -42,7 +42,7 @@ function CatalogContent() {
         setLoading(true)
         try {
             const cats = await getCategorias()
-            const prods = await getProductos(categoriaId, searchQuery || undefined, filters)
+            const prods = await getAllProductos(categoriaId, searchQuery || undefined, filters)
             const ofertasSemana = await getOfertasSemana()
 
             setCategorias(cats)
