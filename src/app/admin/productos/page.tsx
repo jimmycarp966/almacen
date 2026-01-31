@@ -1,4 +1,4 @@
-import { getProductos, getCategorias } from '@/actions/catalog'
+import { getAllProductosForAdmin, getCategorias } from '@/actions/catalog'
 import { ProductosTable } from '@/components/admin/ProductosTable'
 import Link from 'next/link'
 
@@ -7,7 +7,7 @@ export const revalidate = 0
 
 export default async function AdminProductosPage() {
     const [productos, categorias] = await Promise.all([
-        getProductos(),
+        getAllProductosForAdmin(),
         getCategorias()
     ])
 

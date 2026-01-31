@@ -86,8 +86,9 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
                 query = query.order('nombre', { ascending: true })
         }
 
-        // Aumentar límite para obtener todos los productos (Supabase default es 1000)
-        query = query.limit(2000)
+        // Aumentar límite para obtener todos los productos (Supabase default es 1000, max es 1000 por request)
+        // Para más de 1000 necesitamos paginación, por ahora seteamos el máximo
+        query = query.limit(1000)
 
         const { data, error } = await query
 
@@ -106,6 +107,53 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
         return mockProductos.filter(p => p.activo)
     } finally {
         console.log('[DEBUG getProductos] END')
+    }
+}
+
+/**
+ * Obtiene TODOS los productos (sin límite de 1000) para admin
+ * Usa paginación interna para traer todos los resultados
+ */
+export async function getAllProductosForAdmin() {
+    console.log('[DEBUG getAllProductosForAdmin] START')
+    const PAGE_SIZE = 1000
+    let allProductos: any[] = []
+    let page = 0
+    let hasMore = true
+
+    try {
+        while (hasMore) {
+            const start = page * PAGE_SIZE
+            const end = start + PAGE_SIZE - 1
+
+            const { data, error } = await supabase
+                .from('productos')
+                .select('*')
+                .eq('activo', true)
+                .order('nombre', { ascending: true })
+                .range(start, end)
+
+            if (error) {
+                console.error('[DEBUG getAllProductosForAdmin] Error:', error)
+                break
+            }
+
+            if (data && data.length > 0) {
+                allProductos = allProductos.concat(data)
+                page++
+                hasMore = data.length === PAGE_SIZE
+            } else {
+                hasMore = false
+            }
+        }
+
+        console.log(`[DEBUG getAllProductosForAdmin] Total productos: ${allProductos.length}`)
+        return allProductos
+    } catch (error) {
+        console.error('[DEBUG getAllProductosForAdmin] Error inesperado:', error)
+        return []
+    } finally {
+        console.log('[DEBUG getAllProductosForAdmin] END')
     }
 }
 
