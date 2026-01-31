@@ -362,19 +362,27 @@ function CarritoContent({
                                         {cuotasDisponibles.map((c) => {
                                             const etiqueta = getEtiquetaCuotas(metodoPago, c)
                                             const esZeta = metodoPago === 'naranja' && c === 3
+                                            const esCredicash = metodoPago === 'credicash' && c === 1
                                             return (
                                                 <button
                                                     key={c}
                                                     type="button"
                                                     onClick={() => setCuotas(c)}
                                                     className={`py-3 px-2 rounded-xl border-2 font-black transition-all text-sm ${cuotas === c
-                                                        ? esZeta ? 'border-purple-500 bg-purple-500 text-white shadow-lg' : 'border-primary bg-primary text-white shadow-lg'
+                                                        ? esZeta ? 'border-purple-500 bg-purple-500 text-white shadow-lg' :
+                                                          esCredicash ? 'border-red-500 bg-red-500 text-white shadow-lg' :
+                                                          'border-primary bg-primary text-white shadow-lg'
                                                         : 'border-gray-100 bg-white text-text-secondary hover:border-gray-200'
                                                         }`}
                                                 >
                                                     {esZeta ? (
                                                         <>
                                                             <div className="text-xs">Zeta</div>
+                                                            <div className="text-[10px] font-medium opacity-80">+20% recargo</div>
+                                                        </>
+                                                    ) : esCredicash ? (
+                                                        <>
+                                                            <div className="text-xs">Credicash</div>
                                                             <div className="text-[10px] font-medium opacity-80">+20% recargo</div>
                                                         </>
                                                     ) : (
@@ -394,7 +402,7 @@ function CarritoContent({
                             {recargo > 0 ? (
                                 <div className="bg-amber-50 p-4 rounded-xl border border-amber-200">
                                     <p className="text-amber-800 text-sm font-medium">
-                                        💳 Recargo por pago en {cuotas} {cuotas === 1 ? 'cuota' : 'cuotas'}: <strong>+${recargo.toLocaleString('es-AR')}</strong>
+                                        💳 Recargo por pago en {metodoPago === 'credicash' ? 'Credicash' : `${cuotas} ${cuotas === 1 ? 'cuota' : 'cuotas'}`} (20%): <strong>+${recargo.toLocaleString('es-AR')}</strong>
                                     </p>
                                 </div>
                             ) : (
