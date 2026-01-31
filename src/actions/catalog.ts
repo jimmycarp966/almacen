@@ -86,6 +86,9 @@ export async function getProductos(categoriaId?: string, searchQuery?: string, f
                 query = query.order('nombre', { ascending: true })
         }
 
+        // Aumentar límite para obtener todos los productos (Supabase default es 1000)
+        query = query.limit(2000)
+
         const { data, error } = await query
 
         if (error) {
