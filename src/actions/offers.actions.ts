@@ -4,21 +4,48 @@ import { supabase } from '@/lib/supabase'
 import { revalidatePath } from 'next/cache'
 
 /**
- * Obtiene todos los productos con su estado de oferta
+ * Obtiene todos los productos con su estado de oferta (con paginación)
  */
 export async function getAdminProductosOferta() {
-    try {
-        const { data, error } = await supabase
-            .from('productos')
-            .select('id, nombre, precio, imagen_url, es_oferta, descuento, activo')
-            .eq('activo', true)
-            .order('nombre', { ascending: true })
+    console.log('[DEBUG getAdminProductosOferta] START')
+    const PAGE_SIZE = 1000
+    let allProductos: any[] = []
+    let page = 0
+    let hasMore = true
 
-        if (error) throw error
-        return data || []
+    try {
+        while (hasMore) {
+            const start = page * PAGE_SIZE
+            const end = start + PAGE_SIZE - 1
+
+            const { data, error } = await supabase
+                .from('productos')
+                .select('id, nombre, precio, imagen_url, es_oferta, descuento, activo')
+                .eq('activo', true)
+                .order('nombre', { ascending: true })
+                .range(start, end)
+
+            if (error) {
+                console.error('[DEBUG getAdminProductosOferta] Error:', error)
+                break
+            }
+
+            if (data && data.length > 0) {
+                allProductos = allProductos.concat(data)
+                page++
+                hasMore = data.length === PAGE_SIZE
+            } else {
+                hasMore = false
+            }
+        }
+
+        console.log(`[DEBUG getAdminProductosOferta] Total productos: ${allProductos.length}`)
+        return allProductos
     } catch (error) {
-        console.error('Error al obtener productos para ofertas:', error)
+        console.error('[DEBUG getAdminProductosOferta] Error inesperado:', error)
         return []
+    } finally {
+        console.log('[DEBUG getAdminProductosOferta] END')
     }
 }
 
