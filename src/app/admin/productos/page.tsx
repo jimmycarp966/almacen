@@ -11,11 +11,22 @@ export default async function AdminProductosPage() {
         getCategorias()
     ])
 
+    // DEBUG: Log en servidor para ver qué datos llegan
+    console.log('[DEBUG AdminProductosPage] productos.length:', productos.length)
+    console.log('[DEBUG AdminProductosPage] categorias.length:', categorias.length)
+    console.log('[DEBUG AdminProductosPage] Primeros 3 productos:', JSON.stringify(productos.slice(0, 3)))
+
     // Crear un mapa de categorías por ID
     const categoriasMap = new Map(categorias.map(cat => [cat.id, cat.nombre]))
 
     return (
         <div className="space-y-8">
+            {/* DEBUG INFO */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-sm">
+                <strong>DEBUG:</strong> Productos cargados: <span className="font-bold">{productos.length}</span> | Categorías: {categorias.length}
+                {productos.length === 0 && <span className="text-red-600 ml-2">⚠️ No hay productos - revisa logs</span>}
+            </div>
+
             <div className="flex justify-between items-end">
                 <div className="flex flex-col gap-2">
                     <h1 className="text-3xl font-black text-text-main tracking-tight">Gestión de Productos</h1>
