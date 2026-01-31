@@ -268,26 +268,46 @@ export async function revalidateCatalog() {
  * Obtiene los productos marcados como oferta (es_oferta = true)
  */
 export async function getOfertasSemana() {
-    console.log('--- getOfertasSemana START ---')
-    try {
-        const { data, error } = await supabase
-            .from('productos')
-            .select('*')
-            .eq('activo', true)
-            .eq('es_oferta', true)
+    console.log('[DEBUG getOfertasSemana] START')
+    const PAGE_SIZE = 1000
+    let allOfertas: any[] = []
+    let page = 0
+    let hasMore = true
 
-        if (error) {
-            console.error('Error al obtener ofertas de Supabase:', error)
-            return []
+    try {
+        while (hasMore) {
+            const start = page * PAGE_SIZE
+            const end = start + PAGE_SIZE - 1
+
+            const { data, error } = await supabase
+                .from('productos')
+                .select('*')
+                .eq('activo', true)
+                .eq('es_oferta', true)
+                .order('nombre', { ascending: true })
+                .range(start, end)
+
+            if (error) {
+                console.error('[DEBUG getOfertasSemana] Error:', error)
+                break
+            }
+
+            if (data && data.length > 0) {
+                allOfertas = allOfertas.concat(data)
+                page++
+                hasMore = data.length === PAGE_SIZE
+            } else {
+                hasMore = false
+            }
         }
 
-        console.log(`getOfertasSemana exitoso: ${data?.length || 0} ofertas encontradas`)
-        return data || []
+        console.log(`[DEBUG getOfertasSemana] Total ofertas: ${allOfertas.length}`)
+        return allOfertas
     } catch (error) {
-        console.error('Error inesperado al obtener ofertas:', error)
+        console.error('[DEBUG getOfertasSemana] Error inesperado:', error)
         return []
     } finally {
-        console.log('--- getOfertasSemana END ---')
+        console.log('[DEBUG getOfertasSemana] END')
     }
 }
 
